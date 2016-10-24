@@ -1,5 +1,6 @@
 libgpgme-pthread.so.11:GPGME_1.0
 libgpgme-pthread.so.11:GPGME_1.1
+libgpgme-pthread.so.11:gpgme_addrspec_from_uid
 libgpgme-pthread.so.11:gpgme_cancel
 libgpgme-pthread.so.11:gpgme_cancel_async
 libgpgme-pthread.so.11:gpgme_check_version
@@ -185,6 +186,7 @@ libgpgme-pthread.so.11:gpgme_wait
 libgpgme-pthread.so.11:gpgme_wait_ext
 libgpgme.so.11:GPGME_1.0
 libgpgme.so.11:GPGME_1.1
+libgpgme.so.11:gpgme_addrspec_from_uid
 libgpgme.so.11:gpgme_cancel
 libgpgme.so.11:gpgme_cancel_async
 libgpgme.so.11:gpgme_check_version
@@ -622,6 +624,7 @@ libgpgmepp.so.6:_ZN5GpgME6SubkeyC1Ev
 libgpgmepp.so.6:_ZN5GpgME6SubkeyC2ERKSt10shared_ptrI10_gpgme_keyEP13_gpgme_subkey
 libgpgmepp.so.6:_ZN5GpgME6SubkeyC2ERKSt10shared_ptrI10_gpgme_keyEj
 libgpgmepp.so.6:_ZN5GpgME6SubkeyC2Ev
+libgpgmepp.so.6:_ZN5GpgME6UserID18addrSpecFromStringB5cxx11EPKc
 libgpgmepp.so.6:_ZN5GpgME6UserID9SignatureC1ERKSt10shared_ptrI10_gpgme_keyEP14_gpgme_user_idP14_gpgme_key_sig
 libgpgmepp.so.6:_ZN5GpgME6UserID9SignatureC1ERKSt10shared_ptrI10_gpgme_keyEP14_gpgme_user_idj
 libgpgmepp.so.6:_ZN5GpgME6UserID9SignatureC1Ev
@@ -996,6 +999,7 @@ libgpgmepp.so.6:_ZNK5GpgME6UserID4nameEv
 libgpgmepp.so.6:_ZNK5GpgME6UserID5emailEv
 libgpgmepp.so.6:_ZNK5GpgME6UserID6parentEv
 libgpgmepp.so.6:_ZNK5GpgME6UserID7commentEv
+libgpgmepp.so.6:_ZNK5GpgME6UserID8addrSpecB5cxx11Ev
 libgpgmepp.so.6:_ZNK5GpgME6UserID8tofuInfoEv
 libgpgmepp.so.6:_ZNK5GpgME6UserID8validityEv
 libgpgmepp.so.6:_ZNK5GpgME6UserID9Signature10signerNameEv
@@ -1079,6 +1083,7 @@ libgpgmepp.so.6:_ZNK5GpgME9Signature18publicKeyAlgorithmEv
 libgpgmepp.so.6:_ZNK5GpgME9Signature21hashAlgorithmAsStringEv
 libgpgmepp.so.6:_ZNK5GpgME9Signature25isVerifiedUsingChainModelEv
 libgpgmepp.so.6:_ZNK5GpgME9Signature26publicKeyAlgorithmAsStringEv
+libgpgmepp.so.6:_ZNK5GpgME9Signature3keyEbb
 libgpgmepp.so.6:_ZNK5GpgME9Signature3keyEv
 libgpgmepp.so.6:_ZNK5GpgME9Signature6isNullEv
 libgpgmepp.so.6:_ZNK5GpgME9Signature6statusEv
