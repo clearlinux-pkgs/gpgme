@@ -4,7 +4,7 @@
 #
 Name     : gpgme
 Version  : 1.8.0
-Release  : 5
+Release  : 6
 URL      : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.8.0.tar.bz2
 Source0  : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.8.0.tar.bz2
 Summary  : GPGME - GnuPG Made Easy
