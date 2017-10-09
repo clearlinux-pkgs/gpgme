@@ -6,7 +6,7 @@
 #
 Name     : gpgme
 Version  : 1.9.0
-Release  : 7
+Release  : 8
 URL      : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.9.0.tar.bz2
 Source0  : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.9.0.tar.bz2
 Source99 : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.9.0.tar.bz2.sig
@@ -14,11 +14,15 @@ Summary  : GPGME - GnuPG Made Easy
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
 Requires: gpgme-bin
+Requires: gpgme-python3
 Requires: gpgme-lib
 Requires: gpgme-data
 Requires: gpgme-doc
+Requires: gpgme-python
 BuildRequires : libassuan-dev
 BuildRequires : libgpg-error-dev
+BuildRequires : python3-dev
+BuildRequires : swig
 
 %description
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG easier
@@ -71,6 +75,24 @@ Requires: gpgme-data
 lib components for the gpgme package.
 
 
+%package python
+Summary: python components for the gpgme package.
+Group: Default
+Requires: gpgme-python3
+
+%description python
+python components for the gpgme package.
+
+
+%package python3
+Summary: python3 components for the gpgme package.
+Group: Default
+Requires: python3-core
+
+%description python3
+python3 components for the gpgme package.
+
+
 %prep
 %setup -q -n gpgme-1.9.0
 
@@ -79,8 +101,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1494340854
-%configure --disable-static --disable-fd-passing --disable-gpgsm-test
+export SOURCE_DATE_EPOCH=1507592862
+%configure --disable-static --disable-fd-passing --disable-gpgsm-test --enable-languages=cl,cpp,python3
 make V=1  %{?_smp_mflags}
 
 %check
@@ -91,9 +113,14 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1494340854
+export SOURCE_DATE_EPOCH=1507592862
 rm -rf %{buildroot}
 %make_install
+## make_install_append content
+cd lang/python
+DESTDIR=%{buildroot} make install
+rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
+## make_install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -166,3 +193,10 @@ rm -rf %{buildroot}
 /usr/lib64/libgpgme.so.11.18.0
 /usr/lib64/libgpgmepp.so.6
 /usr/lib64/libgpgmepp.so.6.4.0
+
+%files python
+%defattr(-,root,root,-)
+
+%files python3
+%defattr(-,root,root,-)
+/usr/lib/python3*/*
