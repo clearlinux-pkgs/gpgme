@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x249B39D24F25E3B6 (dshaw@jabberwocky.com)
 #
 Name     : gpgme
-Version  : 1.9.0
-Release  : 9
-URL      : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.9.0.tar.bz2
-Source0  : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.9.0.tar.bz2
-Source99 : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.9.0.tar.bz2.sig
+Version  : 1.10.0
+Release  : 10
+URL      : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.10.0.tar.bz2
+Source0  : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.10.0.tar.bz2
+Source99 : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.10.0.tar.bz2.sig
 Summary  : GPGME - GnuPG Made Easy
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
@@ -19,6 +19,7 @@ Requires: gpgme-lib
 Requires: gpgme-data
 Requires: gpgme-doc
 Requires: gpgme-python
+BuildRequires : gnupg
 BuildRequires : libassuan-dev
 BuildRequires : libgpg-error-dev
 BuildRequires : python3-dev
@@ -94,16 +95,16 @@ python3 components for the gpgme package.
 
 
 %prep
-%setup -q -n gpgme-1.9.0
+%setup -q -n gpgme-1.10.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1507592862
+export SOURCE_DATE_EPOCH=1513279805
 %configure --disable-static --disable-fd-passing --disable-gpgsm-test --enable-languages=cl,cpp,python3
-make V=1  %{?_smp_mflags}
+make  %{?_smp_mflags}
 
 %check
 export LANG=C
@@ -113,7 +114,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1507592862
+export SOURCE_DATE_EPOCH=1513279805
 rm -rf %{buildroot}
 %make_install
 ## make_install_append content
@@ -190,9 +191,9 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libgpgme.so.11
-/usr/lib64/libgpgme.so.11.18.0
+/usr/lib64/libgpgme.so.11.19.0
 /usr/lib64/libgpgmepp.so.6
-/usr/lib64/libgpgmepp.so.6.4.0
+/usr/lib64/libgpgmepp.so.6.5.0
 
 %files python
 %defattr(-,root,root,-)

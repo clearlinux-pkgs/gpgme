@@ -82,6 +82,7 @@ libgpgme.so.11:gpgme_op_assuan_transact_ext
 libgpgme.so.11:gpgme_op_assuan_transact_start
 libgpgme.so.11:gpgme_op_card_edit
 libgpgme.so.11:gpgme_op_card_edit_start
+libgpgme.so.11:gpgme_op_conf_dir
 libgpgme.so.11:gpgme_op_conf_load
 libgpgme.so.11:gpgme_op_conf_save
 libgpgme.so.11:gpgme_op_createkey
@@ -96,6 +97,8 @@ libgpgme.so.11:gpgme_op_decrypt_start
 libgpgme.so.11:gpgme_op_decrypt_verify
 libgpgme.so.11:gpgme_op_decrypt_verify_start
 libgpgme.so.11:gpgme_op_delete
+libgpgme.so.11:gpgme_op_delete_ext
+libgpgme.so.11:gpgme_op_delete_ext_start
 libgpgme.so.11:gpgme_op_delete_start
 libgpgme.so.11:gpgme_op_edit
 libgpgme.so.11:gpgme_op_edit_start
@@ -488,6 +491,7 @@ libgpgmepp.so.6:_ZN5GpgME7Context11setTextModeEb
 libgpgmepp.so.6:_ZN5GpgME7Context11startAddUidERKNS_3KeyEPKc
 libgpgmepp.so.6:_ZN5GpgME7Context11startPasswdERKNS_3KeyE
 libgpgmepp.so.6:_ZN5GpgME7Context11startRevUidERKNS_3KeyEPKc
+libgpgmepp.so.6:_ZN5GpgME7Context12createSubkeyERKNS_3KeyEPKcmmj
 libgpgmepp.so.6:_ZN5GpgME7Context12startEditingERKNS_3KeyESt10unique_ptrINS_14EditInteractorESt14default_deleteIS5_EERNS_4DataE
 libgpgmepp.so.6:_ZN5GpgME7Context12startSigningERKNS_4DataERS1_NS_13SignatureModeE
 libgpgmepp.so.6:_ZN5GpgME7Context13addSigningKeyERKNS_3KeyE
@@ -499,6 +503,7 @@ libgpgmepp.so.6:_ZN5GpgME7Context14assuanTransactEPKc
 libgpgmepp.so.6:_ZN5GpgME7Context14assuanTransactEPKcSt10unique_ptrINS_17AssuanTransactionESt14default_deleteIS4_EE
 libgpgmepp.so.6:_ZN5GpgME7Context14setKeyListModeEj
 libgpgmepp.so.6:_ZN5GpgME7Context14signAndEncryptERKSt6vectorINS_3KeyESaIS2_EERKNS_4DataERS7_NS0_15EncryptionFlagsE
+libgpgmepp.so.6:_ZN5GpgME7Context14startCreateKeyEPKcS2_mmRKNS_3KeyEj
 libgpgmepp.so.6:_ZN5GpgME7Context14startKeyImportERKNS_4DataE
 libgpgmepp.so.6:_ZN5GpgME7Context14startKeyImportERKSt6vectorINS_3KeyESaIS2_EE
 libgpgmepp.so.6:_ZN5GpgME7Context15createForEngineENS_6EngineEPNS_5ErrorE
@@ -518,6 +523,7 @@ libgpgmepp.so.6:_ZN5GpgME7Context16startGetAuditLogERNS_4DataEj
 libgpgmepp.so.6:_ZN5GpgME7Context16startKeyDeletionERKNS_3KeyEb
 libgpgmepp.so.6:_ZN5GpgME7Context17createForProtocolENS_8ProtocolE
 libgpgmepp.so.6:_ZN5GpgME7Context17setEngineFileNameEPKc
+libgpgmepp.so.6:_ZN5GpgME7Context17startCreateSubkeyERKNS_3KeyEPKcmmj
 libgpgmepp.so.6:_ZN5GpgME7Context18installIOCallbacksEP12gpgme_io_cbs
 libgpgmepp.so.6:_ZN5GpgME7Context18setDecryptionFlagsENS0_15DecryptionFlagsE
 libgpgmepp.so.6:_ZN5GpgME7Context18setTofuPolicyStartERKNS_3KeyEj
@@ -570,6 +576,7 @@ libgpgmepp.so.6:_ZN5GpgME7Context7nextKeyERNS_5ErrorE
 libgpgmepp.so.6:_ZN5GpgME7Context8cardEditERKNS_3KeyESt10unique_ptrINS_14EditInteractorESt14default_deleteIS5_EERNS_4DataE
 libgpgmepp.so.6:_ZN5GpgME7Context8mountVFSEPKcS2_
 libgpgmepp.so.6:_ZN5GpgME7Context8setArmorEb
+libgpgmepp.so.6:_ZN5GpgME7Context9createKeyEPKcS2_mmRKNS_3KeyEj
 libgpgmepp.so.6:_ZN5GpgME7Context9createVFSEPKcRKSt6vectorINS_3KeyESaIS4_EE
 libgpgmepp.so.6:_ZN5GpgME7Context9deleteKeyERKNS_3KeyEb
 libgpgmepp.so.6:_ZN5GpgME7Context9getSenderEv
@@ -741,6 +748,7 @@ libgpgmepp.so.6:_ZNK5GpgME16DecryptionResult10recipientsEv
 libgpgmepp.so.6:_ZNK5GpgME16DecryptionResult13numRecipientsEv
 libgpgmepp.so.6:_ZNK5GpgME16DecryptionResult15isWrongKeyUsageEv
 libgpgmepp.so.6:_ZNK5GpgME16DecryptionResult20unsupportedAlgorithmEv
+libgpgmepp.so.6:_ZNK5GpgME16DecryptionResult6isDeVsEv
 libgpgmepp.so.6:_ZNK5GpgME16DecryptionResult6isNullEv
 libgpgmepp.so.6:_ZNK5GpgME16DecryptionResult8fileNameEv
 libgpgmepp.so.6:_ZNK5GpgME16DecryptionResult9Recipient10shortKeyIDEv
@@ -959,6 +967,7 @@ libgpgmepp.so.6:_ZNK5GpgME9Signature25isVerifiedUsingChainModelEv
 libgpgmepp.so.6:_ZNK5GpgME9Signature26publicKeyAlgorithmAsStringEv
 libgpgmepp.so.6:_ZNK5GpgME9Signature3keyEbb
 libgpgmepp.so.6:_ZNK5GpgME9Signature3keyEv
+libgpgmepp.so.6:_ZNK5GpgME9Signature6isDeVsEv
 libgpgmepp.so.6:_ZNK5GpgME9Signature6isNullEv
 libgpgmepp.so.6:_ZNK5GpgME9Signature6statusEv
 libgpgmepp.so.6:_ZNK5GpgME9Signature7summaryEv
