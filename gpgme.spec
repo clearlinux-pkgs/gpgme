@@ -6,7 +6,7 @@
 #
 Name     : gpgme
 Version  : 1.10.0
-Release  : 21
+Release  : 23
 URL      : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.10.0.tar.bz2
 Source0  : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.10.0.tar.bz2
 Source99 : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.10.0.tar.bz2.sig
@@ -20,10 +20,13 @@ Requires: gpgme-data
 Requires: gpgme-license
 Requires: gpgme-python
 BuildRequires : buildreq-kde
+BuildRequires : doxygen
 BuildRequires : gnupg
+BuildRequires : graphviz
 BuildRequires : libassuan-dev
 BuildRequires : libgpg-error-dev
 BuildRequires : python3-dev
+BuildRequires : qtbase-extras
 BuildRequires : swig
 
 %description
@@ -67,6 +70,14 @@ Group: Documentation
 
 %description doc
 doc components for the gpgme package.
+
+
+%package extras
+Summary: extras components for the gpgme package.
+Group: Default
+
+%description extras
+extras components for the gpgme package.
 
 
 %package lib
@@ -113,8 +124,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1532549905
-%configure --disable-static --disable-fd-passing --disable-gpgsm-test --enable-languages=cl,cpp,python3
+export SOURCE_DATE_EPOCH=1532550298
+%configure --disable-static --disable-fd-passing --disable-gpgsm-test --enable-languages=cl,cpp,python3,qt
 make  %{?_smp_mflags}
 
 %check
@@ -125,7 +136,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1532549905
+export SOURCE_DATE_EPOCH=1532550298
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/gpgme
 cp COPYING.LESSER %{buildroot}/usr/share/doc/gpgme/COPYING.LESSER
@@ -154,6 +165,42 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 %files dev
 %defattr(-,root,root,-)
 /usr/include/*.h
+/usr/include/QGpgME/AbstractImportJob
+/usr/include/QGpgME/AddUserIDJob
+/usr/include/QGpgME/ChangeExpiryJob
+/usr/include/QGpgME/ChangeOwnerTrustJob
+/usr/include/QGpgME/ChangePasswdJob
+/usr/include/QGpgME/CryptoConfig
+/usr/include/QGpgME/DN
+/usr/include/QGpgME/DataProvider
+/usr/include/QGpgME/DecryptJob
+/usr/include/QGpgME/DecryptVerifyJob
+/usr/include/QGpgME/DefaultKeyGenerationJob
+/usr/include/QGpgME/DeleteJob
+/usr/include/QGpgME/DownloadJob
+/usr/include/QGpgME/EncryptJob
+/usr/include/QGpgME/ExportJob
+/usr/include/QGpgME/HierarchicalKeyKistJob
+/usr/include/QGpgME/ImportFromKeyserverJob
+/usr/include/QGpgME/ImportJob
+/usr/include/QGpgME/Job
+/usr/include/QGpgME/KeyForMailboxJob
+/usr/include/QGpgME/KeyGenerationJob
+/usr/include/QGpgME/KeyListJob
+/usr/include/QGpgME/ListAllKeysJob
+/usr/include/QGpgME/MultiDeleteJob
+/usr/include/QGpgME/Protocol
+/usr/include/QGpgME/QGpgMENewCryptoConfig
+/usr/include/QGpgME/QuickJob
+/usr/include/QGpgME/RefreshKeysJob
+/usr/include/QGpgME/SignEncryptJob
+/usr/include/QGpgME/SignJob
+/usr/include/QGpgME/SignKeyJob
+/usr/include/QGpgME/SpecialJob
+/usr/include/QGpgME/TofuPolicyJob
+/usr/include/QGpgME/VerifyDetachedJob
+/usr/include/QGpgME/VerifyOpaqueJob
+/usr/include/QGpgME/WKSPublishJob
 /usr/include/gpgme++/configuration.h
 /usr/include/gpgme++/context.h
 /usr/include/gpgme++/data.h
@@ -192,18 +239,66 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 /usr/include/gpgme++/trustitem.h
 /usr/include/gpgme++/verificationresult.h
 /usr/include/gpgme++/vfsmountresult.h
+/usr/include/qgpgme/abstractimportjob.h
+/usr/include/qgpgme/adduseridjob.h
+/usr/include/qgpgme/changeexpiryjob.h
+/usr/include/qgpgme/changeownertrustjob.h
+/usr/include/qgpgme/changepasswdjob.h
+/usr/include/qgpgme/cryptoconfig.h
+/usr/include/qgpgme/dataprovider.h
+/usr/include/qgpgme/decryptjob.h
+/usr/include/qgpgme/decryptverifyjob.h
+/usr/include/qgpgme/defaultkeygenerationjob.h
+/usr/include/qgpgme/deletejob.h
+/usr/include/qgpgme/dn.h
+/usr/include/qgpgme/downloadjob.h
+/usr/include/qgpgme/encryptjob.h
+/usr/include/qgpgme/exportjob.h
+/usr/include/qgpgme/hierarchicalkeylistjob.h
+/usr/include/qgpgme/importfromkeyserverjob.h
+/usr/include/qgpgme/importjob.h
+/usr/include/qgpgme/job.h
+/usr/include/qgpgme/keyformailboxjob.h
+/usr/include/qgpgme/keygenerationjob.h
+/usr/include/qgpgme/keylistjob.h
+/usr/include/qgpgme/listallkeysjob.h
+/usr/include/qgpgme/multideletejob.h
+/usr/include/qgpgme/protocol.h
+/usr/include/qgpgme/qgpgme_export.h
+/usr/include/qgpgme/qgpgme_version.h
+/usr/include/qgpgme/qgpgmenewcryptoconfig.h
+/usr/include/qgpgme/quickjob.h
+/usr/include/qgpgme/refreshkeysjob.h
+/usr/include/qgpgme/signencryptjob.h
+/usr/include/qgpgme/signjob.h
+/usr/include/qgpgme/signkeyjob.h
+/usr/include/qgpgme/specialjob.h
+/usr/include/qgpgme/tofupolicyjob.h
+/usr/include/qgpgme/verifydetachedjob.h
+/usr/include/qgpgme/verifyopaquejob.h
+/usr/include/qgpgme/wkspublishjob.h
 /usr/lib64/cmake/Gpgmepp/GpgmeppConfig.cmake
 /usr/lib64/cmake/Gpgmepp/GpgmeppConfigVersion.cmake
+/usr/lib64/cmake/QGpgme/QGpgmeConfig.cmake
+/usr/lib64/cmake/QGpgme/QGpgmeConfigVersion.cmake
 /usr/lib64/libgpgme.so
 /usr/lib64/libgpgmepp.so
+/usr/lib64/libqgpgme.so
 /usr/share/aclocal/*.m4
 
 %files doc
 %defattr(0644,root,root,0755)
 %doc /usr/share/info/*
 
+%files extras
+%defattr(-,root,root,-)
+/usr/lib64/libqgpgme.so.7
+/usr/lib64/libqgpgme.so.7.3.0
+
 %files lib
 %defattr(-,root,root,-)
+%exclude /usr/lib64/libqgpgme.so.7
+%exclude /usr/lib64/libqgpgme.so.7.3.0
 /usr/lib64/libgpgme.so.11
 /usr/lib64/libgpgme.so.11.19.0
 /usr/lib64/libgpgmepp.so.6

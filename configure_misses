@@ -1,4 +1,5 @@
 Configure miss: gitlog-to-changelog
+Configure miss: x86_64-generic-linux-gnu-moc
 Configure miss: getenv_r
 Configure miss: x86_64-generic-linux-gnu-libassuan-config
 Configure miss: closefrom
