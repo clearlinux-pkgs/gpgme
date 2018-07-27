@@ -6,10 +6,10 @@
 #
 Name     : gpgme
 Version  : 1.10.0
-Release  : 23
-URL      : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.10.0.tar.bz2
-Source0  : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.10.0.tar.bz2
-Source99 : ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-1.10.0.tar.bz2.sig
+Release  : 24
+URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.10.0.tar.bz2
+Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.10.0.tar.bz2
+Source99 : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.10.0.tar.bz2.sig
 Summary  : GPGME - GnuPG Made Easy
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
@@ -124,7 +124,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1532550298
+export SOURCE_DATE_EPOCH=1532720465
 %configure --disable-static --disable-fd-passing --disable-gpgsm-test --enable-languages=cl,cpp,python3,qt
 make  %{?_smp_mflags}
 
@@ -136,11 +136,11 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1532550298
+export SOURCE_DATE_EPOCH=1532720465
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/gpgme
-cp COPYING.LESSER %{buildroot}/usr/share/doc/gpgme/COPYING.LESSER
 cp COPYING %{buildroot}/usr/share/doc/gpgme/COPYING
+cp COPYING.LESSER %{buildroot}/usr/share/doc/gpgme/COPYING.LESSER
 %make_install
 ## make_install_append content
 cd lang/python
@@ -164,6 +164,7 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 
 %files dev
 %defattr(-,root,root,-)
+%exclude /usr/lib64/libqgpgme.so
 /usr/include/*.h
 /usr/include/QGpgME/AbstractImportJob
 /usr/include/QGpgME/AddUserIDJob
@@ -283,7 +284,6 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 /usr/lib64/cmake/QGpgme/QGpgmeConfigVersion.cmake
 /usr/lib64/libgpgme.so
 /usr/lib64/libgpgmepp.so
-/usr/lib64/libqgpgme.so
 /usr/share/aclocal/*.m4
 
 %files doc
@@ -292,6 +292,7 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 
 %files extras
 %defattr(-,root,root,-)
+/usr/lib64/libqgpgme.so
 /usr/lib64/libqgpgme.so.7
 /usr/lib64/libqgpgme.so.7.3.0
 
