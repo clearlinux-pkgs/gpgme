@@ -6,7 +6,7 @@
 #
 Name     : gpgme
 Version  : 1.11.1
-Release  : 25
+Release  : 26
 URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.11.1.tar.bz2
 Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.11.1.tar.bz2
 Source99 : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.11.1.tar.bz2.sig
@@ -124,7 +124,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1533053784
+export SOURCE_DATE_EPOCH=1533054081
 %configure --disable-static --disable-fd-passing --disable-gpgsm-test --enable-languages=cl,cpp,python3,qt
 make  %{?_smp_mflags}
 
@@ -136,7 +136,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1533053784
+export SOURCE_DATE_EPOCH=1533054081
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/gpgme
 cp COPYING %{buildroot}/usr/share/doc/gpgme/COPYING
@@ -295,15 +295,16 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 %defattr(-,root,root,-)
 /usr/lib64/libqgpgme.so
 /usr/lib64/libqgpgme.so.7
+/usr/lib64/libqgpgme.so.7.3.2
 
 %files lib
 %defattr(-,root,root,-)
 %exclude /usr/lib64/libqgpgme.so.7
+%exclude /usr/lib64/libqgpgme.so.7.3.2
 /usr/lib64/libgpgme.so.11
 /usr/lib64/libgpgme.so.11.20.1
 /usr/lib64/libgpgmepp.so.6
 /usr/lib64/libgpgmepp.so.6.7.0
-/usr/lib64/libqgpgme.so.7.3.2
 
 %files license
 %defattr(-,root,root,-)
