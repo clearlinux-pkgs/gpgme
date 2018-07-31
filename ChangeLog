@@ -1,3 +1,1308 @@
+2018-04-20  Werner Koch  <wk@gnupg.org>
+
+	Release 1.11.1.
+	+ commit 2e9a14912fb906c17017553ccd0941d172e095ff
+	* configure.ac: Bump LT version to C31/A20/R1.  For cpp to C13/A7/R0.
+	For qt to: C10/A3/R2.
+
+	core: Remove another debug output leftover.
+	+ commit f779362ffbc7b9334d98f9ee50bfe3c2dc177215
+	* src/decrypt.c (_gpgme_decrypt_status_handler): Remove log debug.
+
+	build: More release creation automation.
+	+ commit d11bec5ef5e576dab52c1dc7d87758e4f9bf3583
+	* Makefile.am: Add release and sign-release targets.
+
+2018-04-19  Werner Koch  <wk@gnupg.org>
+
+	json: Remove the -noinstall flag used during development.
+	+ commit ab43d85b9a76fb5ba321f4c7280b4d72bfd67f59
+	* src/Makefile.am (gpgme-json_LDFLAGS): Remove.
+
+2018-04-19  Andre Heinecke  <aheinecke@intevation.de>
+
+	cpp: Add origin and last_update to UserID.
+	+ commit d65d6329319bff8cc555999fc92a20e151762a10
+	* NEWS: Mention it.
+	* lang/cpp/src/key.cpp, lang/cpp/src/key.h (UserID::lastUpdate),
+	(UserID::origin): New.
+	(gpgme_origin_to_pp_origin): New helper.
+
+	cpp: Add origin and last_update.
+	+ commit 0adaf7bafd352f1c3a1e797493780150e3bb0adc
+	* NEWS: mention interface change.
+	* lang/cpp/src/key.cpp (Key::origin, Key::lastUpdate): New.
+	* lang/cpp/src/key.h (Key::Origin): New enum.
+
+2018-04-19  Werner Koch  <wk@gnupg.org>
+
+	core: Remove leftover debug output.
+	+ commit b52a91f5a6818db6b3dd7ce86c01b5d5f6700d0d
+	* src/verify.c (_gpgme_verify_status_handler): Remove debug output.
+
+	tests: Fix t-verify test for GnuPG < 2.2.7.
+	+ commit 3d8e5c07511938a0b30b4626530822338abd9ec0
+	* tests/gpg/t-verify.c (check_result): Tweak for gnupg < 2.2.7.
+
+2018-04-18  Werner Koch  <wk@gnupg.org>
+
+	Release 1.11.0.
+	+ commit 3f55c52b9adc3680c7a9fb0e598598e6ed3a2a5d
+	* configure.ac: Bump LT version to C31/A20/R0.  For cpp to C12/A6/R0.
+	For qt to: C10/A3/R1.
+
+	json: Add stpcpy replacement.
+	+ commit 8e34a14fe694a8c765973aaa3a8b2a2d2c3ba8b9
+	* src/gpgme-json.c [!HAVE_STPCPY](_my_stpcpy): New.
+
+	core: New convenience constant GPGME_KEYLIST_MODE_LOCATE.
+	+ commit 55e9a94680370e584fbe5d21161a2cee3fe95744
+	* src/gpgme.h.in (GPGME_KEYLIST_MODE_LOCATE): New.
+
+	json: Add command "decrypt" to gpgme-json.
+	+ commit e5273fc4431dfb597a2d9cf4af5172572476a2de
+	* src/gpgme-json.c (make_data_object): Enable auto-detection of
+	base-64.
+	(op_encrypt): Support a 'mime' flag.
+	(op_decrypt): New.
+	(process_request): Add command "encrypt".
+
+	core: Add 'is_mime' flags to the verify and decrypt results.
+	+ commit 65479fe7b871ad6237d5a8959b73afcc7db784da
+	* src/op-support.c (_gpgme_parse_plaintext): Add arg r_mime.
+	* src/decrypt.c (_gpgme_decrypt_status_handler): Ser mime flag.
+	* src/verify.c (_gpgme_verify_status_handler): Ditto.
+	* src/gpgme.h.in (gpgme_op_verify_result_t): Append fields 'is_mime'
+	and '_unused'.
+	(gpgme_op_decrypt_result_t): New field 'is_mime'.  Shrink '_unused'.
+
+	* tests/run-decrypt.c (print_result): Print MIME flag.
+	* tests/run-verify.c (print_result): Ditto.
+
+	core: Fix possible compliance mode detection error.
+	+ commit 23177e4410d05d590c0f2e1675dc645bbb4ad62c
+	* src/verify.c (_gpgme_verify_status_handler): Insert missing break.
+
+	json: Improve help meta command in gpgme-json.
+	+ commit 49a617f8bbff116884ca5c7238c2e0ea4e26ce59
+	* src/gpgme-json.c (process_meta_commands): Add ",help CMD".
+
+	json: Add command "getmore" to gpgme-json.
+	+ commit ed1052842df633bc149b14c4cb17859e3c66afe4
+	* src/gpgme-json.c (MIN_REPLY_CHUNK_SIZE): New const.
+	(DEF_REPLY_CHUNK_SIZE): New const.
+	(MAX_REPLY_CHUNK_SIZE): New const.
+	(pending_data): New var.
+	(add_base64_to_object): Chnage to take a plain data pointer.
+	(get_chunksize): New.
+	(make_data_object): New.
+	(op_encrypt): Get chunksize and use make_data_object.
+	(op_getmore): New.
+	(process_request): Release pending data for all commands but "getmore"
+	and "help".
+
+	json: Add meta command ,read to gpgme-json.
+	+ commit e69b175e8ed5430b56e2e8f3d68c16a45f0fed17
+	* src/gpgme-json.c: Include stat.h.
+	(get_file): New.
+	(process_meta_commands): Implement ",read".
+
+2018-04-17  Werner Koch  <wk@gnupg.org>
+
+	core: Extend decryption result with symkey_algo.
+	+ commit 01435da498af9f7538d7ee810392d7eaa407957e
+	* src/gpgme.h.in (gpgme_op_decrypt_result_t): Add field 'symkey_algo'.
+	* src/decrypt.c (release_op_data): Free SYMKEY_ALGO.
+	(gpgme_op_decrypt_result): Make sure SYMKEY_ALGO is not NULL.
+	(parse_decryption_info): New.
+	(_gpgme_decrypt_status_handler): Parse DECRYPTION_INFO status.
+	* src/conversion.c (_gpgme_cipher_algo_name): New.
+	(_gpgme_cipher_mode_name): New.
+
+	* tests/run-decrypt.c (print_result): Print SYMKEY_ALGO
+
+	* src/util.h (_gpgme_map_gnupg_error): Remove obsolete prototype.
+
+	core: New keyword --file for OpenPGP recpstring.
+	+ commit 3589da0500f1c80717e658d103a0cb2751d27b49
+	* src/engine-gpg.c (append_args_from_recipients_string): Add new
+	flags.
+
+	core: For OpenPGP let offline mode disable dirmngr.
+	+ commit c143ab692c7fc7cf2ec0aebe40b9479ee15eaba9
+	* src/engine-gpg.c (struct engine_gpg): New flag.offline.
+	(gpg_set_engine_flags): Set it.  Also fix setting of no_symkey_cache.
+	(build_argv): Pass --disable-dirmngr in offline mode.
+
+2018-04-17  Tobias Mueller  <muelli@cryptobitch.de>
+
+	python: Fix crash by leaving struct members intact.
+	+ commit bbfa7c42337bb619e6af20bf051fe0755ed5a9fd
+	* lang/python/setup.py.in: Copy gpgme.h instead of parsing it.
+
+2018-04-17  Werner Koch  <wk@gnupg.org>
+
+	core: Allow for --hidden keyword in OpenPGP recpstrings.
+	+ commit 4bba3b8e2c350b8ff0d562ec63cc03a096448d84
+	* src/engine-gpg.c (append_args_from_recipients_string): Add special
+	keywords.
+
+	core: New encryption flag GPGME_ENCRYPT_WANT_ADDRESS.
+	+ commit 86efba2be270d2cdd0bc66c9d3fe190495b7af2f
+	* src/gpgme.h.in (GPGME_ENCRYPT_WANT_ADDRESS): New flag.
+	* src/engine-gpg.c (add_arg_recipient): New.
+	(add_arg_recipient_string): New.
+	(append_args_from_recipients): Call new helper function.
+	(append_args_from_recipients_string): Ditto.
+	* src/gpgme-json.c (op_encrypt): Add flag "want-address".
+
+	core: Add extended versions of the encrypt functions.
+	+ commit a1f76b3b54b75a150fe272b804d85ffd40a507a6
+	* src/gpgme.h.in (gpgme_op_encrypt_ext_start) New.
+	(gpgme_op_encrypt_ext): New.
+	(gpgme_op_encrypt_sign_ext_start): New.
+	(gpgme_op_encrypt_sign_ext): New.
+	* src/libgpgme.vers, tests/run-encrypt.c: Add them.
+
+	* src/encrypt.c (encrypt_start): Add arg recpstring.
+	(gpgme_op_encrypt): Factor code out to ...
+	(gpgme_op_encrypt_ext): new function with new arg recpstring.
+	(gpgme_op_encrypt_start): Factor code out to ...
+	(gpgme_op_encrypt_ext_start): new function with new arg recpstring.
+	* src/encrypt-sign.c (encrypt_sign_start): Add arg recpstring.
+	(gpgme_op_encrypt_sign): Factor code out to ...
+	(gpgme_op_encrypt_sign_ext): new function with new arg recpstring.
+	(gpgme_op_encrypt_sign_start): Factor code out to ...
+	(gpgme_op_encrypt_sign_ext_start): new function with new arg
+	recpstring.
+
+	* src/engine-backend.h (struct engine_ops): Change fields encrypt and
+	encrypt_sign.
+	* src/engine.c (_gpgme_engine_op_encrypt): Add arg recpstring and pass
+	to engine.
+	(_gpgme_engine_op_encrypt_sign): Ditto.
+	* src/engine-gpg.c (append_args_from_recipients_string): New.
+	(gpg_encrypt): Add arg recpstring and call new function as needed.
+	(gpg_encrypt_sign): Ditto.
+	* src/engine-gpgsm.c (set_recipients_from_string): New.
+	(gpgsm_encrypt): Add arg recpstring and call new function as needed.
+	* src/engine-uiserver.c (set_recipients_from_string): New.
+	(uiserver_encrypt): Add arg recpstring and call new function as
+	needed.
+
+	* tests/run-encrypt.c (xstrdup): New.
+	(main): Add option --keystring.
+
+	* src/gpgme-json.c (get_keys): Simplify.
+	(op_encrypt): Modify to make use of the extended encrypt function.
+
+2018-04-12  Werner Koch  <wk@gnupg.org>
+
+	core: Tweak STATUS_FAILURE handling.
+	+ commit b99502274ae5efdf6df0d967900ec3d1e64373d7
+	* src/op-support.c (_gpgme_parse_failure): Ignore failures with
+	location "gpg-exit".
+	* tests/gpg/t-verify.c (main): Adjust for the now working checking of
+	the second key.
+
+	core: For a failed verification return the sig's fingerprint.
+	+ commit 478d1650bbef84958ccce439fac982ef57b16cd0
+	* src/verify.c (parse_new_sig): Parse the new ERRSIG fpr.
+
+	tests: Avoid segv in run-verify due to Policy URLs.
+	+ commit ee8fad3ea0cbc82f31c86b3483abd8549df62b69
+	* tests/run-verify.c (print_result): Take care of Policy URLs.
+
+	tests: Add another check to gpg/t-verify.
+	+ commit bdf7cd2e28432cf0fa7e0758acdfee03d7bfd45f
+	* tests/gpg/t-verify.c (PGM): New.  Use it instead of __FILE__.
+	(test_sig1_plus_unknown_key): New test signature.
+	(check_result): Allow checking of several signatures.
+	(main): Check a signature with a know and an unknown key.
+
+	core: Add new context flag "no-symkey-cache".
+	+ commit f7700a016926f0d8e9cb3c0337837deb7fe01079
+	* src/gpgme.c (gpgme_set_ctx_flag): Set flag.
+	(gpgme_get_ctx_flag): Get flag.
+	* src/context.h (struct gpgme_context): Add field no_symkey_cache.
+	* src/engine-gpg.c (struct engine_gpg): Ditto.
+	(gpg_set_engine_flags): Set flag.
+	(build_argv): Pass option --no-symkey-cache to gpg.
+
+	* tests/run-decrypt.c (print_result): Fix segv for symmetric messages.
+	(main): New option --no-symkey-cache.
+	* tests/run-encrypt.c (main): New option --no-symkey-cache.
+
+2018-04-04  Andre Heinecke  <aheinecke@intevation.de>
+
+	qt: Add test for resetting config value.
+	+ commit 5eb261d6028ab2c0ddd9af8e3e1f82e479c6109c
+	* lang/qt/tests/t-config.cpp (CryptoConfigTest::testDefault): New.
+
+2018-03-29  Werner Koch  <wk@gnupg.org>
+
+	json: Build only a dummy if libgpg-error is < 1.28.
+	+ commit 60d7a1e8f625ea0db455bff989534dd52f0650c7
+
+
+2018-03-29  Ben McGinnes  <ben@adversary.org>
+
+	example: revoke UID.
+	+ commit 3b91f6af378ccc37dcf8924cbc157894c35b5192
+	* Script to revoke a UID on an existing key.
+
+	docs: python bindings howto.
+	+ commit d65864989c0560b5f51cb8d05d9ea9f1957b453e
+	* Added section on revoking UIDs.
+
+	example: key signing.
+	+ commit 56bbfd39acea90eb87a28b11a515b0314cdda54c
+	* Added script for signing or certifying keys.
+
+	doc: python bindings howto.
+	+ commit 5a553f5a317e5ad5ab0274d58854df1ecf390e0d
+	* Fixed a typo.
+
+2018-03-28  Ben McGinnes  <ben@adversary.org>
+
+	docs python bindings howto.
+	+ commit 2f507b045909d32bf29d23da04db02b078e5fb9d
+	* PEP8 compliance: a collection of minor edits across multiple example
+	  code snippets.
+
+	example: add user ID.
+	+ commit 5cd419341807d8ae23fec7bd9bb7025a8a2dcb3c
+	* Added script to add a UID to an existing key.
+
+2018-03-28  Werner Koch  <wk@gnupg.org>
+
+	json: Remove the "message" object thingy again.
+	+ commit 3345a17dda2222e3c1592235e8a1cd9493192777
+	* src/gpgme-json.c (process_request): Remove 'nm_mode'.
+
+	json: Make native messaging work.
+	+ commit 4b2fa657d195382d14ac99be40b66327e0fc855c
+	* src/gpgme-json.c (opt_debug): New.
+	(process_request): Add optional arg nm_mode.  In this mode take the
+	request from a "message" object.
+	(native_messaging_repl): Add debug output and call process_request
+	in NM_MODE.
+	(main): Add option --debug.  Parse envvar GPGME_JSON_DEBUG as an
+	alternative way to enable this.  Use a default log file.
+
+2018-03-27  Andre Heinecke  <aheinecke@intevation.de>
+
+	core: Initialize key return value in gpgme_get_key.
+	+ commit 7c220e387d511b0cf66f99370759c36b729cc444
+	* src/keylist.c (gpgme_get_key): Set r_key to NULL.
+
+2018-03-27  Ben McGinnes  <ben@adversary.org>
+
+	doc: python bindings howto.
+	+ commit a2eedef630891397f8eccb5bb426a0728588bf41
+	* Fixed some minor PEP8 compliance issues in the key creation examples.
+
+	example: key creation.
+	+ commit f9159b1d75d3209b1c22bbb0ed4472800b60a522
+	* Script to generate a new key with encryption subkey taking input
+	  from interactive prompts.
+	* Will also take a passphrase via pinentry and uses passphrase caching
+	  of five minutes when used in conjunction with the temp homedir
+	  script.
+
+	script: temp homedir config.
+	+ commit 1b5da37a47ceef41545e0b2474738613f36be949
+	* added passphrase caching of 5 minutes.
+
+2018-03-25  Ben McGinnes  <ben@adversary.org>
+
+	doc: python bindings howto.
+	+ commit 5b32efbaf37920b2e99d4bb87cb383b2809b1688
+	* Testing the addition of a HTML header set in org-mode in order to
+	  had RSS update links for files.
+	* This should work with any [X]HTML export from current versions of
+	  Org-Mode, but if it also works on website generated pages then it'll
+	  tick off one of the wishlist itmes.
+
+	script: temp homedir.
+	+ commit 40a9dea5d56506400b67b0c11f6e55a1629dc6fe
+	* Fixed whitespace.
+
+	doc: python bindings howto.
+	+ commit 3b724aae423f2de01812165d54df2a7b524c82f6
+	* Added a reference to new script which will setup a temporary homedir
+	  for a user.
+
+	script: temporary homedir creation.
+	+ commit dde1aae312958776fab475d6c0cdfa19cc255863
+	* Script to create a temporary gnupg homedir in the user's directory
+	  for testing or scripting purposes.
+	* Creates a hidden directory on POSIX systems with the correct
+	  permissions (700).
+	* Creates a gpg.conf in that directory containing the same
+	  configuration options as used in the "Danger Mouse" example in the
+	  HOWTO with the correct permissions (600).
+
+	doc: python bindings howto.
+	+ commit 22247f658ce2f8e527c26746358cfc2643c4832f
+	* Fixed the plaintext, result and verify_result references in the
+	  decryption section.
+
+2018-03-23  Ben McGinnes  <ben@adversary.org>
+
+	doc: python bindings howto.
+	+ commit e6180f2b36cc8a6c6154e5f3d702324af573132a
+	* Fixed a minor spelling error and a minor grammatical error.
+
+2018-03-23  Werner Koch  <wk@gnupg.org>
+
+	core: Need to increase an array in the gpg engine.
+	+ commit 4763974ef6932c503e35c3d14fe47a66a5323f48
+	* src/engine-gpg.c (build_argv): Allcate one slot more for ARGV.
+
+	json: Use a request origin of "browser".
+	+ commit e5abf4827aead50437bbdff8cfdd5e9fdc6ed72d
+	* src/gpgme-json.c (_create_new_context): Set flag.
+
+	core: New gpgme_set_ctx_flag "request-origin".
+	+ commit b9000bc293164ff62efa7e91e5cf6d5fc19d482f
+	* src/context.h (gpgme_context): Add 'request_origin'.
+	* src/gpgme.c (gpgme_release): Free that field.
+	(gpgme_set_ctx_flag, gpgme_get_ctx_flag): Add "request-origin".
+	* src/engine-backend.h (engine_ops): Add 'set_engine_ops' func ptr and
+	adjust all users.
+	* src/engine.c (_gpgme_engine_set_engine_flags): New.
+	* src/op-support.c (_gpgme_op_reset): Call that func.
+	* src/engine-gpg.c (struct engine_gpg): Add 'request_origin'.
+	(gpg_set_engine_flags): New.
+	(_gpgme_engine_ops_gpg): Hook it.
+	(build_argv): Use command line option --request-origin.
+	* src/engine-gpgsm.c (struct engine_gpgsm): Add 'request_origin'.
+	(gpgsm_set_engine_flags): New.
+	(_gpgme_engine_ops_gpgsm): Hook it.
+	(start): Send OPTION "request-origin".
+	* src/engine-assuan.c (struct engine_llass): Add 'request_origin'.
+	(gpgsm_set_engine_flags): New.
+	(_gpgme_engine_ops_assuan): Hook it.
+	(start): Send OPTION "pretend-request-origin".
+
+	build: Allow building with released libgpg-error.
+	+ commit eee68c1b13fbe21c123f469712817e0c81f16383
+	* src/gpgme-json.c (add_base64_to_object): Return an error if building
+	with an older libgpg-error.
+
+	json: Finish op:encrypt.
+	+ commit d83482a1d768fc5afd3aa4836f2fefe5c549d02e
+	* src/gpgme-json.c (add_base64_to_object): New.
+	(data_from_base64_string): New.
+	(op_encrypt): Employ them.
+	(process_request): Print unformated json.
+
+	json: Add a new function to cJSON.
+	+ commit 6525d78d0a1d303c449762082942e71d3002b9ca
+	* src/cJSON.c (cJSON_CreateStringConvey): New.
+
+2018-03-22  Ben McGinnes  <ben@adversary.org>
+
+	doc: python bindings howto.
+	+ commit 65ed4ac82598734551b87fc89deab3cee010bd37
+	* Fixed table.
+
+2018-03-21  Ben McGinnes  <ben@adversary.org>
+
+	doc and examples: python bindings HOWTO.
+	+ commit 5722148bacab5862b40a027861d64683a0f214ea
+	* Added GPGME Python bindings HOWTO in Australian/British English.
+	** en-US "translation" still to be done.
+	* Added several example scripts comprised of the "Basic Functions"
+	  section of the HOWTO (plus the work-around at the end).
+	** As these scripts are very basic examples they are released under
+	   both the GPLv2+ and the LGPLv2.1+ (just like GPGME itself).
+
+	examples: multi-key selection operations.
+	+ commit 05e59933056ee8ef8ba7579351a58ed25dd7f754
+	* Temporarily removing multi-key selection based examples.
+	* There are a few issues with getting the key selections to play
+	  nicely with gpg.Context().keylist object types.
+	* Will troubleshoot them separately and restore them when that's
+	  worked out, but I don't want these more complicated examples to
+	  delay merging the HOWTO with master.
+
+	example: group encryption.
+	+ commit 61a988036bd3f0d43f7d55bfa43f5f05bec978c4
+	* Troubleshooting.
+
+	examples: encryption.
+	+ commit 7ddff71908a85111c8e0da41312197b3b1a77da6
+	* Fixed two incorrect Context() objects.
+
+	example: key selection.
+	+ commit c6a0395f0a3a57071f0c943f7815f58a02f9d2f3
+	* Removed extraneous blank line.
+
+	example: key selection.
+	+ commit 0a0d57fd41380cd797d29e11cec8a77c7404e960
+	* Similar to group-key-selection.py, but does not use an existing
+	  group from gpg.conf; instead takes multiple key IDs, fingerprints or
+	  patterns on the command line and adds them to a keylist object.
+
+	example: sign and encrypt to group.
+	+ commit 0ccc57c9512246d82d46e7732bfb0f95c18ca9d3
+	* Begins to string together some of the simpler examples to do more
+	  useful things.
+	* Signs and encrypts a file while encrypting to every key in a group
+	  specified in the gpg.conf file.
+
+2018-03-21  Werner Koch  <wk@gnupg.org>
+
+	json: Use gpgrt_argparse instead of argsparse.c.
+	+ commit e14f1f687ff618716ed17e309a0475df95e1c0aa
+	* src/gpgme-json.c: Remove header argparse.h.  Define
+	GPGRT_ENABLE_ARGPARSE_MACROS.
+	(interactive_repl): Replace strusage by gpgrt_strusage.
+	(my_strusage): Add SPDX level.
+	(main): Switch to gpgrt_argparse stuff but keep very limited
+	functionality when building with an older libgpg-error.
+
+2018-03-21  Ben McGinnes  <ben@adversary.org>
+
+	example: group key selection.
+	+ commit 8b401bfc76eac762553f76faab53c2f4cd117a8d
+	* Example of preparing a keylist object using an existing group line
+	  from the gpg.conf file.
+
+	example groups work around.
+	+ commit 6c6af9a7b0ae4e7182d669bec282c6edaaa7eaa1
+	* Updated usage so it only references importing the final list of
+	  lists produced.  Trying to use some of the mid-points can have
+	  unpredictable results (this is part of the problem with work
+	  arounds).
+
+	example: groups.
+	+ commit a4e3f827652c59d850b4e5506a92c1ecd190c1bb
+	* Added a docstring.
+
+	example: verify signatures.
+	+ commit ad6cb4f9b8b97a2bc501c17fc542a84b725dedea
+	* Added example for verifying detached signatures against the files
+	  they're the signatures for.
+
+	example: verify signed file.
+	+ commit ae2767eb27b6a76284ee4403e575869afe2e80a8
+	* Added example to verify normal and clearsigned files.
+
+	doc: python bindings howto.
+	+ commit e57388a69f61d14e3df3c842d227fb450c96c807
+	* Fixed minor error in one of the verification examples.
+
+	example: detach sign file.
+	+ commit ac6a552c37147a000de74f49d1bff34dad52252e
+	* Added example to make detached signatures of a file with key selection.
+
+	example: encrypt-sign-file.py.
+	+ commit af6cbba18ba5e2bbecce5f8268c146282cd12367
+	* Adjusted the doc string.
+
+	examples: doc strings.
+	+ commit 6fa2a344282e369e6aca8155bc77dd2c12a29414
+	* Fixed minor errors in two doc strings.
+
+	example: clear signing.
+	+ commit 1fdd1f306d45f6aeee91c7f016f7c37286ee3b3b
+	* Added example to clear sign a file with signing key selection.
+
+	doc: python bindings howto.
+	+ commit 1d2746433c9632fc0c7bc10b59280fca15895545
+	* deconstructed and fixed all three signing methods.
+
+	example: sign file.
+	+ commit 0390ede18696520be9cc1a42f628e23159b7c2eb
+	* Similar to encrypt file except for signing a file in normal mode.
+	* Noticed additional changes to be made to the howto to match this,
+	  but they will have to wait due to a power outage (currently running
+	  on battery and a mobile connection, but that won't last).
+
+2018-03-20  Werner Koch  <wk@gnupg.org>
+
+	json: Implement op:encrypt.
+	+ commit 6073789a6d3514263404c93fa795a398bfd93d91
+
+
+	core: Do not clobber R_KEY in gpgme_get_key on error.
+	+ commit 343d3e2232a22d0999e1693f0f95e5e290005829
+	* src/keylist.c (gpgme_get_key): Assign a value to the return
+	parameter only on success.
+
+	core: Fix ABI regression in recent commit.
+	+ commit 9e1e6554834d0e803dd0889deaef4f11047c7e47
+	* src/gpgme.h.in (_gpgme_op_import_result): Move new field
+	'skipped_v3_keys' to the end.
+
+2018-03-20  Ben McGinnes  <ben@adversary.org>
+
+	doc: python bindings howto.
+	+ commit 52e262991f1fdf7da93882c3b22c05537376cf49
+	* Fixed typos in examples.
+
+	example: keycount.
+	+ commit 96d0395bccbbff91f73c06cb7bd6c131f04b8a9a
+	* Fixed missing parenthesis.
+
+	example: decrypt file.
+	+ commit 51258975d763c9471859d635e6080c2ec02e8647
+	* Decrypts a file taking file names as command line parameters.
+
+	example: groups work-around.
+	+ commit 29e918171f352c71a90a16c04d4a3dcafa5db682
+	* Added groups selection work around code.
+	* Intended for use as a module to be imported by other scripts,
+	  usually with "from groups import group_lists" or "from groups import
+	  group_lines" or similar.
+
+2018-03-19  Ben McGinnes  <ben@adversary.org>
+
+	example: encrypt file.
+	+ commit 7221bb67642eb01a07957d66d0cbcd4ef8aadbf8
+	* Nested encryption in try/except statement in case recipient key is
+	  untrusted or invalid.
+
+	example: sign and encrypt file.
+	+ commit f3fe47e8fd2e7bc748016befcae494421223368c
+	* Example to sign and encrypt a file.
+	* Similar to encrypt-file.py except all keys are considered trusted
+	  and signs with the default key.
+	* Also encrypts to the default key.
+
+	example: encrypt file.
+	+ commit f0790f224d7af9521efe96e69a8f719fb89a5af2
+	* Fixed typo in second encryption call.
+
+	example: encrypt file.
+	+ commit 7ab42e79ade89f28507ea42d51148a40b4bfc736
+	* Example to encrypt a file to a single key.
+	* Takes key ID and/or fpr as a CLI parameter.
+	* Takes path and filename as a CLI parameter.
+	* Encrypts to specified key only, no signing and writes the output in
+	  both ASCII armoured and GPG binary formats with output filenames
+	  based on input filename.
+
+	example: python bindings key count.
+	+ commit cfbdcb7fb3fa438cafba82e4fb8f327df596f98e
+	* Added script wo count the number of keys in both the public and
+	  secret key stores.
+
+	doc: python bindings examples.
+	+ commit b30ebf89725641018b3b08f77876530f9b983fa2
+	* Explicitly stated that all this code is released under the GPLv2+
+	  and the LGPLv2.1+.
+
+	doc: python bindings example README.
+	+ commit 8f7672ad1b267f122f647bb5f984734d0ff66a5c
+	* Added the same license as used with the HOWTO.
+	* Since these examples are so basic, they'll be dual licensed the same
+	  as GPGME itself (otherwise it would slip too dangerously against the
+	  need for permissive licensing of crypto libraries).
+
+	docs: python bindings examples.
+	+ commit 6950a63e63d60685ddb6f4cbff7b826b8acb5b13
+	* Added reference to location where all the examples included in the
+	  HOWTO will be available as executable scripts.
+	* Included a short README file in that location.
+
+	example: python bindings encryption.
+	+ commit 3e0f68fdff1998dae9cb6f8510a3e945a268d1f6
+	* Since we don't want to encourage accessing the low level functions
+	  (e.g. op_encrypt), but since this example can still be useful to
+	  understand, renaming it and will add new encryption examples to
+	  match the instructions in the HOWTO.
+
+	doc: python bindings howto.
+	+ commit d5f6dec048d3d4d94f1fcdb3f4249cf6e71c4b92
+	* Slight python-gnupg clarification.  See also this thread:
+	  https://lists.gnupg.org/pipermail/gnupg-devel/2018-March/033528.html
+
+	doc: python bindings howto.
+	+ commit 0fb8a5d45c1c77a5928d6e356271da055aa55994
+	* Adjusted the python-gnupg so the comments regarding insecure
+	  invocation of commands via subprocess (shell=True) were a major
+	  historical issue and not a a current issue.
+	* Not including Vinay Sajip's requested change to say it is now secure
+	  since no audit of the current code base has been performed and my
+	  last major inspection of that code was around the time I first
+	  ported PyME to Python 3 in 2015.
+
+	doc: python bindings todo list.
+	+ commit bf67cf433fe82924ed40e79785e95403c07cc068
+	* Checked off several points of howto coverage as completed.
+	* Reorganised to move S/MIME coverage to its own separate group of tasks.
+	* Noted only revocation remains for howto completion.
+
+	doc: python bindings howto.
+	+ commit 1779d7b9d6769b2e47f1e90260290e25c8c3aa02
+	* deconstructing multi-recipient encryption.
+
+	doc: python bindings howto.
+	+ commit 64c5886132aceefc9d9600a3a6dbbbf404b95b81
+	* Replaced the single encryption methods with one main way (i.e. cut
+	  the low level stuff involving SEEK_SET instructions).
+
+2018-03-18  Ben McGinnes  <ben@adversary.org>
+
+	doc: python bindings howto.
+	+ commit 4811ff7b6c8ef97c7d4858ce235e9bf8227f4917
+	* moved single encrytion examples up to the first ones, pending merge
+	  and major cut.
+	* This is basically just to make future checks of revisions a little easier.
+
+	doc: python bindings howto.
+	+ commit 82c5af225f2bdf3acc6fc652a96ee61c9b057395
+	* Stripped decryption example to the bare bones as suggested by Justus.
+
+2018-03-16  Ben McGinnes  <ben@adversary.org>
+
+	doc: python bindings howto.
+	+ commit b549f69d0520bb74957b95cec9ea918dba2374f6
+	* Made the changes suggested by Jakub Wilk on gnupg-devel.
+	* Still need to make the far more comprehensive changes suggested by Justus.
+
+2018-03-16  Werner Koch  <wk@gnupg.org>
+
+	json: Add framework for the gpgme-json tool.
+	+ commit d2b31d8c106423bd0eaa5fffaa39b0983c9ae525
+	* src/gpgme-json.c: New.
+	* src/Makefile.am (bin_PROGRAMS): Add gpgme-json.
+	(gpgme_json_SOURCES, gpgme_json_LDADD): New.
+
+	core: Adjust cJSON code for use in GPGME.
+	+ commit 81c90d0cd0f959fd5e01baed9b4af0ec35ecb85c
+	* src/cJSON.c: Remove util.h.  Use gpgrt alloc functions.
+	(cJSON_Delete): Do not clobber ERRNO.
+	(cJSON_AddItemToObject): Return OBJECT or NULL.
+	(cJSON_AddNullToObject): New.
+	(cJSON_AddTrueToObject): New.
+	(cJSON_AddFalseToObject): New.
+	(cJSON_AddBoolToObject): New.
+	(cJSON_AddNumberToObject): New.
+	(cJSON_AddStringToObject): New.
+	* src/cJSON.h (cJSON__h): Replace macro by cJSON_h for C compliance.
+	(cJSON_AddNullToObject): Remove macro.
+	(cJSON_AddTrueToObject): Remove macro.
+	(cJSON_AddFalseToObject): Remove macro.
+	(cJSON_AddBoolToObject): Remove macro.
+	(cJSON_AddNumberToObject): Remove macro.
+	(cJSON_AddStringToObject): Remove macro.
+
+2018-03-15  Ben McGinnes  <ben@adversary.org>
+
+	doc: python bindings howto.
+	+ commit 431897a4c48fe1bc9d37f655097aabaf5b685d11
+	* Added clarification on why it's not on PyPI.
+
+2018-03-15  Andre Heinecke  <aheinecke@intevation.de>
+
+	cpp: Expose skipped_v3_keys.
+	+ commit ad95288d3b3efc38998841add4fe658c84701f98
+	* lang/cpp/src/importresult.cpp,
+	 lang/cpp/src/importresult.h (ImportResult::numV3KeysSkipped): New.
+
+	core: Parse skipped_v3_keys.
+	+ commit a630a1e3e74c926163864b013cb164b4cd1866fc
+	* src/gpgme.h.in (gpgme_import_result_t): Extend with skipped_v3_keys.
+	* src/import.c (gpgme_op_import_result): Extend debug with new field.
+	(parse_import_res): Parse skipped_v3_keys.
+	* tests/gpg/t-support.h, tests/run-support.h (print_import_result):
+	Print skipped_v3_keys.
+
+2018-03-15  Ben McGinnes  <ben@adversary.org>
+
+	doc: python bindings howto.
+	+ commit 22e2445beee46ed1e527a98e635153c7cf03786f
+	* fixed custom_id for decryption so the XHTML validates.
+
+	doc: python bindings howto.
+	+ commit 94a95ac12364989db7f4be333107f3c023551857
+	* Promoted final encryption example so that it will appear as heading
+	  6.1.3 when exported to HTML or PDF.
+
+	doc: python bindings howto.
+	+ commit 3d0c7a2202c8e9bd4f284fd00069d34b8d3d3d4c
+	* Fixed a minor typographic error.
+	* Bumped version number in preparation for merge with master.
+	* While there are probably a few more things worthy of being added
+	  (mainly how to revoke things), this document is essentially ready
+	  for publication now.
+
+	doc: python bindings howto.
+	+ commit 961aea212ef48914ecbfa169addf951b0854b0b4
+	* Added key signing.
+
+	doc: python bindings howto.
+	+ commit 7ac65b10837740caf68cdade791b8c5ce4eb1b03
+	* Added a new user ID for Danger Mouse.
+	* Removed the empty entry for key preferences since that is handled
+	  through gpg.conf and/or editing the key directly.
+
+	doc: python bindings howto.
+	+ commit 9e3e4a835c64f5d06de821b1fd648af37827ff26
+	* Spell checking and fixing the few errors.
+
+	doc: python bindings howto.
+	+ commit b02d9d0a7b96b186eb3063d94bde369339181461
+	* Added an encryption subkey to Danger Mouse's primary key.
+
+	doc: python bindings howto.
+	+ commit 5432e5f9d1dfc02812d0b181f8d88cdf4a2bfbfb
+	* generated a new primary key for Danger Mouse in an alternative homedir.
+
+	doc: python bindings howto.
+	+ commit 5d1dd2abe5cf787875d12afe46c78c75385d7b31
+	* Added sections for key generation and key editing.
+
+	doc: python bindings howto.
+	+ commit 1d05e6aa4ea467c8c5926b827cfcfba357d03312
+	* Added c.get_key instructions and examples.
+
+	doc: python bindings howto.
+	+ commit b35aaef7a3b793b8f6f5b42596c0a6a51e87f78c
+	* Added text for verifying signatures.
+
+2018-03-14  Ben McGinnes  <ben@adversary.org>
+
+	doc: python bindings howto.
+	+ commit 6bc12a0eeb20409770cb8b923d08c18c2b730cb8
+	* Added 4 signature verification methods and partial text for them.
+
+	doc: python bindings howto.
+	+ commit e5c85fba25de1187949697e2dae0e89345b71e89
+	* Added description for detached signatures.
+
+	doc: python bindings howto.
+	+ commit ada059b07178147821b1598c935aa70ae45e3e6c
+	* Fixed multiple sample code examples of writing output to a file.
+	* Added the description of detached signatures.
+
+2018-03-14  Werner Koch  <wk@gnupg.org>
+
+	core: Import cJSON code from the payproc project.
+	+ commit 8eb08b318913644d918002f3195f7ec0e75ae239
+	* src/cJSON.c: New.
+	* src/cJSON.h: New.
+	* src/cJSON.readme: New.
+
+2018-03-14  Ben McGinnes  <ben@adversary.org>
+
+	doc: python bindings todo.
+	+ commit ef27f3781a37e264d0eb7d1745eb2c804ec062c4
+	* minor phrasing fix.
+
+	doc: python bindings howto.
+	+ commit 423fdcd4653cb01f07f2b0e72cfcf49554930f70
+	* Added recommended method of single encryption with description.
+
+2018-03-13  Ben McGinnes  <ben@adversary.org>
+
+	doc: python binding howto.
+	+ commit a71205dc3b58970adf591b4e4553824a33f353db
+	* Clarified which English dialects this is written in.
+	* Translating to American can happen *after* it's done.
+	** The Yank version would probably want to change some of the examples
+	   anyway.
+	* Began the description for normal/default signing.
+
+	doc: python bindings howto.
+	+ commit a10dcb4f138eb5a21881cdbc4806c25129d4ae4e
+	* Added a section on key selection.
+	* Included recommendation for using fingerprint when selecting one
+	  specific key.
+	* Also included the most ironically amusing example of multiple key
+	  selection in a GPG guide.  Hey, it's public data ... (heh).
+
+	doc: python bindings howto.
+	+ commit 952b6042f78017c476452088261af8d352cfa729
+	* Added explanation of the ascendance of Python 3 over Python 2 in the
+	  guide to the intro.
+	* Expanded key selection description so people know what not to
+	  include regarding key IDs with this key selection method.
+
+	doc: python bindings howto.
+	+ commit c92da2c7eb148ce9fb06495a8470dd9caf662f9a
+	* Added key selection for specifying signing key or keys.
+
+	doc: python bindings howto.
+	+ commit e489ddd08af29fdad8db8aa0aec0c314daa3678c
+	* During the course of working out the updated signature methods,
+	  determined that key selection (including counting) will beed to be
+	  presented before the basic functions.
+	* Moved "working with keys" up.
+
+	doc: python bindings howto.
+	+ commit f29bda8d7146b4bc0bf73d6e613131545ff86b73
+	* Signatures have changed as a result of the recent update from Justus.
+	* Sample code updated.
+	* Text to follow later.
+
+	doc: python bindings howto.
+	+ commit c27a7a3f994dad0eccee890185582f4350fbf233
+	* Added text description for the decryption example.
+
+2018-03-12  Ben McGinnes  <ben@adversary.org>
+
+	doc: python bindings howto.
+	+ commit f81adeba992a9fd3b5a199e9a2e242a0f53cf639
+	* Added a miscellaneous work-arounds section at the end.
+	* Included code in said miscellaneous section for accessing the groups
+	  specified in a gpg.conf file.
+	* It's a bit ugly since it does require subprocess (but not call,
+	  Popen or shell access and only accesses one command).
+
+	doc: python bindings howto.
+	+ commit 36dfbdffea60c529a6d1e1ff3e507be016b6a0f6
+	* Fixed a spelling error in the key counting text.
+
+	doc: python bindings howto.
+	+ commit 484e9a6229ac9c80c6be4df638bce711f08a74c6
+	* updated multi-encryption final example to be complete.
+	* second example shows most likely method of reading plaintext.
+	* updated example filenames to stick with running gag
+	  (i.e. secret_plans.txt).
+
+	doc: python bindings howto.
+	+ commit a8f48b6f577d562c25fd0191c0cc2cc8e96078c1
+	* error corrections.
+	* multiple typesetting fixes only required due to certain archaic
+	  eccentricities of LaTeX.
+	* a couple of minor python PEP8 compliance corrections.
+
+	doc: python bindings howto.
+	+ commit 83b1336ceebb86e13a55bbf220df2d750f6b3ec6
+	* Fixed an error in the encryption try/except statement.
+
+	doc: python bindings howto.
+	+ commit 0e1300ce777dd0c87f31ac8bc49846b9df242df9
+	* Added a more complicated encryption example with a few variations on
+	  the encryption method to account for untrusted recipient keys,
+	  signing or not signing, including or excluding default keys and so
+	  on.
+
+	doc: python bindings howto.
+	+ commit 7ebc5a357057d01b7ef965521ab68b7cb7e20a8f
+	* Switched from links to some external docs to using footnotes where
+	  necessary.
+	* Ideally the howto should be as stand alone as possible.
+	* Also it makes it difficult to convert to another format for
+	  proof-reading if there are links that the conversion can't find.
+
+2018-03-09  Ben McGinnes  <ben@adversary.org>
+
+	doc: python bindings HOWTO.
+	+ commit 172baaf4d3e4ed03a4d3437be9efa3dfe6a847bc
+	* Added instructions and code to count the number of public and secret
+	  keys available since it was quick and easy.
+
+	doc: python TODO list.
+	+ commit f2c1e8d8d54068a7f072efa178fc30460821eff3
+	* Slightly tweaked one heading to make it clear it wasn't a duplicate.
+
+	doc: python bindings howto.
+	+ commit 01686463948ac6096dd8579a110c478d3a1f9a83
+	* Wrote the text description explaining each step in the most basic
+	  encryption operation.
+	* Will need to include additional examples for encrypting to multiple
+	  recipients using Context().encrypt instead of Context().op_encrypt.
+
+	doc: python bindings TODO list.
+	+ commit 93252df9dc4c9932467814745655350a8cab900e
+	* Updated to reflect the most recent work on the HOWTO for the Python
+	  bindings.
+
+	doc: python bindings howto.
+	+ commit ab81c2d868bba79fdb8f8d7f576b6bd88c6bdf3c
+	* Added example for verifying both detached and "in-line" signatures.
+
+2018-03-08  Ben McGinnes  <ben@adversary.org>
+
+	docs: TODO.
+	+ commit e846c3daeeb4e7092169cdb7bf4f55e0b105aac3
+	* Removed WS.
+
+	doc: TODO list update.
+	+ commit 6849924ffbd48ba3f9d32b4a59a02e1d2083fc19
+	* Closed off a few ancient items and added recommendation to others to
+	  use the dev.gnupg.org site for real bugs/features updates.
+	* See also this statement on the gnupg-devel list regarding this file:
+	  https://lists.gnupg.org/pipermail/gnupg-devel/2018-March/033499.html
+
+	docs: python bindings howto update.
+	+ commit fa4927146b68dd045903285f1c45fb64deb2e361
+	* Added all four signing code examples that are most likely to be
+	  used: armoured, clearsigned, detached armoured and detached binary.
+	* May remove some examples and just discuss the differences, but it
+	  depends on the way the text is filled out.
+
+	doc: python bindings howto update.
+	+ commit c767a4a3590bd8a224d0268746df443942cb28c2
+	* Added example of decryption.
+	* included some quick notes for myself regarding aspects to explain
+	  when I flesh out the explanatory text.
+
+	doc: Basic operation of the python bindings.
+	+ commit 75463d589522cba427f9e5a3a408192ffad8bb21
+	* Added sample code for encrypting some text to a single key.
+	* Basically I'm just lifting existing production code and changing the
+	  key IDs from mine to "0x12345678DEADBEEF" for these first few
+	  examples.
+	* I'll fill in the text description after.
+	* Note: due to my regional location, I might split some tasks into
+	  more commits in order to be sure no work gets lost in case of
+	  emergency (or to put it another way: I know Telstra too well to
+	  trust them).
+
+	doc-howto: fundamental aspects of GPGME vs Python.
+	+ commit a98f2c556fe6e33a9cd38279e64e4b09f05cc675
+	* Added a section for those pythonistas who are too used to web
+	  programming.  Stressed that it's not simply not RESTful, it's not
+	  even REST-like.
+	* Letting me move on to drawing a very loose parallel between a
+	  session and a context.  The differences should become obvious in the
+	  subsequent sections.
+
+	doc: Added multiple TODOs for inclusion in the HOWTO.
+	+ commit e8adab68f8c0cd865ff220f06dfaff7fe183e8a1
+	* Some instructions to include are fairly obvious; as with encryption,
+	  decryption and signature verification.
+	* Some are a little less obvious.
+	* This includes the requests received to specifically include subkey
+	  management (adding and revoking subkeys on a primary key that's
+	  being retained.
+	* Added the UID equivalents to the list, as well as key selection
+	  matters (and may or may not include something for handling group
+	  lines since that involves wrapping a CLI binary).
+	* Key control documentation and examples requested by Mike Ingle of
+	  confidantmail.org.
+
+2018-03-07  Ben McGinnes  <ben@adversary.org>
+
+	GPL compatible license for documentation.
+	+ commit 47d401d159852ea08e90af21d91bb4b93be9000d
+	* Added the same, slightly modified GPL based license that is used in
+	  other parts of GnuPG.
+
+	HOWTO update.
+	+ commit 8a76deb11efd7dadfde6e8e7e69fbcd92577982f
+	* removed one bit of whitespace.
+	* Marked up references to gpgme.h.
+	* Fixed one spelling error.
+	* Removed py2.6 from python search order since even if it is
+	  supported, it shouldn't be encouraged.
+
+	GPGME Python bindings HOWTO.
+	+ commit 5215d58ae2521d81c3db0b45dfbdce01a679acab
+	* Started work on the GPGME Python bindings HOWTO.
+	* 1,050 words to begin with at approx. 7.5KB.
+	* Got as far as installation.
+	* Includes instruction not to use PyPI for this.
+
+	TODO - HOWTO.
+	+ commit 8f2c0f4534ea2a07f071f360a63e877f60dc52f2
+	* Added suv-entry for the new HOWTO being started and, since it has
+	  been started, checked it off.
+
+	TODO.
+	+ commit d4778bb23d0817ee6fbcbe4f0ff0ff0429bf3669
+	* Slightly expanded the list.
+
+	copyright fix.
+	+ commit 3a746d5d46ffd7d332dc24fd6a4d24efc5fc1230
+	* Made the copyright line a new top level org heading in order to
+	  prevent it getting folded into other tasks which will eventually get
+	  closed (so it doesn't go missing if those items are subsequently
+	  archived).
+
+	Nuxed doubles.
+	+ commit 13d2164cd9f313b409b2210d9e63465681cccc99
+	* Just because there's a lot of documentation which needs to be added,
+	  doesn't mean it needs to be listed twice.  Merged the two lists.
+
+	Removed double.
+	+ commit 1516c56ee4da28eb720bbacb026892393d10b24a
+	* default.profraw didn't need to be listed twice.
+
+2018-03-04  Ben McGinnes  <ben@adversary.org>
+
+	IDENTIFY.
+	+ commit f61d4f585f27c13fabf7a23ad295bdc8bea7c838
+	* Fixed sp error in docstring.
+
+2018-03-03  Ben McGinnes  <ben@adversary.org>
+
+	Missed a couple.
+	+ commit 75f5e6e6672a1bbd16b7680313c0f96796c219bd
+	* WS indicated 2 custom-ids were missed, now they're set.
+
+	TODO DONE.
+	+ commit b438e5e44c2eaf22549db94141a3ec8731556674
+	* Marked off a TODO for this clean-up.
+
+	TODO.
+	+ commit 1d910672539686e2e17fd8fa1a894cee92863417
+	* WS removal
+
+	TODO updates.
+	+ commit 12a87af1df906744a14079ff7ff88e7d60679695
+	* Updated TODO with tags to make everything appear properly when
+	  exported to HTML or PDF.
+	* Added a couple more items, mainly to do with docs or future bindings.
+	* Marked some, but not all as actual TODO items.
+	* Some items should probably be removed, but haven't been yet.
+	* Some have probably been completed already.
+
+2018-02-27  Ben McGinnes  <ben@adversary.org>
+
+	New stuff.
+	+ commit 85bdca3b2b095afb672f19abbffccd2bcb8bbd0a
+	* Added the idea for alternative Emacs bindings (to extend the
+	  existing ones, not replace them outright).
+	* Added a reference to the API Squared part of the project.
+
+	TODO the TODO.
+	+ commit 8047e1374fe6e69e8c4502e58e6522ea86e4bef4
+	* Added an actual TODO to fix the TODOs.
+	* Pretty sure I know who will be completing this one ...  ;)
+
+	TODO ... the TODO.
+	+ commit 73c51bc9858de2aab25844e7e283a6334038ccc8
+	* If we're going to use Org, let's actually use Org.
+	* Added the properties tags for each point.
+	* Some of thems still need custom ID tags assigned properly.
+	* Probably ought to make them actual TODOs at some point, but that can
+	  wait until they can be marked as DONE anyway.
+	* Will add a TODO for some of this stuff ... oh, the irony.
+
+2018-02-27  NIIBE Yutaka  <gniibe@fsij.org>
+
+	core: Support non-thread-safe getenv.
+	+ commit 59fe3f26c1ca0fba16f76738cd05aaf80fb735ef
+	* src/get-env.c (_gpgme_getenv): Use gpgrt_lock_lock
+	and gpgrt_lock_unlock to protect call of getnev.
+
+2018-02-26  Ben McGinnes  <ben@adversary.org>
+
+	WS removal.
+	+ commit c58f61e92226c4a03f216f5d07bdc5479ce8a2d9
+	* Whitespace removal.
+
+	LaTeX headers.
+	+ commit 6f2e2e0f150d5c6d53de5bc48af137f7864d5fd9
+	* Set LaTeX headers to enable ligatures and a 12pt font by default.
+	* Paper size left for regional defaults.
+	* Using XeLaTeX for easier font control.
+	* Using default LaTeX font of Latin Main, but that's easy enough to change.
+
+2018-02-19  Ben McGinnes  <ben@adversary.org>
+
+	Renaming ad infinitum ...
+	+ commit 272a8e778a959cb24298f488e77fce9bffd23b7a
+	* Dropped the .txt from the end of the file ...
+
+	Text conversion.
+	+ commit c82b17c6ce490738efb07186532e752e6f70ea07
+	* Exported from Org Mode to UTF-8 text.
+	* Removed my name from just under the title.
+
+	Title fix.
+	+ commit ea481d4bb9e6197fbc195187d1362b844e2cba2e
+	* Fixed title.
+
+	Conflict with Phabricator files.
+	+ commit 1ae3ead2cd854258954e784bf51f03822321aefe
+	* The developers of Phabricator, the web front-end on dev.gnupg.org
+	  have not implemented renderers for Markdown, Org-Mode or any other
+	  common markdown like language.
+	* They also refuse to do so.
+	* Instead they re-invented the wheel and implemented their own version
+	  of Markdown-like thing which is incompatible with everything else.
+	  It is called Remarkup.
+	* The developers of Phabricator and Remarkup have refused to provide
+	  conversion tools to move files to/from any format to/from Remarkup.
+	* They expect everyone to learn their new favourite pet project.
+	* Remarkup may or may not display Org Mode files, but if so then it is
+	  likely to only want to do so as plain text.
+	* There is an unaffiliated and unofficial project to convert Github
+	  Markdown to Remarkup via Pandoc.  This might be adapted for our use,
+	  but requires testing.
+	* Until then exporting from Org Mode to UTF-8 text is likely the least
+	  worst plan.
+	* Which means renaming this file to README.org first.
+
+	Schizophrenic file types.
+	+ commit fe4f3edd70949329cb992dd963de2de3c86dcd81
+	* Removed Markdown style heading underlining.
+	* Removed in-line file type declaration (which is not correctly parsed
+	  by the web interface on dev.gnupg.org).
+
+2018-02-16  Andre Heinecke  <aheinecke@intevation.de>
+
+	cpp: Add shorthand for key locate.
+	+ commit 7f9d5c6cd204bfd84ea477b284df795b1dadb1af
+	* lang/cpp/src/key.cpp (Key::locate): New static helper.
+	* lang/cpp/src/key.h: Update accordingly.
+
+2018-02-16  Ben McGinnes  <ben@adversary.org>
+
+	History path.
+	+ commit fb16eaa685fe488f12f4df9b59d1f3689c813034
+	* Fixed a typo in a filepath reference.
+	* Moved conjecture regarding the first version of Python used to a
+	  footnote.
+
+2018-02-15  Ben McGinnes  <ben@adversary.org>
+
+	LaTeX margins.
+	+ commit 6f15d821404742ac2683f54ca4102ee4aaedacf2
+	* Added LaTeX header for 1 inch margins in the quite likely event that
+	  all PDF output ultimately uses LaTeX.
+
+	TODO Documentation.
+	+ commit 235d899a5fc24cdf9c856adbc021a69c43985c99
+	* Checked off the decision to stick with Org Mode.
+
+	TODO.
+	+ commit 40da5022922172ed898172956a8ccf5622e5638d
+	* Beginning to turn the first part of this into something kind of like
+	  an actual TODO list as Org Mode uses it (maybe).
+
+2018-02-15  NIIBE Yutaka  <gniibe@fsij.org>
+
+	tests: Fix previous commit.
+	+ commit 3224d7f0ea83a3c2baaa9f97846c4a5b392d2c59
+
+
+	tests: More Makefile portability.
+	+ commit ba6e610baa138ba9b43be303df2c5981dd04de5a
+	* tests/gpg/Makefile.am: Invoke GPG with TESTS_ENVIRONMENT.
+
+	tests: Makefile portability.
+	+ commit b5ec21b9baf017b4cee88c9ef3cc1a638547cd20
+	* tests/gpg/Makefile.am: Don't use "export" directive.
+	* tests/gpgsm/Makefile.am: Ditto.
+	* lang/qt/tests/Makefile.am: Ditto.
+	* lang/python/tests/Makefile.am: Ditto.
+
+	build: More Makefile fix.
+	+ commit c9a351f5af289c8f6919854c40f235c781b76ec7
+	* lang/python/tests/Makefile.am: Avoid target with '/'.
+
+2018-02-14  Ben McGinnes  <ben@adversary.org>
+
+	Short History.
+	+ commit 3c3b149996036e7ff4cc4c77ef2d97062d880409
+	* Fixed or updated the most fundamental errors.
+	* Also included some details on which modules are available on PyPI,
+	  as well as what happened to the PyME commit log.
+
+	Subsectioned history.
+	+ commit 7c662d22a8f7d2e6ad6532014f2ecc1769de16fb
+	* Split the main parts down into subsections.
+	* Still need to cull the incorrect stuff towards the end and add more
+	  recent changes.
+
+	History.
+	+ commit a1bc710c5fb7a7d2253434c1443e33e019020a55
+	* Reshaping the history file to fit Org Mode's structuring for docs.
+	* Also said history needs to be a bit more clear (it was kind of
+	  unfinished).
+
+	TODO.
+	+ commit fccd2ea3871f5d63fb038db0733a34f9c5d550c3
+	* Updated TODO.
+	* The entirety of the old TODO has been replaced with either more
+	  relevant tasks or goals for the examples and a more measured
+	  approach to the docs and why, in this project, Org Mode trumps reST,
+	  even though it's Python through and through.
+
+	TODO.
+	+ commit 487ed9337e8e07d1c63e53b785cc39e3bd35ff6e
+	* Removed reST version of file.
+
+	TODO.
+	+ commit c4fa4216199b16c1f169725c0a1e0a40764b1ebb
+	* Converted document from reST to org-mode.
+
+	Short History.
+	+ commit 1d48b04cfb3d1de654f3995578e9434a6b7b2fed
+	* Removed reST version.
+
+	Short History.
+	+ commit d86fd7c54c462ef23c70370624e07fcc1bc15121
+	* Converted document from reST to org-mode.
+
+	House keeping.
+	+ commit 1b5719cd57d80dcd9577141491a0860912e74cd4
+	* Added a bunch of things to .gitignore that might otherwise creep in
+	  during Python development.
+	* This really should be merged ASAP.  You'll thank me later ...
+
+2018-02-14  NIIBE Yutaka  <gniibe@fsij.org>
+
+	build: Fix Makefiles for portability.
+	+ commit f1d8a7975b0a166f55aef06eb25d50230781b96f
+	* tests/gpg/Makefile.am: Don't allow target with '/'.
+	* tests/gpgsm/Makefile.am: Ditto.
+
+2018-02-13  Andre Heinecke  <aheinecke@intevation.de>
+
+	configure: Fix mingw check for getenv.
+	+ commit 5ec890b9c76db0f23cc396108ff6f1fe658855a8
+	* configure.ac: have_thread_safe_getenv=yes with have_w32_system.
+
+2018-02-13  NIIBE Yutaka  <gniibe@fsij.org>
+
+	configure: MinGW has thread-safe getenv.
+	+ commit 77ca9cc2db2c6da303b9224a931679a325ebda1e
+	* configure.ac: have_thread_safe_getenv=yes with have_w64_system.
+
+2018-02-09  Andre Heinecke  <aheinecke@intevation.de>
+
+	cpp: Add SpawnShowWindow flag.
+	+ commit 7e27a0ff64626026521dc5877b278794cea72e61
+	* lang/cpp/src/context.h (SpawnShowWindow): New.
+
+	core, w32: Enable spawning GUI applications.
+	+ commit 201db83a7f1b7759173b6e9f0a844caef4da6cce
+	* src/engine-spawn.c (engspawn_start): Translate spawn flag
+	to IOSPAWN flag.
+	* src/gpgme-w32spawn.c (my_spawn): Handle the new flag.
+	* src/gpgme.h.in (GPGME_SPAWN_SHOW_WINDOW): New.
+	* src/priv-io.h (IOSPAWN_FLAG_SHOW_WINDOW): New.
+
+	core, w32: Fix flags passing to gpgme-w32-spawn.
+	+ commit f10605ffb5cc9d457c3e432918fdfbfaf3d04185
+	* src/w32-io.c (_gpgme_io_spawn): Don't hardcode flags value.
+
+	cpp: Add conveniance Data::toString.
+	+ commit 5a5b0d4996c17bfbc69b90f89fec23732f92813a
+	* lang/cpp/src/data.h, lang/cpp/src/data.cpp: Add Data::toString.
+
+2018-01-30  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Fix for BSD Make.
+	+ commit 59fcabbdf537b2745ef0c3cae908b21970a5b39b
+	* tests/gpg/Makefile.am, tests/gpgsm/Makefile.am: Remove ./.
+
+2018-01-29  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Fix compile error message.
+	+ commit bbb5e70e7e8598978b6c61b13ba77705ff86e469
+	* src/get-env.c (_gpgme_getenv): Fix error message.
+
+	tests: Fix for NetBSD.
+	+ commit 58130b97f6582455fd355ac58ae3182a28812cfc
+	* tests/gpg/pinentry: Use /bin/sh instead of Bash.
+
+	core: Implement _gpgme_getenv for NetBSD.
+	+ commit 37d62e9d0f685c257fdb5f303e60ff01f8a36a2f
+	* src/get-env.c [HAVE_GETENV_R] (_gpgme_getenv): New.
+
 2017-12-12  Werner Koch  <wk@gnupg.org>
 
 	Release 1.10.0.

@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x249B39D24F25E3B6
 #
 Name     : gpgme
-Version  : 1.10.0
-Release  : 24
-URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.10.0.tar.bz2
-Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.10.0.tar.bz2
-Source99 : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.10.0.tar.bz2.sig
+Version  : 1.11.1
+Release  : 25
+URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.11.1.tar.bz2
+Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.11.1.tar.bz2
+Source99 : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.11.1.tar.bz2.sig
 Summary  : GPGME - GnuPG Made Easy
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
@@ -117,14 +117,14 @@ python3 components for the gpgme package.
 
 
 %prep
-%setup -q -n gpgme-1.10.0
+%setup -q -n gpgme-1.11.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1532720465
+export SOURCE_DATE_EPOCH=1533053784
 %configure --disable-static --disable-fd-passing --disable-gpgsm-test --enable-languages=cl,cpp,python3,qt
 make  %{?_smp_mflags}
 
@@ -136,17 +136,17 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1532720465
+export SOURCE_DATE_EPOCH=1533053784
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/gpgme
 cp COPYING %{buildroot}/usr/share/doc/gpgme/COPYING
 cp COPYING.LESSER %{buildroot}/usr/share/doc/gpgme/COPYING.LESSER
 %make_install
-## make_install_append content
+## install_append content
 cd lang/python
 DESTDIR=%{buildroot} make install
 rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
-## make_install_append end
+## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -154,6 +154,7 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/gpgme-config
+/usr/bin/gpgme-json
 /usr/bin/gpgme-tool
 
 %files data
@@ -294,16 +295,15 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 %defattr(-,root,root,-)
 /usr/lib64/libqgpgme.so
 /usr/lib64/libqgpgme.so.7
-/usr/lib64/libqgpgme.so.7.3.0
 
 %files lib
 %defattr(-,root,root,-)
 %exclude /usr/lib64/libqgpgme.so.7
-%exclude /usr/lib64/libqgpgme.so.7.3.0
 /usr/lib64/libgpgme.so.11
-/usr/lib64/libgpgme.so.11.19.0
+/usr/lib64/libgpgme.so.11.20.1
 /usr/lib64/libgpgmepp.so.6
-/usr/lib64/libgpgmepp.so.6.5.0
+/usr/lib64/libgpgmepp.so.6.7.0
+/usr/lib64/libqgpgme.so.7.3.2
 
 %files license
 %defattr(-,root,root,-)

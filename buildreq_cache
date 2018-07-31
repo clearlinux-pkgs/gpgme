@@ -1,6 +1,6 @@
-1.10.0
+1.11.1
 libgpg-error-dev
 libassuan-dev
-graphviz
 qtbase-extras
+graphviz
 doxygen
