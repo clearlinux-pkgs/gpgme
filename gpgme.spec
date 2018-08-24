@@ -6,7 +6,7 @@
 #
 Name     : gpgme
 Version  : 1.11.1
-Release  : 26
+Release  : 27
 URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.11.1.tar.bz2
 Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.11.1.tar.bz2
 Source99 : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.11.1.tar.bz2.sig
