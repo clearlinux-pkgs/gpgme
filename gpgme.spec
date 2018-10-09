@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x249B39D24F25E3B6
 #
 Name     : gpgme
-Version  : 1.11.1
-Release  : 27
-URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.11.1.tar.bz2
-Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.11.1.tar.bz2
-Source99 : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.11.1.tar.bz2.sig
+Version  : 1.12.0
+Release  : 28
+URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.12.0.tar.bz2
+Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.12.0.tar.bz2
+Source99 : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.12.0.tar.bz2.sig
 Summary  : GPGME - GnuPG Made Easy
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
@@ -19,6 +19,7 @@ Requires: gpgme-lib
 Requires: gpgme-data
 Requires: gpgme-license
 Requires: gpgme-python
+BuildRequires : buildreq-distutils3
 BuildRequires : buildreq-kde
 BuildRequires : doxygen
 BuildRequires : gnupg
@@ -26,7 +27,7 @@ BuildRequires : graphviz
 BuildRequires : libassuan-dev
 BuildRequires : libgpg-error-dev
 BuildRequires : python3-dev
-BuildRequires : qtbase-extras
+BuildRequires : qtbase-dev
 BuildRequires : swig
 
 %description
@@ -37,8 +38,8 @@ decryption, signing, signature verification and key management.
 %package bin
 Summary: bin components for the gpgme package.
 Group: Binaries
-Requires: gpgme-data
-Requires: gpgme-license
+Requires: gpgme-data = %{version}-%{release}
+Requires: gpgme-license = %{version}-%{release}
 
 %description bin
 bin components for the gpgme package.
@@ -55,10 +56,10 @@ data components for the gpgme package.
 %package dev
 Summary: dev components for the gpgme package.
 Group: Development
-Requires: gpgme-lib
-Requires: gpgme-bin
-Requires: gpgme-data
-Provides: gpgme-devel
+Requires: gpgme-lib = %{version}-%{release}
+Requires: gpgme-bin = %{version}-%{release}
+Requires: gpgme-data = %{version}-%{release}
+Provides: gpgme-devel = %{version}-%{release}
 
 %description dev
 dev components for the gpgme package.
@@ -83,8 +84,8 @@ extras components for the gpgme package.
 %package lib
 Summary: lib components for the gpgme package.
 Group: Libraries
-Requires: gpgme-data
-Requires: gpgme-license
+Requires: gpgme-data = %{version}-%{release}
+Requires: gpgme-license = %{version}-%{release}
 
 %description lib
 lib components for the gpgme package.
@@ -101,7 +102,7 @@ license components for the gpgme package.
 %package python
 Summary: python components for the gpgme package.
 Group: Default
-Requires: gpgme-python3
+Requires: gpgme-python3 = %{version}-%{release}
 
 %description python
 python components for the gpgme package.
@@ -117,14 +118,14 @@ python3 components for the gpgme package.
 
 
 %prep
-%setup -q -n gpgme-1.11.1
+%setup -q -n gpgme-1.12.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1533054081
+export SOURCE_DATE_EPOCH=1539053149
 %configure --disable-static --disable-fd-passing --disable-gpgsm-test --enable-languages=cl,cpp,python3,qt
 make  %{?_smp_mflags}
 
@@ -136,7 +137,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1533054081
+export SOURCE_DATE_EPOCH=1539053149
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/gpgme
 cp COPYING %{buildroot}/usr/share/doc/gpgme/COPYING
@@ -302,12 +303,12 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 %exclude /usr/lib64/libqgpgme.so.7
 %exclude /usr/lib64/libqgpgme.so.7.3.2
 /usr/lib64/libgpgme.so.11
-/usr/lib64/libgpgme.so.11.20.1
+/usr/lib64/libgpgme.so.11.21.0
 /usr/lib64/libgpgmepp.so.6
-/usr/lib64/libgpgmepp.so.6.7.0
+/usr/lib64/libgpgmepp.so.6.8.0
 
 %files license
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/doc/gpgme/COPYING
 /usr/share/doc/gpgme/COPYING.LESSER
 
