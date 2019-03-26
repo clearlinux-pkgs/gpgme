@@ -5,20 +5,21 @@
 # Source0 file verified with key 0x249B39D24F25E3B6
 #
 Name     : gpgme
-Version  : 1.12.0
-Release  : 29
-URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.12.0.tar.bz2
-Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.12.0.tar.bz2
-Source99 : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.12.0.tar.bz2.sig
+Version  : 1.13.0
+Release  : 31
+URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.13.0.tar.bz2
+Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.13.0.tar.bz2
+Source99 : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.13.0.tar.bz2.sig
 Summary  : GPGME - GnuPG Made Easy
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
-Requires: gpgme-bin
-Requires: gpgme-python3
-Requires: gpgme-lib
-Requires: gpgme-data
-Requires: gpgme-license
-Requires: gpgme-python
+Requires: gpgme-bin = %{version}-%{release}
+Requires: gpgme-data = %{version}-%{release}
+Requires: gpgme-lib = %{version}-%{release}
+Requires: gpgme-license = %{version}-%{release}
+Requires: gpgme-python = %{version}-%{release}
+Requires: gpgme-python3 = %{version}-%{release}
+Requires: requests
 BuildRequires : buildreq-distutils3
 BuildRequires : buildreq-kde
 BuildRequires : doxygen
@@ -26,8 +27,10 @@ BuildRequires : gnupg
 BuildRequires : graphviz
 BuildRequires : libassuan-dev
 BuildRequires : libgpg-error-dev
+BuildRequires : python3
 BuildRequires : python3-dev
 BuildRequires : qtbase-dev
+BuildRequires : qtbase-extras
 BuildRequires : swig
 
 %description
@@ -118,15 +121,16 @@ python3 components for the gpgme package.
 
 
 %prep
-%setup -q -n gpgme-1.12.0
+%setup -q -n gpgme-1.13.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1539053149
-%configure --disable-static --disable-fd-passing --disable-gpgsm-test --enable-languages=cl,cpp,python3,qt
+export SOURCE_DATE_EPOCH=1553644659
+export LDFLAGS="${LDFLAGS} -fno-lto"
+%configure --disable-static --disable-fd-passing --disable-gpgsm-test --enable-languages=cl,cpp,python,qt
 make  %{?_smp_mflags}
 
 %check
@@ -137,13 +141,14 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1539053149
+export SOURCE_DATE_EPOCH=1553644659
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/gpgme
-cp COPYING %{buildroot}/usr/share/doc/gpgme/COPYING
-cp COPYING.LESSER %{buildroot}/usr/share/doc/gpgme/COPYING.LESSER
+mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
+cp COPYING %{buildroot}/usr/share/package-licenses/gpgme/COPYING
+cp COPYING.LESSER %{buildroot}/usr/share/package-licenses/gpgme/COPYING.LESSER
 %make_install
 ## install_append content
+touch abifiles.list
 cd lang/python
 DESTDIR=%{buildroot} make install
 rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
@@ -160,6 +165,7 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 
 %files data
 %defattr(-,root,root,-)
+/usr/share/common-lisp/source/gpgme/gpgme-grovel.lisp
 /usr/share/common-lisp/source/gpgme/gpgme-package.lisp
 /usr/share/common-lisp/source/gpgme/gpgme.asd
 /usr/share/common-lisp/source/gpgme/gpgme.lisp
@@ -286,6 +292,8 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 /usr/lib64/cmake/QGpgme/QGpgmeConfigVersion.cmake
 /usr/lib64/libgpgme.so
 /usr/lib64/libgpgmepp.so
+/usr/lib64/pkgconfig/gpgme-glib.pc
+/usr/lib64/pkgconfig/gpgme.pc
 /usr/share/aclocal/*.m4
 
 %files doc
@@ -296,21 +304,21 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 %defattr(-,root,root,-)
 /usr/lib64/libqgpgme.so
 /usr/lib64/libqgpgme.so.7
-/usr/lib64/libqgpgme.so.7.3.2
+/usr/lib64/libqgpgme.so.7.3.3
 
 %files lib
 %defattr(-,root,root,-)
 %exclude /usr/lib64/libqgpgme.so.7
-%exclude /usr/lib64/libqgpgme.so.7.3.2
+%exclude /usr/lib64/libqgpgme.so.7.3.3
 /usr/lib64/libgpgme.so.11
-/usr/lib64/libgpgme.so.11.21.0
+/usr/lib64/libgpgme.so.11.22.0
 /usr/lib64/libgpgmepp.so.6
-/usr/lib64/libgpgmepp.so.6.8.0
+/usr/lib64/libgpgmepp.so.6.9.0
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/doc/gpgme/COPYING
-/usr/share/doc/gpgme/COPYING.LESSER
+/usr/share/package-licenses/gpgme/COPYING
+/usr/share/package-licenses/gpgme/COPYING.LESSER
 
 %files python
 %defattr(-,root,root,-)

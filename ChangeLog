@@ -1,3 +1,960 @@
+2019-03-26  Werner Koch  <wk@gnupg.org>
+
+	Release GPGME 1.13.0.
+	+ commit 1b5a6bf27ac9b2e5a1fc4d5e879bd4901fcad5bb
+	* configure.ac: Bump LT versions.
+	                For C to C33/A22/R0.
+	                For C++ to C15/A9/R0.
+	                For Qt to C10/A3/R3.
+
+2019-03-26  Andre Heinecke  <aheinecke@gnupg.org>
+
+	core: Fix a strtoul to strtol.
+	+ commit 10576dc427b3746e2c3b9bc40efe618a3bd40519
+	* src/assuan-support.c (my_spawn): Fix using strtoul for
+	a long.
+
+	cpp: Fix GenCardKeyInteractor and extend it.
+	+ commit ffdb75217bc09561cf651dab15cd26e0024d89a7
+	* NEWS: Mention interface change.
+	* lang/cpp/src/gpggencardkeyinteractor.cpp
+	(GpgGenCardKeyInteractor::setAlgo): New.
+	(GpgGenCardKeyInteractor::action),
+	(GpgGenCardKeyInteractor::nextState: Handle new interface.
+
+2019-03-25  Andre Heinecke  <aheinecke@gnupg.org>
+
+	core, w32: Add hack to translate diag logger-fd.
+	+ commit 129def87b262241483ba3a8b6771ad6d07c2e3be
+	* src/assuan-support.c (my_spawn): Add hack to
+	mark the logger fd for w32spawn translation.
+
+2019-03-20  Andre Heinecke  <aheinecke@gnupg.org>
+
+	qt: Handle diagnostic audit log for CMS.
+	+ commit 47369569e23482bdd24a136b071192352b1d1347
+	* lang/qt/src/threadedjobmixin.cpp(_detail::audit_log_as_html):
+	Handle CMS audit log.
+
+2019-03-19  Werner Koch  <wk@gnupg.org>
+	    Andre Heinecke  <aheinecke@gnupg.org>
+
+	core: Support GPGME_AUDITLOG_DIAG for gpgsm.
+	+ commit dd21ec997cf4b6ba18538c63c728478110ad1f60
+	* src/engine-gpgsm.c (struct engine_gpgsm): Add fields diag_cb and
+	diagnostics.
+	(close_notify_handler): Close the diag fd on status fd close.
+	Handle diag close.
+	(gpgsm_cancel): Handle diag.
+	(gpgsm_release): Free DIAGNOSTICS.
+	(gpgsm_new): Support the diag feature.
+	(start): Set a handler for the diag fd.
+	(gpgsm_getauditlog): Support GPGME_AUDITLOG_DIAG.
+
+2019-03-13  Andre Heinecke  <aheinecke@gnupg.org>
+
+	cpp: Fix Error::hasSystemError.
+	+ commit c4cc47ee8f0bedc58e58ab416689d7014b0df2e7
+	* lang/cpp/src/context.cpp (Error::hasSystemError): Invert logic to
+	do what it says.
+
+2019-02-28  Werner Koch  <wk@gnupg.org>
+
+	json: Fix cosmetic error in the repl.
+	+ commit 1bdab961c51fc038c33ae8116595aa0213ab1dd5
+	* src/gpgme-json.c (native_messaging_repl): Use correct var with sizeof.
+
+	tests: Let run-verify print the de-vs flag.
+	+ commit b159b2eddd9df5df6cc8f29bd999cf1603c56991
+	* tests/run-verify.c (print_result): Chack is_de_vs.
+	* tests/run-import.c (main): Fix bad parameter for format string.
+
+2019-02-27  Andre Heinecke  <aheinecke@gnupg.org>
+
+	json: Limit recursion depth.
+	+ commit 4a117859e7a512458ab78cfedfae0372805196b1
+	* src/cJSON.c (MAX_DEPTH): New. Maximum recursion depth.
+	(parse_value, parse_array, parse_object): Carry and check
+	depth argument.
+	(cJSON_ParseWithOpts): Initialize depth.
+
+2019-02-21  Andre Heinecke  <aheinecke@gnupg.org>
+
+	cpp: Add ostream operators for import result.
+	+ commit 73b2f40ae5e6881991dea609b0781373b28d7d30
+	* lang/cpp/src/importresult.cpp: Add ostream operators.
+	* lang/cpp/src/importresult.h: Update accordingly.
+
+	cpp: Make GpgME::Data::toKeys really const.
+	+ commit 6175025c822678102c3f089e37952aa84b19a3ec
+	* lang/cpp/src/data.cpp (GpgME::Data::toKeys): Rewind afterards.
+
+2019-02-19  Werner Koch  <wk@gnupg.org>
+
+	core,w32: Fix missing sentinel in dir name builder.
+	+ commit 4c49417cc0dbd7f34269aff00fccafba150af744
+	* src/w32-util.c (_gpgme_get_gpgconf_path): Add NULL top strconcat.
+
+2019-02-11  Andre Heinecke  <aheinecke@gnupg.org>
+
+	tests: Fix memleak in run-threaded.
+	+ commit f8312d7c333193582dcb5816198219b9564023f0
+	* tests/run-threaded.c (verify): Free msg.
+
+2019-02-10  Ben McGinnes  <ben@adversary.org>
+
+	python: examples.
+	+ commit 302d5ef52e095378231efd54677b5c315354ad78
+	* A rather obvious variant of the existing key import examples, except
+	  directed at Mailvelope's keyserver.
+	* Yeah, Werner, I know ... but it exists because I used it and there's
+	  no harm in sharing.
+
+2019-01-30  Ben McGinnes  <ben@adversary.org>
+
+	python: docs.
+	+ commit e005052f4d5b29beda2252f8042dbf5728f5e2aa
+	* Version bump in preparation for whenever GPGME 1.13.0 happens.
+	* Ran the post_installer.py for docs preparation again.
+
+2019-01-27  Ben McGinnes  <ben@adversary.org>
+
+	python: post installer script.
+	+ commit 2de1e599770cdb129b84302d963f65fdd3ddd2a4
+	* Removed auto-generated .texi files from doc/src/ so only the
+	  corrected versions are left.
+	* Which means now it is complete, but with the initial work to expand
+	  it with info file generation later.
+
+	python: post installer docs fix script.
+	+ commit 1e265723653042bc1010b457537b69a2011b43b7
+	* Moved post_installer.py into the examples/howto/ directory.
+	* Added instructions for its use to the Python Bindings HOWTO.
+	* Ran it as intended from the lang/python/ directory in order to both
+	  prove it works and quickly and easily get the updated howto
+	  replicated.  Also to fix all those .texi files.
+
+2019-01-25  Werner Koch  <wk@gnupg.org>
+
+	json: Better use gpgme_free.
+	+ commit ed81892917f47dddc23aa99d88733e3f8f344256
+	* src/gpgme-json.c (subkey_to_json): here
+
+	json: Fix minor memory leaks.
+	+ commit 7f2423371964263784252cf839269023b6573bd2
+	* src/gpgme-json.c (interactive_repl): Fix memleak.
+	(subkey_to_json): Ditto
+	(op_config): Delay init of j_comps to avoid a leak on error.
+
+2019-01-16  NIIBE Yutaka  <gniibe@fsij.org>
+
+	build: With LD_LIBRARY_PATH defined, use --disable-new-dtags.
+	+ commit 66bcb8acb2452cf19318023ed0ff1ea7d7bb8439
+	* configure.ac (LDADD_FOR_TESTS_KLUDGE): New for --disable-new-dtags.
+	* tests/Makefile.am (LDADD): Use LDADD_FOR_TESTS_KLUDGE.
+	* lang/cpp/tests/Makefile.am, lang/qt/tests/Makefile.am: Likewise.
+	* tests/gpg/Makefile.am, tests/gpgsm/Makefile.am: Likewise.
+	* tests/json/Makefile.am, tests/opassuan/Makefile.am: Likewise.
+
+2019-01-15  Andre Heinecke  <aheinecke@gnupg.org>
+
+	tests: Add diagnostic example to run-import.c.
+	+ commit ce327f994a2888b807b63cf202ddcecc3fb9c685
+	* tests/run-import.c (main): Show diagnostics in verbose mode.
+
+2019-01-09  Andre Heinecke  <aheinecke@gnupg.org>
+
+	qt: Use tofu conflict test keys without expiry.
+	+ commit 66376f3e206a1aa791d712fb8577bb3490268f60
+	* lang/qt/tests/t-tofuinfo.cpp: Use new test keys without
+	expiry.
+
+2019-01-02  Ben McGinnes  <ben@adversary.org>
+
+	python docs: post installer.
+	+ commit a0dbdfebbb60f0d34dd16894803e95221d8be668
+	* Merging post installer script.
+	* Included ammended Sphinx config file to try to reduce the
+	  auto-generated EPUB validation failures it produces.
+
+	python: post installer doc fix script.
+	+ commit a2e7c863c821ca035f1e3f8077bdae3b0f81f5eb
+	* Got rid of the bash bit in the comments.
+	* Made the final printed instructions far more obvious.
+
+	python: examples.
+	+ commit 207d4289d84971d11ec1824fbe7d4a2be63b56e4
+	* Fixed inter-edit.py so it will actually work now.
+	* made 3 others executable.
+	* Fixed the semantics of assuan.py's instructions.
+
+2018-12-26  Ben McGinnes  <ben@adversary.org>
+
+	python: examples.
+	+ commit d406471d4bf9c79140e4bc91de7d316ec7465892
+	* Fixed inter-edit.py so it will actually work now.
+	* made 3 others executable.
+	* Fixed the semantics of assuan.py's instructions.
+
+2018-12-24  Ben McGinnes  <ben@adversary.org>
+
+	python: docs processing.
+	+ commit ef9355c2fe8f81ccd73e0ed45ce33e925928f8e1
+	* Added some EPUB specific config options to the Sphinx config file
+	  which might help reduce some of Sphinx's more stupid default errors
+	  with EPUB validation.
+	* Added lang/python/post_installer.py script for automating the
+	  generation of .texi and .rst "source" files from the real source
+	  files written in Org mode.  Includes recreating the Sphinx Makefile
+	  which is excluded due to the m4 toolchain in parent directories, it
+	  also handles the rewriting of the reST index file properly and
+	  rewrites the .texi files so they don't impale themselves on Unicode.
+
+2018-12-21  Ben McGinnes  <ben@adversary.org>
+
+	python: docs.
+	+ commit 06bca0eaa8de8405fafc892ab7864990f8853bcf
+	* Found a bug in org-mode's export to texinfo function which will
+	  require either manual modification of each file or a customs sed run
+	  over the generated files for all updates.
+	* Manually updated the current files for now, but will need to add
+	  some post-install processing scripts for future use (I already have
+	  some of these for my specific setup, they just need to be made a
+	  little more generic and platform independent for here).
+
+	python: groups example.
+	+ commit dc5f416351e47bfafb46a53f8fd8435dd6c231ba
+	* Tightened code a little more.
+
+2018-12-17  Ben McGinnes  <ben@adversary.org>
+
+	python docs: house keeping.
+	+ commit daded4925489d306f6a65271c2f55101b331187c
+	* Dropped the ASCII copyright line, since even MS have conceded their
+	  battle against Unicode enough to load UTF-8.
+	* Fixed the drafts section since there will be less need of multiple
+	  output format testing from next year.
+
+2018-12-17  Werner Koch  <wk@gnupg.org>
+
+	core: Silence newer compiler warnings.
+	+ commit 8b41fb08f00f01fe0dd8b2b5455d3422d97ddc60
+	* configure.ac: Add -Wno-format-truncation and
+	  -Wno-sizeof-pointer-div.
+	* src/b64dec.c (_gpgme_b64dec_proc): Add fallthrough annotation.
+	* src/cJSON.c (parse_string): Ditto.
+	* src/gpgme-json.c (main): Ditto.
+
+2018-12-16  Ben McGinnes  <ben@adversary.org>
+
+	python: howto and examples.
+	+ commit fbc298dc1b0fbb51ebc92a9d56c45b78c5e9989d
+	* Tightening up both the documentation and some of the example code.
+
+2018-12-13  Ben McGinnes  <ben@adversary.org>
+
+	python: examples bugfix.
+	+ commit 4308d172816f3172454fac1dc0771014056764a1
+	* Fixed a bug in the ProtonMail importers (pmkey-*.py) where multiple
+	  keys found for a username would always result in the last email
+	  address checked being returned in the printed output for all located
+	  keys.
+
+2018-12-12  Ben McGinnes  <ben@adversary.org>
+
+	python: new example script.
+	+ commit 3849b60e22432ef33f0d1d39b88e07922ad7779e
+	* Though Keybase really should not be encouraged due to
+	  disengenuosness and FUD emanating from that souce, this new script
+	  will obtain a key hosted on that site and import it when supplied
+	  with the keybase username.
+
+	python: what's new summary.
+	+ commit 3ca7cf07f5d3ec4af89e69ed13ea7ab701e33c03
+	* Added a little more detail to the what's new section.
+
+	python: advanced howto example.
+	+ commit 64758a0dac4c7c3b312dccbc1661813e2c3e2888
+	* Added Cython requirement to this advanced use case.
+
+	python: howto examples equirements.
+	+ commit 4c324ac1beb710714262af0040dea21232ba87d9
+	* Added small requirements.txt file for additional modules not in the
+	  standard python library and not including the bindings themselves
+	  and not including Cython, which is for more advanced examples.
+
+2018-12-10  Ben McGinnes  <ben@adversary.org>
+
+	python: hkp key importer.
+	+ commit 772b5aae24a2a3a996f399024845de612192fc2f
+	* Tweaked it slightly to avoid repetition of key searches when there
+	  is only one search pattern to check (i.e. usually a single key ID or
+	  fingerprint).
+
+	python: HKP search and import updates.
+	+ commit 2e7a14c9b369096775a035091c197f2d438142a0
+	* Tweaked the code again so that it can also handle the cases where
+	  someone has included a hexadecimal string in their user ID.
+	* Updated the HOWTO to match.
+	* Exported to .rst and .texi.
+
+	python: key import via HKP example.
+	+ commit fe7e01d164b64ad5e7f65cb80e4bf13f06d8d3ef
+	* Fixed the logic used to search for any given pattern.
+	* Added a sensible method of checking whether a pattern is a key ID or
+	  fingerprint.
+
+	python: docs updates.
+	+ commit 7c63bfe4ab434b61a871aec4bc1d0a05b4c068e6
+	* Multiple updates, expanding on the Windows installation issues.
+	* Also adding to the new maintenance mode reference document.
+	* Includes content relating to the resolution of T4271 and T4191.
+
+2018-12-07  Andre Heinecke  <aheinecke@intevation.de>
+
+	core: Fix ERR_INV_ARG check in genkey_start.
+	+ commit 78f6291a3bf56769f53af66fe39718ddd2d74bf2
+	* src/genkey.c (gpgme_op_genkey_start): Fix check for
+	parms.
+
+2018-12-05  Ben McGinnes  <ben@adversary.org>
+
+	python: examples.
+	+ commit dc5600d306f808767068bad5117232fc3d35ac43
+	* cut some of then poor len usage.
+
+2018-12-05  Daniel Kahn Gillmor  <dkg@fifthhorseman.net>
+
+	python: overhaul logic of Context.decrypt()
+	+ commit 65c28da4e49a8778607fdcf6f51a840166616d9f
+	* lang/python/src/core.py (Context.decrypt): simplify and clarify the
+	logic behind handling verify=False.
+	* lang/python/tests/t-decrypt.py: ensure that we test verify=False
+
+	python: ctx.decrypt() has problematic error handling.
+	+ commit 878a0ad01265dba5b06429276bdcc5c21fedb6f5
+	* lang/python/src/core.py (Context.decrypt): document odd
+	error-handling behavior as a potential problem to be addressed.
+
+	python: Clarify the meaning of ctx.decrypt(verify=[])
+	+ commit 5d8b4f74891af22379899ccee9e8ee849144eee3
+	* lang/python/src/core.py (Context.decrypt): docstring clarification
+	of what it means to pass an empty list to the verify argument.
+
+	python: gpg.Context.decrypt verify_sigs and sink_result are bools.
+	+ commit b8fa76a30c02afc3d7f6aad0a59bb613d1b711fc
+	Both of these function-internal variables are never used for anything
+	other than a binary state.  Implement them as the booleans they are.
+	Otherwise, casual readers of the code might think that they're
+	supposed to represent something other than a flag (e.g. "verify_sigs"
+	could mean "the signatures to verify", and "sink_result" could mean
+	"the place where we sink the result").
+
+	Signed-Off-By: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+
+	python: clarify documentation for verify argument for Context.decrypt()
+	+ commit 49af6d76e55f348c7b3cece756d6ac643d17ee68
+	It's easy to miss that verify can take a list of keys.  Make it more
+	obvious to the average python dev who reads docstrings.
+
+	python: simplify Context.decrypt()
+	+ commit 2491e6f92f5b562cbd6f7f931df630cb106f6688
+	In the course of trying to address https://dev.gnupg.org/T4271, i
+	discovered that gpg.Context.decrypt() has a bit of superfluous code.
+	This changeset is intended to simplify the code without making any
+	functional changes.
+
+2018-12-05  Ben McGinnes  <ben@adversary.org>
+
+	python: windows c and cython.
+	+ commit 1dffdcc6e9d249111eb8761d29ef3b35b32a8c3d
+	* added warning that he Windows C runtime issues will also affect use
+	  with Cython and that relying on binary installers would remove that
+	  possible use case.
+
+2018-12-04  Ben McGinnes  <ben@adversary.org>
+
+	python: sphinx modification.
+	+ commit c8a04af676d981b42172c9bdad82eb83f91c8ce6
+	* The make.bat file incorrectly triggers the trailing whitespace check
+	  in the git repo (it doesn't actually have any trailing whitespace,
+	  but triggers the error on every line).
+	* Will need to add a script to handle future org-mode conversions of
+	  the index page anyway, so will get that script to deal with this
+	  problem too by generating the make.bat file if the platform is
+	  detected as Windows.
+
+	python: Sphinx support.
+	+ commit 6d8823b81162c18406d40ec59bd252cfdf1df648
+	* Added framework from sphinx-quickstart to lang/python/doc/rst/ so
+	  that Python developers already using Sphinx can use the generated
+	  reST files with existing documentation systems.
+	* Note that when generating source files from Org-mode, the index page
+	  will require manual intervention to match the Sphinx requirements.
+
+	python: docs update.
+	+ commit 8613727f1ee985c3cfa2c815523312914f033ffd
+	* Expanded the section on issues with Windows installations, with
+	  greater detail of which versions of Visual Studio are needed
+	  depending on which version of CPython is to be used.
+	* Included a recommendation which is a bit harsh without being totally
+	  prickish.
+	* Updated all files to not link to author's key or related data in
+	  order to make them all consistent with the changes in commit
+	  649b19688132dd315e361c0f5b63ba6d8f45996d.
+
+2018-12-04  NIIBE Yutaka  <gniibe@fsij.org>
+
+	build: Remove --with-*-prefix, which is no need any more.
+	+ commit 5dbac555f23bcec4adcfd82de61878f0f23ff272
+	* autogen.rc (configure_opts): Remove --with-*-prefix.
+
+2018-12-03  Andre Heinecke  <aheinecke@intevation.de>
+
+	qt,cpp: Consistently use nullptr and override.
+	+ commit 1d31420650bfa7ca1d1503cc7431b3360e86022c
+	* lang/cpp/src/Makefile.am, lang/qt/src/Makefile.am (AM_CPPFLAGS):
+	Add suggest-override and zero-as-null-pointer-constant warnings.
+
+	* lang/cpp/src/*, lang/qt/src/*: Consistenly use nullptr and override.
+
+2018-11-30  Ben McGinnes  <ben@adversary.org>
+
+	python: documentation fixes.
+	+ commit 2e3a681d0c35bbf6db584fedc9d7f0a010430b51
+	* Typographic and whitespace error correction pertaining to the
+	  previous update.
+
+	python: documentation.
+	+ commit 3b056a01a252bb72df5744409ba494e1a6e54d31
+	* Added long description to setup.py.in.
+	* Added maintenance mode details with clarification for what type of
+	  things would be a bug as far as MM is concerned and what wouldn't
+	  be.
+	** Includes a not too subtle hint directed towards the donations page.
+	* Miscellaneous tightening of documentation.
+
+2018-11-28  Andre Heinecke  <aheinecke@intevation.de>
+
+	tests, json: Make them run on debian stable.
+	+ commit a9cfb6dad8ac60543bcb06f4d0515f4a64ad897a
+	* tests/json/t-json.c (main): Relax version check a bit.
+
+2018-11-26  Ben McGinnes  <ben@adversary.org>
+
+	python docs: checking key signatures.
+	+ commit 1c92f3ff55ad0cdda06d05ad0a83193e3a147b7e
+	* Added instructions for checking key certifications or key
+	  signatures (depending on preferred terminology).
+	* Added pendulum module to recommended installations, but not to
+	  requirements.
+
+2018-11-22  Ben McGinnes  <ben@adversary.org>
+
+	python: docs update.
+	+ commit c87155e6eba2e97e4e6c6ee7e2591088a5489556
+	* Added documentation for the new methods added to gpgme.version.
+	* Removed the Flask based advanced use case from the what-is-new
+	  section as that type of code will not be added here.
+
+	python: version as integers.
+	+ commit de6bb23279796b9ae4dc369d58591cb75f818684
+	* lang/python/version.py.in: added gpg.version.versionintlist
+	* If gpg.version.versionintlist[2] ever returns -1 then there's a
+	  serious problem with the build and it should be lodged as a bug if
+	  it's repeatable.  Seeing this should never happen, but checking for
+	  it is better than not doing so.
+
+2018-11-19  Werner Koch  <wk@gnupg.org>
+
+	core: Fix format string errors in w32-io.c and use of TRACE_SUC.
+	+ commit b182838f71d8349d6cd7be9ecfb859b893d09127
+	* src/w32-io.c: Fix use of TRACE_SUC.  Fix some format strung errors.
+
+2018-11-19  Ben McGinnes  <ben@adversary.org>
+
+	python: import type.
+	+ commit fd34415bdd57332424bd5a98d279e2331678a2fb
+	* Fixed bug T4242 and tested that dropping "Import" in favour of
+	  "import_type" does indeed work just fine.
+
+	python: import constant.
+	+ commit f773ad392da57e6be4ade93c44baa5d2057c40b6
+	* lang/python/src/constants/__init__.py: dropped use of Import
+	  capitalisation and renamed lang/python/src/constants/import.py to
+	  lang/python/src/constants/import_type.py to address bug T4242.
+	* lang/python/doc/src/gpgme-python-howto: minor docs updates.
+
+2018-11-16  Werner Koch  <wk@gnupg.org>
+
+	core: Protect the trace macros for fun and profit.
+	+ commit 7a1e7006d06fdbab86ea79a197c316744b09d933
+	* src/debug.h: Protect macros using.
+	(_trace_err, _trace_sysres, _trace_syserr): New helper inline
+	functions.
+
+	core: Fix a LF problem in the new debug fucntion.
+	+ commit 7eda50a673d15320022375360fd220e8381b69ab
+	* src/debug.c (_gpgme_debug): Print a LF for an empty FORMAT unless we
+	are in legacy mode.
+
+	core: Remove old debug helper function.
+	+ commit 94d274a1a33c6fb30981290b127f2c4babc27245
+	* src/debug.c (_gpgme_debug): Remove.
+	(_gpgme_debugf): Rename to _gpgme_debug.
+
+	core: Simplify the trace maros by using variadics.
+	+ commit 5857491a2aa7d4975100d90f1ad62c08aa345e3e
+	* src/debug.h (TRACE_BEG, TRACE_LOG, TRACE_SUC): Use variadic macros
+	and remove the TRACE_BEG1 et al.  Change all users to always pass a
+	format string.
+	(TRACE): Ditto.
+	* src/debug.c (_gpgme_debugf): New.
+	* configure.ac <GCC>: Add -Wno-format-zero-length.
+
+2018-11-15  Andre Heinecke  <aheinecke@intevation.de>
+
+	tests: Add run-threaded for multithread tests.
+	+ commit d0402f886b720d03369887c807581bd980ee70cf
+	* tests/Makefile.am (run-threaded): Add.
+	* tests/run-threaded.c: New.
+
+	tests,json: Clean openpgp-revocs.d.
+	+ commit 004e2cad2f26250cd010684f11dc187f08e6f9e1
+	* tests/json/clean-local: Remove revocs.d
+
+	tests,json: Move version check into t-json.
+	+ commit 40d962b43a183070ba8602cac1e83f2292ebf2c3
+	* tests/gpg/t-support.h (check_gpg_version, compare_versions),
+	(parse_version_string, parse_version_number): Remove version
+	check code.
+	* tests/json/t-json.c (check_gpg_version, compare_versions),
+	(parse_version_string, parse_version_number): Add.
+
+2018-11-14  Andre Heinecke  <aheinecke@intevation.de>
+
+	tests,json: Add sig-notations test.
+	+ commit d3dae4a445d950c94c952ddf54e534ef71675bd1
+	* tests/json/t-sig-notations.in.json,
+	tests/json/t-sig-notations.out.json: New
+	* tests/json/Makefile.am (EXTRA_DIST): Add files.
+	* tests/json/t-json.c: Register it.
+
+	tests,json: Fix distcheck.
+	+ commit def030e843bd4576597272abe9fe12f846066576
+	* tests/json/Makefile.am (EXTRA_DIST): Add inital and final scripts.
+	(t_json_SOURCES): Don't use cJSON.o as source.
+
+	tests,json: Add more tests.
+	+ commit d0087d45f0207bf82a4f078d972c28c4d1cd2690
+	* t-config-opt.in.json,
+	 t-config-opt.out.json,
+	 t-import.in.json,
+	 t-import.out.json,
+	 t-sign.in.json,
+	 t-sign.out.json: New.
+
+	tests,json: Add missing files and chunking test.
+	+ commit 88b7221eb737a3102ec61ea385990b7ea7ef2b30
+	* tests/json/Makefile.am, tests/json/final.test,
+	tests/json/initial.test: New.
+	* tests/json/t-chunking.in.json, tests/json/t-chunking.out.json:
+	New test.
+	* tests/json/t-json.c: Register new test.
+
+	tests,json: Fix match if the first child differs.
+	+ commit 27ca12e815c0a582d357641a04b889d648b8766e
+	* tests/json/t-json.c (test_contains): Try all siblings of
+	the haystack child.
+
+	tests,json: Add the bulk of tests.
+	+ commit dd4b80a5f640232bb44eb825ff5a74ec295fad10
+	* t-json.c (tests): Register new tests.
+	* t-createkey.in.json,
+	  t-createkey.out.json,
+	  t-decrypt-verify.in.json,
+	  t-decrypt-verify.out.json,
+	  t-decrypt.in.json,
+	  t-decrypt.out.json,
+	  t-delete.in.json,
+	  t-delete.out.json,
+	  t-encrypt-sign.in.json,
+	  t-encrypt-sign.out.json,
+	  t-encrypt.in.json,
+	  t-encrypt.out.json,
+	  t-export-secret-info.in.json,
+	  t-export-secret-info.out.json,
+	  t-export.in.json,
+	  t-export.out.json,
+	  t-json.c,
+	  t-keylist-secret.in.json,
+	  t-keylist-secret.out.json,
+	  t-keylist.in.json,
+	  t-keylist.out.json,
+	  t-verify.in.json,
+	  t-verify.out.json,
+	  t-version.in.json,
+	  t-version.out.json: New.
+
+	tests,json: Add wildcard string matching.
+	+ commit 9a31fdcb11d04d47dfcc38a8409b84436c549108
+	* tests/json/t-json.c (test_contains): When searching for "*" accept
+	every string.
+
+	tests,json: Skip tests for older GnuPG versions.
+	+ commit e55e467d5ffb32c428566a876616d309ef2d15cd
+	* tests/json/t-json.c (main): Skip if version is not at least
+	2.2.0
+
+	tests,json: Suffix .json to test pattern.
+	+ commit ca2e2b3d6973b1f942571ba65bd8b57153847777
+	* tests/json/t-config.in, tests/json/t-config.out: Renamed.
+	* t-json.c (run_test): Use new naming pattern.
+
+	tests,gpg: Add version check hlp to t-support.
+	+ commit 5b61c092e7444749b08e39ac5aa9fb0818e1a076
+	* t-support.h (parse_version_number, parse_version_string)
+	(compare_versions): New. Copy&Paste from src/version.c
+	(check_gpg_version): New helper to check for a gpg version.
+
+	tests,json: Improve verbose mode and add verbose 2.
+	+ commit 9933641cce595ba308d0f3a1f3ae8f13a9743dd1
+	* tests/json/t-json.c (main): Handle multiple verbose args.
+	(test-contains): Improve verbose output
+
+	tests,json: Fix and improve t-json.
+	+ commit 3e5684d99b881787f9739e53fd8e8c22eadc2146
+	* tests/json/t-json.c (run_test): Terminate argv array correctly.
+	(run_test): Note and handle empty response.
+
+	tests: Add json testrunner.
+	+ commit 0c31837766e016227b3c8dfd44c476949cd4741e
+	* configure.ac: Configure makefile.
+	* tests/Makefile.am: Run json tests if gpg tests are run.
+	* tests/json/t-json.c: New testrunner for json tests.
+	* tests/json/t-config.in, tests/json/t-config.out: First test.
+
+2018-11-13  NIIBE Yutaka  <gniibe@fsij.org>
+
+	build: Update gpg-error.m4 and libassuan.m4.
+	+ commit c4aa4af50f3102b251cfff9c9755e2dde8d1bd1f
+	* m4/gpg-error.m4: Update from master.
+	* m4/libassuan.m4: Update from master.
+
+2018-11-12  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Fix the previous commit.
+	+ commit 895176f42af3a1b13614f15dd537a426bb4ac16a
+
+
+	build: Make gpgme.m4 use gpgrt-config with *.pc.
+	+ commit 60828a505a1c74fd34476c181df2a588ea6f9c83
+	* src/gpgme.m4 (_AM_PATH_GPGME_CONFIG): Use gpgrt-config with gpgme.pc
+	when possible.
+	(AM_PATH_GPGME_GLIB): Likewise with gpgme-glib.pc.
+
+	build: Provide gpgme-glib.pc too.
+	+ commit a76e145a1057e11953b71f804cf3a499c3ad5362
+	* src/gpgme-glib.pc.in: New.
+	* src/gpgme.pc.in (avail_lang): Remove.
+
+	build: Provide gpgme.pc, generated by configure.
+	+ commit f3e60521899e6126229b6efedc9f011b84122e11
+	* configure.ac: Generate src/gpgme.pc.
+	* src/Makefile.am (pkgconfigdir, pkgconfig_DATA): New.
+	(EXTRA_DIST): Add gpgme.pc.in.
+	* src/gpgme.pc.in: New.
+	* src/gpgme-config.in: Use variables.
+
+2018-11-08  Daniel Kahn Gillmor  <dkg@fifthhorseman.net>
+
+	spelling: fix misspellings.
+	+ commit 2557d0ae6ff0336b041129b7bf5c1e3a8c20a805
+
+
+2018-11-06  Ben McGinnes  <ben@adversary.org>
+
+	docs: python bindings.
+	+ commit d0a5caf73c2d6b73dd043f62574c31946e4f347d
+	* Continued restructuring as part of moving beyond mere;y the HOWTO
+	  file.
+	* Generated the alternative source files for reST and Texinfo.
+	* Fixed some errors and updated links after moving the what's new
+	  section to two new files (yes, two).
+
+	python examples: another importer.
+	+ commit 0cb625da84d7e5deeacad113c404a8bc2154c8e7
+	* Fixed a similar type of bug with the non-protonmail importer.
+
+	python examples: protonmail hkp scripts.
+	+ commit 1b9d30db089e9de3ef859195ad58d2164a0231a0
+	* fixed a bug in the import try statement for both versions.
+
+2018-11-05  Werner Koch  <wk@gnupg.org>
+
+	gpg: Avoid error diagnostics with --override-session-key.
+	+ commit bded8ebc59c7fdad2617f4c9232a58047656834c
+	* src/engine-gpg.c (gpg_decrypt): Add --no-keyring.
+
+2018-11-03  Ben McGinnes  <ben@adversary.org>
+
+	docs: typo.
+	+ commit 13e09bd21a531b448f2f34b1f075315502b76fb6
+	* lang/python/doc/src/gpgme-python-howto: s/Revokinging/Revoking/g
+
+2018-11-02  Werner Koch  <wk@gnupg.org>
+
+	w32: Fix a few compiler warnings.
+	+ commit 5262ce0c815193fc901b00a9b4132925ba672df7
+	* src/debug.h (TRACE_SYSERR_NR): New.
+	* src/w32-io.c: Fix compiler warnings.
+
+	w32: Log all errors from CloseHandle and WFSO in w32-io.
+	+ commit ed3f5ad760a28566fa2571e0c7392467bfc3770d
+	* src/w32-io.c (close_handle, _close_handle): New macro and function;
+	use in place of all CloseHandle calls.
+	(wait_for_single_object, _wait_for_single_object): Likewise.
+
+	w32: Don't use CloseHandle on an arbitrary integer.
+	+ commit 4faa0ccf58c7a0f64f51dcbc8466add660080414
+	* src/assuan-support.c (my_waitpid): Do not close the PID = it is not
+	a handle.
+
+	w32: Revamp the closing of system objects.
+	+ commit da89528ac39b687bfbed2209ca2637e3bd8e0ac5
+	* src/w32-io.c (hddesc_t): New.
+	(reader_context_s, writer_context_s): Replace file_sock and file_hd by
+	the hddesc_t hdd.
+	(fd_table): Ditto.  Add want_reader and want_writer.
+	(hddesc_lock): New lock variable.
+	(new_hddesc, ref_hddesc): New.
+	(release_hddesc): New.
+	(reader, writer): Call release_hddesc.
+	(create_reader, create_writer): Change for new hddesc scheme.
+	(destroy_reader, destroy_writer): Replace closing by a call to
+	release_hddesc.
+	(_gpgme_io_pipe): Change for new hddesc scheme.
+	(_gpgme_io_close): Ditto.
+	(_gpgme_io_dup): Ditto.  Use want_reader and want_writer.
+	(_gpgme_io_socket): Change for new hddesc scheme.
+
+	core: Print a dump of the I/O data only at level 8.
+	+ commit 337c10825525d4084f3f437fde5af3806707e6a4
+	* src/debug.h (TRACE_SUC3): New.
+	(TRACE_LOGBUFX): New.
+	* src/posix-io.c: Use TRACE_LOGBUFX instead of TRACE_LOGBUF.
+	* src/w32-glib-io.c: Ditto.
+
+	w32: Fix and improve CancelSynchronousIo use.
+	+ commit acef4f775f273bbef63bc81afbad8feaabc7414e
+	* src/w32-util.c (_gpgme_w32_cancel_synchronous_io): Fix name of DLL
+	and print trace info only on error.
+
+2018-11-01  Werner Koch  <wk@gnupg.org>
+
+	w32: Use CancelSynchronousIo in destroy_reader.
+	+ commit 63ba09b541dabbe838253926896e721cb9be564a
+	* src/w32-util.c (_gpgme_w32_cancel_synchronous_io): New.
+	* src/w32-io.c (destroy_reader): Use it here.
+
+	w32: Merge all the object tables of w32-io into one.
+	+ commit 338e9edfdb9239f1c9d4409f6d08d79a9d6f285b
+	* src/w32-io.c (fd_table_size): New.  Used in most places instead of
+	the MAX_SLAFD constant.
+	(reader_table, writer_table, notify_table): Merge them into ...
+	(fd_table): this table.  Chnage all affected code to take just one
+	lock.
+
+2018-10-31  Werner Koch  <wk@gnupg.org>
+
+	w32: Remove unused arg from two functions.
+	+ commit 79fc7c0fe825014e75bb825c4966a04a22e78254
+	* src/w32-io.c (find_reader, find_writer): Remove unused start_it
+	arg.  It is always passed as true.  Change callers.
+
+	w32: Remove all support for WindowsCE.
+	+ commit 3c04dea3ecebed35208f6b631b2e8b04222ea432
+	* configure.ac: Remove WindwosCE support.
+	* contrib/: Remove all; it was only used for WindowsCE.
+	* src/w32-ce.c, src/w32-ce.h: Remove files.
+	* src/Makefile.am (system_components): Remove these files.
+	* src/ath.c, src/ath.h: Remove W32CE support.
+	* src/data-compat.c (gpgme_data_new_from_filepart): Ditto.
+	(gpgme_data_new_from_file): Ditto.
+	* src/debug.c (debug_init, _gpgme_debug): Ditto.
+	* src/gpgme-tool.c (gpgme_server): Ditto.
+	(main): Ditto.
+	* src/priv-io.h: Do not include w32-ce.h.
+	* src/util.h: Remove WindowsCE support.
+	* src/w32-io.c: Ditto.
+	* src/w32-util.c: Ditto.
+	* src/debug.h (TRACE_SUC4): New.
+
+	w32: Remove cruft in w32-io from WindowsME times.
+	+ commit 2e07d4f89a26bb56a55b2743d39fb37532028ffd
+	* src/w32-io.c (set_synchronize): Remove.
+	(create_reader, create_writer): No need for set_synchronize.
+
+2018-10-30  Ben McGinnes  <ben@adversary.org>
+
+	docs: python docs restructure.
+	+ commit 78be1e2f543667576a49286476e7d66a707dd17e
+	* Moved the what's new section out of the HOWTO (mostly), in
+	  anticipation of expanding the docs to be more than merely a HOWTO.
+
+	docs: python.
+	+ commit d5c22966d5bf397cccfa171095885cd207ef6ae3
+	* dropped the ".org" extension and added a mode line for each file as
+	  this will make scripting format conversions a lot easier.
+
+2018-10-30  Werner Koch  <wk@gnupg.org>
+
+	w32: Fix previous commit.
+	+ commit 9eef23fcf39f2b2eb2645afd31a79ba1286d9885
+	* src/w32-io.c (_gpgme_io_spawn): Move freeing of TMP_NAME behind its
+	use in an error handling.
+
+2018-10-29  Andre Heinecke  <aheinecke@intevation.de>
+
+	core,w32: Fix memleak of tmp_name in w32-io.
+	+ commit 7a1b58045f980c4df76daf225a2a1b604e8604d2
+	* src/w32-io.c (_gpgme_io_spawn): Free tmp_name.
+
+	tests: Add repeat argument to run-verify.
+	+ commit 681525be003433728d127303d40712803b70cb9c
+	* tests/run-verify.c (main): Add repeat argument.
+
+	core: Do not crash if CMS plaintext is ignored.
+	+ commit 8f27511862cabac8fa1dd8f883cb78faebc05ef6
+	* src/engine-gpgsm.c (gpgsm_verify): Fix handling both
+	plaintext and signed_text as NULL.
+
+	cpp,tests: Add another test runner.
+	+ commit 62c736ba76a19d3b41af69e1f340a53b80f13fe0
+	* lang/cpp/tests/run-verify.cpp: New.
+	* lang/cpp/tests/Makefile.am: Update accordingly.
+
+2018-10-25  Andre Heinecke  <aheinecke@intevation.de>
+
+	cpp: Add some convenience functions.
+	+ commit 05a0e97f5c12c06082fbeab0fba6f86ddbfbe6b2
+	* lang/cpp/src/context.cpp (Context::create): New.
+	* lang/cpp/src/context.h: Update accordingly.
+	* lang/cpp/src/key.cpp, lang/cpp/src/key.h:
+	(Key::isBad, Subkey::isBad, UserID::isBad)
+	(UserID::Signature::isBad): Add shorthand for the isX checks.
+	* NEWS: Mention it.
+
+2018-10-23  Ben McGinnes  <ben@adversary.org>
+
+	docs: python howto.
+	+ commit 04791c896712857feaf9a472a48d7a4c4f287775
+	* Fixed a few spelling and grammatical errors.
+
+2018-10-21  Ben McGinnes  <ben@adversary.org>
+
+	Python: docs tweaks.
+	+ commit 59e38e3d2c14b40045e15c45b6c2f300e8f097dc
+	* Fixed a minor error in how the reST version of the HOWTO is
+	  generated.
+	* Updated the help() in __init__.py with a little more detail as to
+	  why not to use the lower level functions.
+
+2018-10-20  Ben McGinnes  <ben@adversary.org>
+
+	python bindings: callback test.
+	+ commit 651a1afe80bcc421da26f38015e8a322e140f130
+	* lang/python/tests/t-callbacks.py: Updated test logic to try
+	  generating a key which expires in 2099 and if that fails then
+	  fallback to an expiration in 2037 in an attempt to catch the 32-bit
+	  systems.
+
+2018-10-18  Werner Koch  <wk@gnupg.org>
+
+	core: Fix segv in genkey when no endtag is provided.
+	+ commit fbac11b19d97730494dc9dad3b7f71453ef15581
+	* src/genkey.c (get_key_parameter): Provide a fallback ENDTAG.
+
+	core: Return an error if NULL is provided for genkey's parms.
+	+ commit 174af15725d4989a840ff3098996cc8a0568f724
+	* src/debug.c (_gpgme_debug_buffer): Bail out of BUF is NULL.
+	* src/genkey.c (gpgme_op_genkey): Do no deref a NULL in
+	TRACE_LOGBUF.
+	(gpgme_op_genkey_start): Ditto. Return an error if PARMS is NULL.
+
+2018-10-18  Daniel Kahn Gillmor  <dkg@fifthhorseman.net>
+
+	python: do not export HAVE_CXX11 definition.
+	+ commit 9de1c96ac3cf6fa126325002b61a1b606037ca88
+	* lang/python/gpgme.i: ignore HAVE_CXX11 in SWIG interface
+
+2018-10-17  Werner Koch  <wk@gnupg.org>
+
+	python: Auto-check for all installed python versions.
+	+ commit ff6ff616aea6f59b7f2ce1176492850ecdf3851e
+	* m4/python.m4 (AM_PATH_PYTHON): Add a 4th arg.
+	* configure.ac (available_languages): Remove separate python2 and
+	python3 and keep just python.  Simplify test for pythons.  Use an
+	explicit list of python versions to test.
+
+2018-10-16  Werner Koch  <wk@gnupg.org>
+
+	core: Really remove CR from version output.
+	+ commit d63d6d8b8030ec1dc19f9f66c8af3b2f3288d309
+	* src/version.c (_gpgme_get_program_version): Fix test.
+
+2018-10-10  NIIBE Yutaka  <gniibe@fsij.org>
+
+	build: Let configure create the VERSION file.
+	+ commit 85dd0fa4b5f026a13da842bf64ab8a37a68918d4
+	* autogen.sh: Update from libgpg-error.
+	* configure.ac: Use mym4_version to create VERSION file.
+	* Makefile.am (dist-hook): Do not create VERSION.
+	(EXTRA_DIST): Add VERSION.
+
+2018-10-09  Andre Heinecke  <aheinecke@intevation.de>
+
+	cpp: Add KeyListMode::Locate.
+	+ commit c565cf42a38a8bda936df8c52936589cc8a06ca3
+	* cpp/src/global.h (KeyListMode): Add Locate.
+
+	cpp: Add first manual tests.
+	+ commit 9f85f4967e617e9f97529b89f530c1bc36b52a5c
+	* lang/cpp/Makefile.am: Add tests subdir.
+	* lang/cpp/tests/Makefile.am: New.
+	* lang/cpp/tests/README,
+	lang/cpp/tests/run-getkey.cpp,
+	lang/cpp/tests/run-keylist.cpp: New.
+	* configure.ac: Configure tests makefile.
+
+	core: Add trust-model flag.
+	+ commit 85627e58184529e982369cfc00ed7865244c13d6
+	* src/context.h (gpgme_context): Extend with trust_model.
+	* src/engine-gpg.c (engine_gpg): Extend with trust_model.
+	(gpg_set_engine_flags): Take trust_model from context.
+	(build_argv): Handle trust_model.
+	(gpg_release): Free trust_model.
+	* src/gpgme.c (gpgme_set_ctx_flag): Handle trust-model flag.
+	(gpgme_release): Release trust-model.
+	* doc/gpgme.texi: Document new flag for gpgme_set_ctx_flag.
+	(Context Flags): New subsection for the context flags.
+	* tests/run-keylist.c (show_usage, main): Add new --trust-model
+	parameter.
+
+	cpp: Initialize all gpgme_key_t's in context.
+	+ commit 7a1e6dbfb16f71f692a53f7e0955bde86dbb7fee
+	* lang/cpp/src/context.cpp (Context::startKeyListing),
+	(Context::keyListResult, Context::signingKeys): Initialize key.
+
+	core: Ensure r_key init in gpgme_get_key.
+	+ commit ecfa88e65fda9c9766ad526d57e2fc8b2884f634
+	* src/keylist.c (gpgme_get_key): Move r_key init above
+	the first invalid value check.
+
+	qt, tests: Add test for single get key.
+	+ commit bf4aae45129c1093ee7712bdbcdfe1c8f2ca7c0f
+	* lang/qt/tests/t-keylist.cpp (testGetKey): New.
+
 2018-10-08  Werner Koch  <wk@gnupg.org>
 
 	Release 1.12.0.
