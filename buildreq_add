@@ -6,3 +6,4 @@ swig
 gnupg
 buildreq-kde
 libgpg-error-dev
+libgpg-error-extras
