@@ -1,3 +1,258 @@
+2019-06-13  Werner Koch  <wk@gnupg.org>
+
+	Release 1.13.1.
+	+ commit ea11c2a13cd44caf0bab395bd5132bf232318ad8
+	* configure.ac: Bump LT versions to c=C33/A22/R1 cpp=C16/A10/R0
+	qt=C10/A3/R4.
+
+	python: Fix regression in t-decrypt-verify test.
+	+ commit 7d0a979c07d2a32c1e39a9403f009cbe026f77ff
+	* lang/python/tests/t-decrypt-verify.py: Comment recent changes.
+
+	python: Set a default-key into gpg.conf for the tests.
+	+ commit ad1395f210f3a3d5839f482f1933eac80a94d174
+	* lang/python/tests/Makefile.am (gpg.conf): Set a default key.
+
+	core: At debug levels up to 9 print only an ascii dump.
+	+ commit 4f11210b21a1914a1daf67474e9b82084b2cac01
+	* src/debug.c (_gpgme_debug_buffer): Switch between two output
+	formats.
+
+2019-06-06  Werner Koch  <wk@gnupg.org>
+
+	tests: Minor fix to run-threaded.c.
+	+ commit f6fd90c99aea8b604d76ae49d29bc5269c236a98
+	* tests/run-threaded.c (random_data_close): Correct FD test.
+
+	core: Add commented debug helper to posix-io.c.
+	+ commit f84abcad253ace782708c05760e52793814896f4
+	* src/posix-io.c (_gpgme_is_fd_valid): New out-commented function.
+
+	core: Fix error return value of _gpgme_run_io_cb.
+	+ commit 6b9ff1ba391a4364b37cb116748194f3f33b4f12
+	* src/wait.c (_gpgme_run_io_cb): Fix return code.
+
+2019-06-06  Andre Heinecke  <aheinecke@gnupg.org>
+
+	tests: Add option "allow-del" to run-threaded.
+	+ commit e6f28273062ff26344163e219c1b784ae99de980
+	* tests/run-threaded.c (main): Handle allow-del.
+	(allow-del): New. Variable to allow deletion of keys.
+	(import): Delete key after import if allow-del is set.
+	(delete_impres): Delete keys from an import result.
+	(delete_fpr): Delete a key by fingerprint.
+
+2019-06-05  Andre Heinecke  <aheinecke@gnupg.org>
+
+	tests: Implement import in run-threaded.
+	+ commit 024a7f75d4b8e017b92a13552b23e7fb1d22a5ce
+	* tests/run-threaded.c (import): New.
+	(do_data_op): Call it.
+
+2019-06-05  Werner Koch  <wk@gnupg.org>
+
+	core: Prettify _gpgme_io_select debug output again and fix TRACE_SYSRES.
+	+ commit 0f68c9f16bdae7295cac4cbf3c9a197840989a85
+	* src/debug.c (_gpgme_debug): Take better care of NULL userinfo.
+	(_gpgme_debug_end): Rework.
+	(_trace_sysres): Print ERRNO and not the supplied RES.
+
+2019-06-05  Andre Heinecke  <aheinecke@gnupg.org>
+
+	tests: Use synced output for error in run-threaded.
+	+ commit 3a3648e3a56712261bda4fa866bd2419a740cec8
+	* tests/run-threaded.c (do_data_op): Use synced out macro.
+
+	tests: Avoid variable named the same as a macro.
+	+ commit 3a11421d0f63b8cb5afa407cd65f763b11033241
+	* tests/run-threaded.c (decrypt, verify): Don't use a variable name
+	that is also a macro.
+
+	tests,w32: Fix thread creation in run-threaded.
+	+ commit 9bbe15ebbc41533fa219d5b3017a26a75bc72731
+	* tests/run-threaded.c (create_thread): Check proper return
+	value and not return value of CloseHandle.
+
+2019-06-05  Werner Koch  <wk@gnupg.org>
+
+	core: Improve the debug messages even more.
+	+ commit 8f9f3224aac78ce9d54e19e73acf7ab659787168
+	* src/debug.c (_gpgme_debug): Add arg LINE.  Chnage all callers.
+	(_gpgme_debug_begin): Remove.
+	* src/debug.h (TRACE_SEQ): Use the LINE arg of _gpgme_debug.
+
+	core: Avoid explicit locks in the debug code.
+	+ commit 856d2e8d64f668855b1c22d3d38fe783904c6c48
+	* src/debug.c (debug_lock): Remove.  Also remove all users.
+	(_gpgme_debug): Use gpgrt_bsprintf to prepare the output and finally
+	print using standard fprintf.  Reformat to prefix to be narrower.
+
+2019-06-04  Werner Koch  <wk@gnupg.org>
+
+	json: Print "nan", "-inf", "inf" if needed.
+	+ commit f56c996318dfa1c9f0d10582b18c2fce10d24668
+	* src/cJSON.c (print_number): Print NaN and INF.
+
+	json: Improve handling of large exponents in the JSON parsor.
+	+ commit fabe96126b4ed9c5e07b713813d7db26a02e5e5f
+	* src/cJSON.c: Include stdint.h.
+	(parse_number): Avoid overflob in SUBSCALE and cap integer values.
+
+	core: Implement recpstring option parsing for gpgsm.
+	+ commit 1024884e07f750ce781fa74dffa62e126bdda622
+	* src/engine-gpg.c (append_args_from_recipients_string): Detect bad
+	options.
+	* src/engine-gpgsm.c (set_recipients_from_string): Implement option
+	parsing.
+
+	core: Make gpgme_op_encrypt_ext work for CMS.
+	+ commit e9ca36f876e1066227668981f5a9e1a7f1031d9e
+	* src/engine-gpgsm.c (gpgsm_encrypt): Fix argument check.
+
+2019-06-04  NIIBE Yutaka  <gniibe@fsij.org>
+
+	python: Fix typo in DecryptionError exception.
+	+ commit 47135ffdb923de66bc275a37e31811ad22c73dd7
+	* lang/python/src/errors.py (DecryptionError): Rename from
+	DeryptionError.
+	(UnsupportedAlgorithm): Use DecryptionError.
+
+2019-06-03  Andre Heinecke  <aheinecke@gnupg.org>
+
+	Add NEWS for 1.13.1.
+	+ commit 49883023f661a18d73f9f2c7a3a98902af62ef6b
+	* NEWS: Add news for 1.13.1
+
+2019-05-06  Andre Heinecke  <aheinecke@gnupg.org>
+
+	python: Make EXTRA_DIST files explicit.
+	+ commit f9c923bb2d87711235312e8085964372d7480ce4
+	* configure.ac: Configure new Makefiles.
+	* lang/python/Makefile.am: Remove dirs from extra dist and use
+	subdirs.
+	* lang/python/examples/Makefile.am, lang/python/src/Makefile.am,
+	lang/python/doc/Makefile.am: New. Files that list EXTRA_DIST files.
+
+	Python, doc: Minor style improvement.
+	+ commit 63055f13407760c877e5a3a94e564dfb3077dd47
+	* lang/python/src/core.py (Context): Retab and shorten
+	max line length.
+
+	Merge remote-tracking branch 'origin/dkg/fix-T4276'
+	+ commit f303806a110a9813023a5fd9468a55ab0f7fb39d
+
+
+2019-05-03  Andre Heinecke  <aheinecke@gnupg.org>
+
+	Always use maintainer mode -Wno cflags.
+	+ commit 33b13d1c290d7ce35c636cce4265b512fb8e64c3
+	* configure.ac (CFLAGS): Move -Wno flags out of the maintainer mode.
+
+	cpp: Fix initialization warning.
+	+ commit 0ed81498147723f0e9282df5ae08b8b8e40edd2f
+	* lanc/cpp/src/gpggencardkeyinteractor.cpp
+	(GpgGenCardKeyInteractor::Private): Fix initialization warning.
+
+2019-05-03  Daniel Kahn Gillmor  <dkg@fifthhorseman.net>
+
+	python: stop raising BadSignatures from decrypt(verify=True)
+	+ commit 4100794e305ba22241ea5a4f7b42bb5189fbd948
+	* src/core.py (decrypt): filter out signatures with errors from the
+	returned verify_result, but avoid raising BadSignatures
+	* tests/t-decrypt-verify.py: ensure that only a single signature is
+	returned when evaluating cipher-3.asc, since the other signature is
+	unknown.
+
+	python/tests: try to decrypt and verify new test data.
+	+ commit bd2d282e572b5d02669238c9e087259b85638477
+	* lang/python/tests/t-decrypt.py: test decryption of cipher-3.asc and
+	cipher-no-sig.asc
+	* lang/python/tests/t-decrypt-verify.py: test decryption and
+	verification of cipher-3.asc and cipher-no-sig.asc
+
+	tests: add two new types of encrypted data.
+	+ commit c5c3a9d10be415ea7bc0cd9730ad6085f16ee7a0
+	* tests/gpg/cipher-3.asc: add an encrypted file containing signatures
+	(one from a known key, and one from an unknown key)
+	* tests/gpg/cipher-no-sig.asc: add an encrypted file containing no
+	signatures at all
+
+	python: make it easier to run a limited number of tests.
+	+ commit 30bd1c097544376f257d426d5feb4706fb5d3afd
+	* lang/python/tests/Makefile.am: prefer py_tests from the environment
+	if present.
+
+2019-05-02  Andre Heinecke  <aheinecke@gnupg.org>
+
+	tests: Add cms mode to run-import.
+	+ commit 4746c5c9e2dd9a3ee471a429c19bc1f7fd1d07db
+	* tests/run-import.c (show_usage): Add doc for cms / openpgp.
+	(main): Handle protocol.
+
+2019-04-24  Andre Heinecke  <aheinecke@gnupg.org>
+
+	cpp: Add wrapper for gpgme_set_global_flag.
+	+ commit 7981ec4147f3058d5b56905903456247993dc6f7
+	* lang/cpp/src/context.cpp (setGlobalFlag): New.
+	* lang/cpp/src/global.h (setGlobalFlag): Export it.
+
+2019-04-19  NIIBE Yutaka  <gniibe@fsij.org>
+
+	core: Fix duplication of close_notify_handler for gpgsm.
+	+ commit 7673ef7953482f42cab50dca1810e5c9d10f461e
+	* src/engine-gpgsm.c [!USE_DESCRIPTOR_PASSING] (gpgsm_new): Remove
+	last call to _gpgme_io_set_close_notify.
+
+	core: Fix error return.
+	+ commit 814f6c8de8006830f19a029a879bd92f9e584789
+	* src/engine.c (_gpgme_set_engine_info): Add error return.
+
+2019-04-09  Andre Heinecke  <aheinecke@gnupg.org>
+
+	core,w32: Fix minor potential memleak.
+	+ commit 140d694e1fddf16fa3fd2371b9a852ebb14622c8
+	* src/w32-util.c (_gpgme_create_process_utf8): Free converted
+	startup info strings.
+
+	core,w32: Fix new w32-util functions.
+	+ commit ecbba12b869106ba03e10b7b7dd80f74d086831b
+	* src/w32-util.c (_gpgme_access): Respect mode parameter.
+	(_gpgme_create_process_utf8): Convert startupinfo, too.
+
+	core,w32: Improve handling of Unicode paths.
+	+ commit a82e3a0ae57a48ba173e282a050680751006c074
+	* src/dirinfo.c (get_gpgconf_item): Use _gpgme_access.
+	* src/posix-util.c (_gpgme_access): Add forward to normal access.
+	* src/sys-util.h (_gpgme_access): New for posix and w32.
+	* src/w32-io.c (_gpgme_io_spawn): Use _gpgme_crate_process_utf8.
+	* src/w32-util.c (utf8_to_wchar, utf8_to_wchar0): The usual w32 conv.
+	(find_program_in_dir): Use _gpgme_access.
+	(find_program_at_standard_place): Use wchar API and convert to UTF-8.
+	(_gpgme_access): Convert UTF-8 to wchar and use wchar API.
+	(_gpgme_create_process_utf8): Convert UTF-8 to wchar and use wchar API.
+
+	core,w32: Show w32-spawn warning only once.
+	+ commit 937adfdcbb22f715c5a331e5e2d4546ac15a1b7e
+	* src/w32-io.c (_gpgme_io_spawn): Show MessageBox only once.
+
+2019-03-27  Andre Heinecke  <aheinecke@gnupg.org>
+
+	core, w32: Fix format string errors on windows.
+	+ commit 4a4680f8901ecdcb7e8d5ed55f48226ccfccd7c8
+	* src/debug.c (_gpgme_debug): Use gpgrt_vasprintf instead of
+	vfprintf to have a more portable format.
+
+	core: Fix assuan logger-fd hack for windows.
+	+ commit 19a4c4daa2cfd075b181d5131a4b8b4d54714b8c
+	* src/assuan-support.c (my_spawn): Zero is a perfectly fine fd.
+
+2019-03-26  Andre Heinecke  <aheinecke@gnupg.org>
+
+	core,w32,glib: Fix build of w32-glib-io.c.
+	+ commit 213c4bc1eb1f45695cc3955cc722ebb363dcbdd0
+	* src/w32-glib-io.c (_gpgme_io_pipe, _gpgme_io_connect): Do not
+	use TRACE_SUC in a return statement.
+
 2019-03-26  Werner Koch  <wk@gnupg.org>
 
 	Release GPGME 1.13.0.

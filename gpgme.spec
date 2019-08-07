@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x249B39D24F25E3B6
 #
 Name     : gpgme
-Version  : 1.13.0
-Release  : 34
-URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.13.0.tar.bz2
-Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.13.0.tar.bz2
-Source99 : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.13.0.tar.bz2.sig
+Version  : 1.13.1
+Release  : 35
+URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.13.1.tar.bz2
+Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.13.1.tar.bz2
+Source1 : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.13.1.tar.bz2.sig
 Summary  : GPGME - GnuPG Made Easy
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
@@ -19,7 +19,9 @@ Requires: gpgme-lib = %{version}-%{release}
 Requires: gpgme-license = %{version}-%{release}
 Requires: gpgme-python = %{version}-%{release}
 Requires: gpgme-python3 = %{version}-%{release}
+Requires: Cython
 Requires: requests
+BuildRequires : Cython
 BuildRequires : buildreq-distutils3
 BuildRequires : buildreq-kde
 BuildRequires : doxygen
@@ -31,7 +33,7 @@ BuildRequires : libgpg-error-extras
 BuildRequires : python3
 BuildRequires : python3-dev
 BuildRequires : qtbase-dev
-BuildRequires : qtbase-extras
+BuildRequires : requests
 BuildRequires : swig
 
 %description
@@ -123,28 +125,31 @@ python3 components for the gpgme package.
 
 
 %prep
-%setup -q -n gpgme-1.13.0
+%setup -q -n gpgme-1.13.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1558390895
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1565201867
 export GCC_IGNORE_WERROR=1
-export LDFLAGS="${LDFLAGS} -fno-lto"
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %configure --disable-static --disable-fd-passing --disable-gpgsm-test --enable-languages=cl,cpp,python,qt
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1558390895
+export SOURCE_DATE_EPOCH=1565201867
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
 cp COPYING %{buildroot}/usr/share/package-licenses/gpgme/COPYING
@@ -175,7 +180,6 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 
 %files dev
 %defattr(-,root,root,-)
-%exclude /usr/lib64/libqgpgme.so
 /usr/include/*.h
 /usr/include/QGpgME/AbstractImportJob
 /usr/include/QGpgME/AddUserIDJob
@@ -307,16 +311,14 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 %defattr(-,root,root,-)
 /usr/lib64/libqgpgme.so
 /usr/lib64/libqgpgme.so.7
-/usr/lib64/libqgpgme.so.7.3.3
 
 %files lib
 %defattr(-,root,root,-)
-%exclude /usr/lib64/libqgpgme.so.7
-%exclude /usr/lib64/libqgpgme.so.7.3.3
 /usr/lib64/libgpgme.so.11
-/usr/lib64/libgpgme.so.11.22.0
+/usr/lib64/libgpgme.so.11.22.1
 /usr/lib64/libgpgmepp.so.6
-/usr/lib64/libgpgmepp.so.6.9.0
+/usr/lib64/libgpgmepp.so.6.10.0
+/usr/lib64/libqgpgme.so.7.3.4
 
 %files license
 %defattr(0644,root,root,0755)
