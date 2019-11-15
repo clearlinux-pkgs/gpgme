@@ -1,4 +1,5 @@
 Configure miss: gitlog-to-changelog
+Configure miss: windres
 Configure miss: x86_64-generic-linux-gnu-moc
 Configure miss: a Python interpreter with version >= 2.7
 Configure miss: a Python interpreter with version >= 3.4

@@ -6,7 +6,7 @@
 #
 Name     : gpgme
 Version  : 1.13.1
-Release  : 36
+Release  : 37
 URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.13.1.tar.bz2
 Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.13.1.tar.bz2
 Source1 : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.13.1.tar.bz2.sig
@@ -15,6 +15,7 @@ Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
 Requires: gpgme-bin = %{version}-%{release}
 Requires: gpgme-data = %{version}-%{release}
+Requires: gpgme-info = %{version}-%{release}
 Requires: gpgme-lib = %{version}-%{release}
 Requires: gpgme-license = %{version}-%{release}
 Requires: gpgme-python = %{version}-%{release}
@@ -73,20 +74,20 @@ Requires: gpgme = %{version}-%{release}
 dev components for the gpgme package.
 
 
-%package doc
-Summary: doc components for the gpgme package.
-Group: Documentation
-
-%description doc
-doc components for the gpgme package.
-
-
 %package extras
 Summary: extras components for the gpgme package.
 Group: Default
 
 %description extras
 extras components for the gpgme package.
+
+
+%package info
+Summary: info components for the gpgme package.
+Group: Default
+
+%description info
+info components for the gpgme package.
 
 
 %package lib
@@ -127,13 +128,14 @@ python3 components for the gpgme package.
 
 %prep
 %setup -q -n gpgme-1.13.1
+cd %{_builddir}/gpgme-1.13.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1565202168
+export SOURCE_DATE_EPOCH=1573789337
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -150,11 +152,11 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1565202168
+export SOURCE_DATE_EPOCH=1573789337
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
-cp COPYING %{buildroot}/usr/share/package-licenses/gpgme/COPYING
-cp COPYING.LESSER %{buildroot}/usr/share/package-licenses/gpgme/COPYING.LESSER
+cp %{_builddir}/gpgme-1.13.1/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d
+cp %{_builddir}/gpgme-1.13.1/COPYING.LESSER %{buildroot}/usr/share/package-licenses/gpgme/0bf81afbc585fd8fa3a9267d33498831f5a5c9c2
 %make_install
 ## install_append content
 touch abifiles.list
@@ -181,7 +183,6 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/*.h
 /usr/include/QGpgME/AbstractImportJob
 /usr/include/QGpgME/AddUserIDJob
 /usr/include/QGpgME/ChangeExpiryJob
@@ -256,6 +257,7 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 /usr/include/gpgme++/trustitem.h
 /usr/include/gpgme++/verificationresult.h
 /usr/include/gpgme++/vfsmountresult.h
+/usr/include/gpgme.h
 /usr/include/qgpgme/abstractimportjob.h
 /usr/include/qgpgme/adduseridjob.h
 /usr/include/qgpgme/changeexpiryjob.h
@@ -304,15 +306,17 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 /usr/lib64/pkgconfig/gpgme.pc
 /usr/share/aclocal/*.m4
 
-%files doc
-%defattr(0644,root,root,0755)
-%doc /usr/share/info/*
-
 %files extras
 %defattr(-,root,root,-)
 /usr/lib64/libqgpgme.so
 /usr/lib64/libqgpgme.so.7
 /usr/lib64/libqgpgme.so.7.3.4
+
+%files info
+%defattr(0644,root,root,0755)
+/usr/share/info/gpgme.info
+/usr/share/info/gpgme.info-1
+/usr/share/info/gpgme.info-2
 
 %files lib
 %defattr(-,root,root,-)
@@ -323,8 +327,8 @@ rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/gpgme/COPYING
-/usr/share/package-licenses/gpgme/COPYING.LESSER
+/usr/share/package-licenses/gpgme/0bf81afbc585fd8fa3a9267d33498831f5a5c9c2
+/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d
 
 %files python
 %defattr(-,root,root,-)
