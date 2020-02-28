@@ -6,10 +6,10 @@
 #
 Name     : gpgme
 Version  : 1.13.1
-Release  : 39
+Release  : 40
 URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.13.1.tar.bz2
 Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.13.1.tar.bz2
-Source1 : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.13.1.tar.bz2.sig
+Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.13.1.tar.bz2.sig
 Summary  : GPGME - GnuPG Made Easy
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
@@ -68,6 +68,7 @@ Requires: gpgme-lib = %{version}-%{release}
 Requires: gpgme-bin = %{version}-%{release}
 Requires: gpgme-data = %{version}-%{release}
 Provides: gpgme-devel = %{version}-%{release}
+Requires: gpgme = %{version}-%{release}
 Requires: gpgme = %{version}-%{release}
 
 %description dev
@@ -135,7 +136,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1573789337
+export SOURCE_DATE_EPOCH=1582932091
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -152,7 +154,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1573789337
+export SOURCE_DATE_EPOCH=1582932091
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
 cp %{_builddir}/gpgme-1.13.1/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d
@@ -163,6 +165,7 @@ touch abifiles.list
 cd lang/python
 DESTDIR=%{buildroot} make install
 rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
+
 ## install_append end
 
 %files
