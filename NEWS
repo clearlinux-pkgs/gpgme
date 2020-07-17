@@ -1,3 +1,48 @@
+Noteworthy changes in version 1.14.0 (2020-07-16)
+-------------------------------------------------
+
+ * New keylist mode to force the engine to return the keygrip. [#4820]
+
+ * New export mode to export as OpenSSH public key.  [#4310]
+
+ * New context flag "extended-edit" to enable expert key edit. [#4734]
+
+ * Deprecate the anyway non working trustlist functions.  [#4834]
+
+ * cpp: Add convenience API to obtain remarks. [#4734]
+
+ * cpp: The sign key edit-interactor now supports multiple signatures
+   from the same key. [#4734]
+
+ * qt: Extended signkeyjob to handle remarks and multiple signatures.
+   [#4734]
+
+ * qt: Added job API for gpg-card.
+
+ * qt: The logging category has been changed to gpg.qgpgme to be more
+       consistent with other qt logging categories.
+
+ * Interface changes relative to the 1.13.1 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPGME_KEYLIST_MODE_WITH_KEYGRIP              NEW.
+ GPGME_EXPORT_MODE_SSH                        NEW.
+ gpgme_user_id_t                         EXTENDED: New field 'uidhash'.
+ cpp: UserID::remark                          NEW.
+ cpp: UserID::remarks                         NEW.
+ cpp: GpgSignKeyEditInteractor::setDupeOk     NEW.
+ cpp: Context::exportPublicKeys          EXTENDED: New param 'flags'.
+ cpp: Context::startPublicKeyExport      EXTENDED: New param 'flags'.
+ cpp: Context::ExportMode                     NEW.
+ qt: SignKeyJob::setDupeOk                    NEW.
+ qt: SignKeyJob::setRemark                    NEW.
+ qt: GpgCardJob                               NEW.
+ qt: ExportJob::setExportFlags                NEW.
+
+ [c=C34/A23/R0 cpp=C17/A11/R0 qt=C11/A4/R0]
+
+ Release-info: https://dev.gnupg.org/T4996
+
+
 Noteworthy changes in version 1.13.1 (2019-06-13)
 -------------------------------------------------
 
