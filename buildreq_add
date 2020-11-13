@@ -1,9 +1,13 @@
 # This file contains additional build requirements that did not get
 # picked up automatically. One name per line, no whitespace.
-python3
-python3-dev
-swig
-gnupg
 buildreq-kde
+doxygen
+gnupg
+graphviz
+libassuan-dev
 libgpg-error-dev
 libgpg-error-extras
+python3
+python3-dev
+qtbase-dev
+swig
