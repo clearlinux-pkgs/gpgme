@@ -955,6 +955,7 @@ libgpgmepp.so.6:_ZNK5GpgME6UserID9Signature9isExpiredEv
 libgpgmepp.so.6:_ZNK5GpgME6UserID9Signature9isInvalidEv
 libgpgmepp.so.6:_ZNK5GpgME6UserID9Signature9notationsEv
 libgpgmepp.so.6:_ZNK5GpgME6UserID9Signature9policyURLEv
+libgpgmepp.so.6:_ZNK5GpgME6UserID9SignatureltERKS1_
 libgpgmepp.so.6:_ZNK5GpgME6UserID9isInvalidEv
 libgpgmepp.so.6:_ZNK5GpgME6UserID9isRevokedEv
 libgpgmepp.so.6:_ZNK5GpgME6UserID9signatureEj
