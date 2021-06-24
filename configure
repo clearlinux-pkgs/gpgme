@@ -1,1 +1,3 @@
---disable-fd-passing --disable-gpgsm-test --enable-languages=cl,cpp,python,qt
+--disable-fd-passing
+--disable-gpgsm-test
+--enable-languages=cl,cpp,python,qt
