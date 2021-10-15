@@ -6,7 +6,7 @@
 #
 Name     : gpgme
 Version  : 1.16.0
-Release  : 54
+Release  : 55
 URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.16.0.tar.bz2
 Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.16.0.tar.bz2
 Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.16.0.tar.bz2.sig
@@ -36,6 +36,7 @@ BuildRequires : python3-dev
 BuildRequires : qtbase-dev
 BuildRequires : requests
 BuildRequires : swig
+Patch1: 0001-core-Support-closefrom-also-for-glibc.patch
 
 %description
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG easier
@@ -128,13 +129,14 @@ python3 components for the gpgme package.
 %prep
 %setup -q -n gpgme-1.16.0
 cd %{_builddir}/gpgme-1.16.0
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1624568118
+export SOURCE_DATE_EPOCH=1634322837
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -153,7 +155,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1624568118
+export SOURCE_DATE_EPOCH=1634322837
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
 cp %{_builddir}/gpgme-1.16.0/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d

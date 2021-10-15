@@ -5,7 +5,6 @@ Configure miss: a Python interpreter with version >= 3.6
 Configure miss: a Python interpreter with version >= 3.7
 Configure miss: a Python interpreter with version >= 3.8
 Configure miss: a Python interpreter with version >= all
-Configure miss: closefrom
 Configure miss: getenv_r
 Configure miss: gitlog-to-changelog
 Configure miss: windres
