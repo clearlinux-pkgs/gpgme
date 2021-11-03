@@ -5,6 +5,9 @@ Configure miss: a Python interpreter with version >= 3.6
 Configure miss: a Python interpreter with version >= 3.7
 Configure miss: a Python interpreter with version >= 3.8
 Configure miss: a Python interpreter with version >= all
+Configure miss: consistency of all components of python development environment
+Configure miss: g++ option to enable C++11 features
+Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: getenv_r
 Configure miss: gitlog-to-changelog
 Configure miss: windres

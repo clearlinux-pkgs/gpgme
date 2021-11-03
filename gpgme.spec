@@ -6,7 +6,7 @@
 #
 Name     : gpgme
 Version  : 1.16.0
-Release  : 55
+Release  : 56
 URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.16.0.tar.bz2
 Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.16.0.tar.bz2
 Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.16.0.tar.bz2.sig
@@ -23,20 +23,29 @@ Requires: gpgme-python3 = %{version}-%{release}
 Requires: Cython
 Requires: requests
 BuildRequires : Cython
+BuildRequires : automake
+BuildRequires : automake-dev
 BuildRequires : buildreq-distutils3
 BuildRequires : buildreq-kde
 BuildRequires : doxygen
+BuildRequires : gettext-bin
 BuildRequires : gnupg
 BuildRequires : graphviz
 BuildRequires : libassuan-dev
 BuildRequires : libgpg-error-dev
 BuildRequires : libgpg-error-extras
+BuildRequires : libtool
+BuildRequires : libtool-dev
+BuildRequires : m4
+BuildRequires : pkg-config-dev
 BuildRequires : python3
 BuildRequires : python3-dev
 BuildRequires : qtbase-dev
 BuildRequires : requests
 BuildRequires : swig
 Patch1: 0001-core-Support-closefrom-also-for-glibc.patch
+Patch2: newpython.patch
+Patch3: fedorafix.patch
 
 %description
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG easier
@@ -130,19 +139,21 @@ python3 components for the gpgme package.
 %setup -q -n gpgme-1.16.0
 cd %{_builddir}/gpgme-1.16.0
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1634322837
+export SOURCE_DATE_EPOCH=1635953794
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
 export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
-%configure --disable-static --disable-fd-passing \
+%reconfigure --disable-static --disable-fd-passing \
 --disable-gpgsm-test \
 --enable-languages=cl,cpp,python,qt
 make  %{?_smp_mflags}
@@ -155,7 +166,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1634322837
+export SOURCE_DATE_EPOCH=1635953794
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
 cp %{_builddir}/gpgme-1.16.0/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d

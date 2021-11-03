@@ -1,0 +1,11 @@
+--- gpgme-1.16.0/configure.ac~	2021-06-24 17:03:27.000000000 +0000
++++ gpgme-1.16.0/configure.ac	2021-11-03 14:48:53.720467390 +0000
+@@ -425,7 +425,7 @@
+ 	if test "$found_py" = "1" -o "$found_py3" = "1"; then
+ 	  # Reset everything, so that we can look for another Python.
+           m4_foreach([mym4pythonver],
+-                     [[2.7],[3.4],[3.5],[3.6],[3.7],[3.8],[3.9],[all]],
++                     [[2.7],[3.4],[3.5],[3.6],[3.7],[3.8],[3.9],[3.10],[all]],
+            [unset PYTHON
+ 	    unset PYTHON_VERSION
+ 	    unset PYTHON_CPPFLAGS
