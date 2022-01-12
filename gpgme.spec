@@ -6,7 +6,7 @@
 #
 Name     : gpgme
 Version  : 1.16.0
-Release  : 57
+Release  : 58
 URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.16.0.tar.bz2
 Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.16.0.tar.bz2
 Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.16.0.tar.bz2.sig
@@ -20,9 +20,6 @@ Requires: gpgme-lib = %{version}-%{release}
 Requires: gpgme-license = %{version}-%{release}
 Requires: gpgme-python = %{version}-%{release}
 Requires: gpgme-python3 = %{version}-%{release}
-Requires: Cython
-Requires: requests
-BuildRequires : Cython
 BuildRequires : automake
 BuildRequires : automake-dev
 BuildRequires : buildreq-distutils3
@@ -38,10 +35,12 @@ BuildRequires : libtool
 BuildRequires : libtool-dev
 BuildRequires : m4
 BuildRequires : pkg-config-dev
+BuildRequires : pypi(cython)
+BuildRequires : pypi(hkp4py)
+BuildRequires : pypi(requests)
 BuildRequires : python3
 BuildRequires : python3-dev
 BuildRequires : qtbase-dev
-BuildRequires : requests
 BuildRequires : swig
 Patch1: 0001-core-Support-closefrom-also-for-glibc.patch
 Patch2: newpython.patch
@@ -130,6 +129,9 @@ python components for the gpgme package.
 Summary: python3 components for the gpgme package.
 Group: Default
 Requires: python3-core
+Requires: pypi(cython)
+Requires: pypi(hkp4py)
+Requires: pypi(requests)
 
 %description python3
 python3 components for the gpgme package.
@@ -147,7 +149,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1635953794
+export SOURCE_DATE_EPOCH=1641948919
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -166,7 +168,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1635953794
+export SOURCE_DATE_EPOCH=1641948919
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
 cp %{_builddir}/gpgme-1.16.0/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d
