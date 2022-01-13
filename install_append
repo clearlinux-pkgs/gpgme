@@ -1,4 +1,4 @@
 touch abifiles.list
 cd lang/python
 DESTDIR=%{buildroot} make install
-rm -f %{buildroot}/usr/lib/python3.6/site-packages/gpg/install_files.txt
+mv %{buildroot}/usr/lib/python3.*/site-packages/gpg-*.egg/gpg %{buildroot}/usr/lib/python3.10/site-packages/gpg
