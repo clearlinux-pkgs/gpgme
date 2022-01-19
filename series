@@ -1,3 +1,2 @@
 0001-core-Support-closefrom-also-for-glibc.patch
-newpython.patch
 py310-fix.patch

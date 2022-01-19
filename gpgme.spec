@@ -6,7 +6,7 @@
 #
 Name     : gpgme
 Version  : 1.16.0
-Release  : 61
+Release  : 62
 URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.16.0.tar.bz2
 Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.16.0.tar.bz2
 Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.16.0.tar.bz2.sig
@@ -20,21 +20,14 @@ Requires: gpgme-lib = %{version}-%{release}
 Requires: gpgme-license = %{version}-%{release}
 Requires: gpgme-python = %{version}-%{release}
 Requires: gpgme-python3 = %{version}-%{release}
-BuildRequires : automake
-BuildRequires : automake-dev
 BuildRequires : buildreq-distutils3
 BuildRequires : buildreq-kde
 BuildRequires : doxygen
-BuildRequires : gettext-bin
 BuildRequires : gnupg
 BuildRequires : graphviz
 BuildRequires : libassuan-dev
 BuildRequires : libgpg-error-dev
 BuildRequires : libgpg-error-extras
-BuildRequires : libtool
-BuildRequires : libtool-dev
-BuildRequires : m4
-BuildRequires : pkg-config-dev
 BuildRequires : pypi(cython)
 BuildRequires : pypi(hkp4py)
 BuildRequires : pypi(requests)
@@ -43,8 +36,7 @@ BuildRequires : python3-dev
 BuildRequires : qtbase-dev
 BuildRequires : swig
 Patch1: 0001-core-Support-closefrom-also-for-glibc.patch
-Patch2: newpython.patch
-Patch3: py310-fix.patch
+Patch2: py310-fix.patch
 
 %description
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG easier
@@ -139,20 +131,19 @@ python3 components for the gpgme package.
 cd %{_builddir}/gpgme-1.16.0
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1642101520
+export SOURCE_DATE_EPOCH=1642553468
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
 export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
-%reconfigure --disable-static --disable-fd-passing \
+%configure --disable-static --disable-fd-passing \
 --disable-gpgsm-test \
 --enable-languages=cl,cpp,python,qt
 make  %{?_smp_mflags}
@@ -165,7 +156,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1642101520
+export SOURCE_DATE_EPOCH=1642553468
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
 cp %{_builddir}/gpgme-1.16.0/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d
@@ -176,7 +167,6 @@ cp %{_builddir}/gpgme-1.16.0/LICENSES %{buildroot}/usr/share/package-licenses/gp
 touch abifiles.list
 cd lang/python
 DESTDIR=%{buildroot} make install
-mv %{buildroot}/usr/lib/python3.*/site-packages/gpg-*.egg/gpg %{buildroot}/usr/lib/python3.10/site-packages/gpg
 ## install_append end
 
 %files
