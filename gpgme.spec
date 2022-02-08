@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x528897B826403ADA
 #
 Name     : gpgme
-Version  : 1.16.0
-Release  : 62
-URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.16.0.tar.bz2
-Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.16.0.tar.bz2
-Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.16.0.tar.bz2.sig
+Version  : 1.17.0
+Release  : 63
+URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.0.tar.bz2
+Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.0.tar.bz2
+Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.0.tar.bz2.sig
 Summary  : GPGME - GnuPG Made Easy
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1 MIT
@@ -35,8 +35,7 @@ BuildRequires : python3
 BuildRequires : python3-dev
 BuildRequires : qtbase-dev
 BuildRequires : swig
-Patch1: 0001-core-Support-closefrom-also-for-glibc.patch
-Patch2: py310-fix.patch
+Patch1: py310-fix.patch
 
 %description
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG easier
@@ -121,23 +120,25 @@ python components for the gpgme package.
 Summary: python3 components for the gpgme package.
 Group: Default
 Requires: python3-core
+Requires: pypi(cython)
+Requires: pypi(hkp4py)
+Requires: pypi(requests)
 
 %description python3
 python3 components for the gpgme package.
 
 
 %prep
-%setup -q -n gpgme-1.16.0
-cd %{_builddir}/gpgme-1.16.0
+%setup -q -n gpgme-1.17.0
+cd %{_builddir}/gpgme-1.17.0
 %patch1 -p1
-%patch2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1642553468
+export SOURCE_DATE_EPOCH=1644341951
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -156,12 +157,12 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1642553468
+export SOURCE_DATE_EPOCH=1644341951
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
-cp %{_builddir}/gpgme-1.16.0/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d
-cp %{_builddir}/gpgme-1.16.0/COPYING.LESSER %{buildroot}/usr/share/package-licenses/gpgme/0bf81afbc585fd8fa3a9267d33498831f5a5c9c2
-cp %{_builddir}/gpgme-1.16.0/LICENSES %{buildroot}/usr/share/package-licenses/gpgme/7f6d7039cb982a2acec77a9d337942283a3875a0
+cp %{_builddir}/gpgme-1.17.0/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d
+cp %{_builddir}/gpgme-1.17.0/COPYING.LESSER %{buildroot}/usr/share/package-licenses/gpgme/0bf81afbc585fd8fa3a9267d33498831f5a5c9c2
+cp %{_builddir}/gpgme-1.17.0/LICENSES %{buildroot}/usr/share/package-licenses/gpgme/7f6d7039cb982a2acec77a9d337942283a3875a0
 %make_install
 ## install_append content
 touch abifiles.list
@@ -188,6 +189,7 @@ DESTDIR=%{buildroot} make install
 %files dev
 %defattr(-,root,root,-)
 /usr/include/QGpgME/AbstractImportJob
+/usr/include/QGpgME/AddExistingSubkeyJob
 /usr/include/QGpgME/AddUserIDJob
 /usr/include/QGpgME/ChangeExpiryJob
 /usr/include/QGpgME/ChangeOwnerTrustJob
@@ -216,6 +218,7 @@ DESTDIR=%{buildroot} make install
 /usr/include/QGpgME/Protocol
 /usr/include/QGpgME/QGpgMENewCryptoConfig
 /usr/include/QGpgME/QuickJob
+/usr/include/QGpgME/ReceiveKeysJob
 /usr/include/QGpgME/RefreshKeysJob
 /usr/include/QGpgME/SignEncryptJob
 /usr/include/QGpgME/SignJob
@@ -224,6 +227,8 @@ DESTDIR=%{buildroot} make install
 /usr/include/QGpgME/TofuPolicyJob
 /usr/include/QGpgME/VerifyDetachedJob
 /usr/include/QGpgME/VerifyOpaqueJob
+/usr/include/QGpgME/WKDLookupJob
+/usr/include/QGpgME/WKDLookupResult
 /usr/include/QGpgME/WKSPublishJob
 /usr/include/gpgme++/configuration.h
 /usr/include/gpgme++/context.h
@@ -237,6 +242,7 @@ DESTDIR=%{buildroot} make install
 /usr/include/gpgme++/eventloopinteractor.h
 /usr/include/gpgme++/exception.h
 /usr/include/gpgme++/global.h
+/usr/include/gpgme++/gpgaddexistingsubkeyeditinteractor.h
 /usr/include/gpgme++/gpgadduserideditinteractor.h
 /usr/include/gpgme++/gpgagentgetinfoassuantransaction.h
 /usr/include/gpgme++/gpggencardkeyinteractor.h
@@ -267,6 +273,7 @@ DESTDIR=%{buildroot} make install
 /usr/include/gpgme++/vfsmountresult.h
 /usr/include/gpgme.h
 /usr/include/qgpgme/abstractimportjob.h
+/usr/include/qgpgme/addexistingsubkeyjob.h
 /usr/include/qgpgme/adduseridjob.h
 /usr/include/qgpgme/changeexpiryjob.h
 /usr/include/qgpgme/changeownertrustjob.h
@@ -297,6 +304,7 @@ DESTDIR=%{buildroot} make install
 /usr/include/qgpgme/qgpgme_version.h
 /usr/include/qgpgme/qgpgmenewcryptoconfig.h
 /usr/include/qgpgme/quickjob.h
+/usr/include/qgpgme/receivekeysjob.h
 /usr/include/qgpgme/refreshkeysjob.h
 /usr/include/qgpgme/signencryptjob.h
 /usr/include/qgpgme/signjob.h
@@ -305,6 +313,8 @@ DESTDIR=%{buildroot} make install
 /usr/include/qgpgme/tofupolicyjob.h
 /usr/include/qgpgme/verifydetachedjob.h
 /usr/include/qgpgme/verifyopaquejob.h
+/usr/include/qgpgme/wkdlookupjob.h
+/usr/include/qgpgme/wkdlookupresult.h
 /usr/include/qgpgme/wkspublishjob.h
 /usr/lib64/cmake/Gpgmepp/GpgmeppConfig.cmake
 /usr/lib64/cmake/Gpgmepp/GpgmeppConfigVersion.cmake
@@ -320,7 +330,6 @@ DESTDIR=%{buildroot} make install
 %defattr(-,root,root,-)
 /usr/lib64/libqgpgme.so
 /usr/lib64/libqgpgme.so.7
-/usr/lib64/libqgpgme.so.7.6.0
 
 %files info
 %defattr(0644,root,root,0755)
@@ -331,9 +340,10 @@ DESTDIR=%{buildroot} make install
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libgpgme.so.11
-/usr/lib64/libgpgme.so.11.25.0
+/usr/lib64/libgpgme.so.11.26.0
 /usr/lib64/libgpgmepp.so.6
-/usr/lib64/libgpgmepp.so.6.13.0
+/usr/lib64/libgpgmepp.so.6.14.0
+/usr/lib64/libqgpgme.so.7.7.0
 
 %files license
 %defattr(0644,root,root,0755)
