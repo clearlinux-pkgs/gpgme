@@ -6,7 +6,7 @@
 #
 Name     : gpgme
 Version  : 1.17.0
-Release  : 63
+Release  : 64
 URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.0.tar.bz2
 Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.0.tar.bz2
 Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.0.tar.bz2.sig
@@ -138,7 +138,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1644341951
+export SOURCE_DATE_EPOCH=1645039114
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -157,7 +157,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1644341951
+export SOURCE_DATE_EPOCH=1645039114
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
 cp %{_builddir}/gpgme-1.17.0/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d
@@ -330,6 +330,7 @@ DESTDIR=%{buildroot} make install
 %defattr(-,root,root,-)
 /usr/lib64/libqgpgme.so
 /usr/lib64/libqgpgme.so.7
+/usr/lib64/libqgpgme.so.7.7.0
 
 %files info
 %defattr(0644,root,root,0755)
@@ -343,7 +344,6 @@ DESTDIR=%{buildroot} make install
 /usr/lib64/libgpgme.so.11.26.0
 /usr/lib64/libgpgmepp.so.6
 /usr/lib64/libgpgmepp.so.6.14.0
-/usr/lib64/libqgpgme.so.7.7.0
 
 %files license
 %defattr(0644,root,root,0755)
