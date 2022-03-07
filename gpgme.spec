@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x528897B826403ADA
 #
 Name     : gpgme
-Version  : 1.17.0
-Release  : 64
-URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.0.tar.bz2
-Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.0.tar.bz2
-Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.0.tar.bz2.sig
+Version  : 1.17.1
+Release  : 65
+URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2
+Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2
+Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2.sig
 Summary  : GPGME - GnuPG Made Easy
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1 MIT
@@ -129,8 +129,8 @@ python3 components for the gpgme package.
 
 
 %prep
-%setup -q -n gpgme-1.17.0
-cd %{_builddir}/gpgme-1.17.0
+%setup -q -n gpgme-1.17.1
+cd %{_builddir}/gpgme-1.17.1
 %patch1 -p1
 
 %build
@@ -138,7 +138,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1645039114
+export SOURCE_DATE_EPOCH=1646682152
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -157,12 +157,12 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1645039114
+export SOURCE_DATE_EPOCH=1646682152
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
-cp %{_builddir}/gpgme-1.17.0/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d
-cp %{_builddir}/gpgme-1.17.0/COPYING.LESSER %{buildroot}/usr/share/package-licenses/gpgme/0bf81afbc585fd8fa3a9267d33498831f5a5c9c2
-cp %{_builddir}/gpgme-1.17.0/LICENSES %{buildroot}/usr/share/package-licenses/gpgme/7f6d7039cb982a2acec77a9d337942283a3875a0
+cp %{_builddir}/gpgme-1.17.1/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d
+cp %{_builddir}/gpgme-1.17.1/COPYING.LESSER %{buildroot}/usr/share/package-licenses/gpgme/0bf81afbc585fd8fa3a9267d33498831f5a5c9c2
+cp %{_builddir}/gpgme-1.17.1/LICENSES %{buildroot}/usr/share/package-licenses/gpgme/7f6d7039cb982a2acec77a9d337942283a3875a0
 %make_install
 ## install_append content
 touch abifiles.list
@@ -329,8 +329,8 @@ DESTDIR=%{buildroot} make install
 %files extras
 %defattr(-,root,root,-)
 /usr/lib64/libqgpgme.so
-/usr/lib64/libqgpgme.so.7
-/usr/lib64/libqgpgme.so.7.7.0
+/usr/lib64/libqgpgme.so.15
+/usr/lib64/libqgpgme.so.15.0.0
 
 %files info
 %defattr(0644,root,root,0755)
