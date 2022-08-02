@@ -6,7 +6,7 @@
 #
 Name     : gpgme
 Version  : 1.17.1
-Release  : 65
+Release  : 66
 URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2
 Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2
 Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2.sig
@@ -138,7 +138,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1646682152
+export SOURCE_DATE_EPOCH=1659478693
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -157,12 +157,12 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1646682152
+export SOURCE_DATE_EPOCH=1659478693
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
-cp %{_builddir}/gpgme-1.17.1/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d
-cp %{_builddir}/gpgme-1.17.1/COPYING.LESSER %{buildroot}/usr/share/package-licenses/gpgme/0bf81afbc585fd8fa3a9267d33498831f5a5c9c2
-cp %{_builddir}/gpgme-1.17.1/LICENSES %{buildroot}/usr/share/package-licenses/gpgme/7f6d7039cb982a2acec77a9d337942283a3875a0
+cp %{_builddir}/gpgme-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d
+cp %{_builddir}/gpgme-%{version}/COPYING.LESSER %{buildroot}/usr/share/package-licenses/gpgme/0bf81afbc585fd8fa3a9267d33498831f5a5c9c2
+cp %{_builddir}/gpgme-%{version}/LICENSES %{buildroot}/usr/share/package-licenses/gpgme/7f6d7039cb982a2acec77a9d337942283a3875a0
 %make_install
 ## install_append content
 touch abifiles.list
