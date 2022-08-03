@@ -6,7 +6,7 @@
 #
 Name     : gpgme
 Version  : 1.17.1
-Release  : 66
+Release  : 67
 URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2
 Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2
 Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2.sig
@@ -28,7 +28,6 @@ BuildRequires : graphviz
 BuildRequires : libassuan-dev
 BuildRequires : libgpg-error-dev
 BuildRequires : libgpg-error-extras
-BuildRequires : pypi(cython)
 BuildRequires : pypi(hkp4py)
 BuildRequires : pypi(requests)
 BuildRequires : python3
@@ -120,7 +119,6 @@ python components for the gpgme package.
 Summary: python3 components for the gpgme package.
 Group: Default
 Requires: python3-core
-Requires: pypi(cython)
 Requires: pypi(hkp4py)
 Requires: pypi(requests)
 
@@ -138,7 +136,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1659478693
+export SOURCE_DATE_EPOCH=1659539209
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -157,7 +155,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1659478693
+export SOURCE_DATE_EPOCH=1659539209
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
 cp %{_builddir}/gpgme-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d
