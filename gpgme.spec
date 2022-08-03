@@ -6,7 +6,7 @@
 #
 Name     : gpgme
 Version  : 1.17.1
-Release  : 67
+Release  : 68
 URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2
 Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2
 Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2.sig
@@ -136,7 +136,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1659539209
+export SOURCE_DATE_EPOCH=1659545442
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -155,7 +155,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1659539209
+export SOURCE_DATE_EPOCH=1659545442
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
 cp %{_builddir}/gpgme-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d
@@ -166,6 +166,7 @@ cp %{_builddir}/gpgme-%{version}/LICENSES %{buildroot}/usr/share/package-license
 touch abifiles.list
 cd lang/python
 DESTDIR=%{buildroot} make install
+mv %{buildroot}/usr/lib/python3.10/site-packages/gpg-*.egg/gpg %{buildroot}/usr/lib/python3.10/site-packages/gpg
 ## install_append end
 
 %files
