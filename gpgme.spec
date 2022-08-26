@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x528897B826403ADA
 #
 Name     : gpgme
-Version  : 1.17.1
-Release  : 68
-URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2
-Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2
-Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.17.1.tar.bz2.sig
+Version  : 1.18.0
+Release  : 69
+URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.18.0.tar.bz2
+Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.18.0.tar.bz2
+Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.18.0.tar.bz2.sig
 Summary  : GPGME - GnuPG Made Easy
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1 MIT
@@ -127,8 +127,8 @@ python3 components for the gpgme package.
 
 
 %prep
-%setup -q -n gpgme-1.17.1
-cd %{_builddir}/gpgme-1.17.1
+%setup -q -n gpgme-1.18.0
+cd %{_builddir}/gpgme-1.18.0
 %patch1 -p1
 
 %build
@@ -136,7 +136,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1659545442
+export SOURCE_DATE_EPOCH=1661472901
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -155,12 +155,12 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1659545442
+export SOURCE_DATE_EPOCH=1661472901
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
-cp %{_builddir}/gpgme-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d
-cp %{_builddir}/gpgme-%{version}/COPYING.LESSER %{buildroot}/usr/share/package-licenses/gpgme/0bf81afbc585fd8fa3a9267d33498831f5a5c9c2
-cp %{_builddir}/gpgme-%{version}/LICENSES %{buildroot}/usr/share/package-licenses/gpgme/7f6d7039cb982a2acec77a9d337942283a3875a0
+cp %{_builddir}/gpgme-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d || :
+cp %{_builddir}/gpgme-%{version}/COPYING.LESSER %{buildroot}/usr/share/package-licenses/gpgme/0bf81afbc585fd8fa3a9267d33498831f5a5c9c2 || :
+cp %{_builddir}/gpgme-%{version}/LICENSES %{buildroot}/usr/share/package-licenses/gpgme/7f6d7039cb982a2acec77a9d337942283a3875a0 || :
 %make_install
 ## install_append content
 touch abifiles.list
@@ -219,6 +219,8 @@ mv %{buildroot}/usr/lib/python3.10/site-packages/gpg-*.egg/gpg %{buildroot}/usr/
 /usr/include/QGpgME/QuickJob
 /usr/include/QGpgME/ReceiveKeysJob
 /usr/include/QGpgME/RefreshKeysJob
+/usr/include/QGpgME/RevokeKeyJob
+/usr/include/QGpgME/SetPrimaryUserIDJob
 /usr/include/QGpgME/SignEncryptJob
 /usr/include/QGpgME/SignJob
 /usr/include/QGpgME/SignKeyJob
@@ -248,6 +250,7 @@ mv %{buildroot}/usr/lib/python3.10/site-packages/gpg-*.egg/gpg %{buildroot}/usr/
 /usr/include/gpgme++/gpgmefw.h
 /usr/include/gpgme++/gpgmepp_export.h
 /usr/include/gpgme++/gpgmepp_version.h
+/usr/include/gpgme++/gpgrevokekeyeditinteractor.h
 /usr/include/gpgme++/gpgsetexpirytimeeditinteractor.h
 /usr/include/gpgme++/gpgsetownertrusteditinteractor.h
 /usr/include/gpgme++/gpgsignkeyeditinteractor.h
@@ -305,6 +308,8 @@ mv %{buildroot}/usr/lib/python3.10/site-packages/gpg-*.egg/gpg %{buildroot}/usr/
 /usr/include/qgpgme/quickjob.h
 /usr/include/qgpgme/receivekeysjob.h
 /usr/include/qgpgme/refreshkeysjob.h
+/usr/include/qgpgme/revokekeyjob.h
+/usr/include/qgpgme/setprimaryuseridjob.h
 /usr/include/qgpgme/signencryptjob.h
 /usr/include/qgpgme/signjob.h
 /usr/include/qgpgme/signkeyjob.h
@@ -329,7 +334,6 @@ mv %{buildroot}/usr/lib/python3.10/site-packages/gpg-*.egg/gpg %{buildroot}/usr/
 %defattr(-,root,root,-)
 /usr/lib64/libqgpgme.so
 /usr/lib64/libqgpgme.so.15
-/usr/lib64/libqgpgme.so.15.0.0
 
 %files info
 %defattr(0644,root,root,0755)
@@ -340,9 +344,10 @@ mv %{buildroot}/usr/lib/python3.10/site-packages/gpg-*.egg/gpg %{buildroot}/usr/
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libgpgme.so.11
-/usr/lib64/libgpgme.so.11.26.0
+/usr/lib64/libgpgme.so.11.27.0
 /usr/lib64/libgpgmepp.so.6
-/usr/lib64/libgpgmepp.so.6.14.0
+/usr/lib64/libgpgmepp.so.6.15.0
+/usr/lib64/libqgpgme.so.15.1.0
 
 %files license
 %defattr(0644,root,root,0755)
