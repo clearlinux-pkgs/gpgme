@@ -6,7 +6,7 @@
 #
 Name     : gpgme
 Version  : 1.18.0
-Release  : 69
+Release  : 70
 URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.18.0.tar.bz2
 Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.18.0.tar.bz2
 Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.18.0.tar.bz2.sig
@@ -136,7 +136,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1661472901
+export SOURCE_DATE_EPOCH=1661473234
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -155,7 +155,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1661472901
+export SOURCE_DATE_EPOCH=1661473234
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
 cp %{_builddir}/gpgme-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d || :
@@ -334,6 +334,7 @@ mv %{buildroot}/usr/lib/python3.10/site-packages/gpg-*.egg/gpg %{buildroot}/usr/
 %defattr(-,root,root,-)
 /usr/lib64/libqgpgme.so
 /usr/lib64/libqgpgme.so.15
+/usr/lib64/libqgpgme.so.15.1.0
 
 %files info
 %defattr(0644,root,root,0755)
@@ -347,7 +348,6 @@ mv %{buildroot}/usr/lib/python3.10/site-packages/gpg-*.egg/gpg %{buildroot}/usr/
 /usr/lib64/libgpgme.so.11.27.0
 /usr/lib64/libgpgmepp.so.6
 /usr/lib64/libgpgmepp.so.6.15.0
-/usr/lib64/libqgpgme.so.15.1.0
 
 %files license
 %defattr(0644,root,root,0755)
