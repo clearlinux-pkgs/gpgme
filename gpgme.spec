@@ -6,7 +6,7 @@
 #
 Name     : gpgme
 Version  : 1.18.0
-Release  : 70
+Release  : 71
 URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.18.0.tar.bz2
 Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.18.0.tar.bz2
 Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.18.0.tar.bz2.sig
