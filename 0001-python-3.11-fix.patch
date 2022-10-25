@@ -1,0 +1,345 @@
+From 46498be9a05a86c19d46c63f78265667177b7bef Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Tue, 25 Oct 2022 14:34:19 -0700
+Subject: [PATCH] python 3.11 fix
+
+---
+ configure | 78 +++++++++++++++++++++++++++----------------------------
+ 1 file changed, 39 insertions(+), 39 deletions(-)
+
+diff --git a/configure b/configure
+index c1611c7..cfd00d2 100755
+--- a/configure
++++ b/configure
+@@ -19765,7 +19765,7 @@ $as_echo_n "checking for $am_display_PYTHON version... " >&6; }
+ if ${am_cv_python_version+:} false; then :
+   $as_echo_n "(cached) " >&6
+ else
+-  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:3])"`
++  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:4])"`
+ fi
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_version" >&5
+ $as_echo "$am_cv_python_version" >&6; }
+@@ -19806,7 +19806,7 @@ else:
+ # <https://github.com/pypa/virtualenv/issues/118>
+ try:
+     from platform import python_implementation
+-    if python_implementation() == 'CPython' and sys.version[:3] == '2.7':
++    if python_implementation() == 'CPython' and sys.version[:4] == '2.7':
+         can_use_sysconfig = 0
+ except ImportError:
+     pass"
+@@ -20015,7 +20015,7 @@ variable to configure. See \`\`configure --help'' for reference.
+ 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ $as_echo_n "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ $as_echo "yes" >&6; }
+ 	else
+@@ -20073,7 +20073,7 @@ EOD`
+ 				ac_python_version=$PYTHON_VERSION
+ 			else
+ 				ac_python_version=`$PYTHON -c "import sys; \
+-					print (sys.version[:3])"`
++					print (sys.version[:4])"`
+ 			fi
+ 		fi
+ 
+@@ -20395,7 +20395,7 @@ $as_echo_n "checking for $am_display_PYTHON version... " >&6; }
+ if ${am_cv_python_version+:} false; then :
+   $as_echo_n "(cached) " >&6
+ else
+-  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:3])"`
++  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:4])"`
+ fi
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_version" >&5
+ $as_echo "$am_cv_python_version" >&6; }
+@@ -20436,7 +20436,7 @@ else:
+ # <https://github.com/pypa/virtualenv/issues/118>
+ try:
+     from platform import python_implementation
+-    if python_implementation() == 'CPython' and sys.version[:3] == '2.7':
++    if python_implementation() == 'CPython' and sys.version[:4] == '2.7':
+         can_use_sysconfig = 0
+ except ImportError:
+     pass"
+@@ -20645,7 +20645,7 @@ variable to configure. See \`\`configure --help'' for reference.
+ 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ $as_echo_n "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ $as_echo "yes" >&6; }
+ 	else
+@@ -20703,7 +20703,7 @@ EOD`
+ 				ac_python_version=$PYTHON_VERSION
+ 			else
+ 				ac_python_version=`$PYTHON -c "import sys; \
+-					print (sys.version[:3])"`
++					print (sys.version[:4])"`
+ 			fi
+ 		fi
+ 
+@@ -21025,7 +21025,7 @@ $as_echo_n "checking for $am_display_PYTHON version... " >&6; }
+ if ${am_cv_python_version+:} false; then :
+   $as_echo_n "(cached) " >&6
+ else
+-  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:3])"`
++  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:4])"`
+ fi
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_version" >&5
+ $as_echo "$am_cv_python_version" >&6; }
+@@ -21066,7 +21066,7 @@ else:
+ # <https://github.com/pypa/virtualenv/issues/118>
+ try:
+     from platform import python_implementation
+-    if python_implementation() == 'CPython' and sys.version[:3] == '2.7':
++    if python_implementation() == 'CPython' and sys.version[:4] == '2.7':
+         can_use_sysconfig = 0
+ except ImportError:
+     pass"
+@@ -21275,7 +21275,7 @@ variable to configure. See \`\`configure --help'' for reference.
+ 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ $as_echo_n "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ $as_echo "yes" >&6; }
+ 	else
+@@ -21333,7 +21333,7 @@ EOD`
+ 				ac_python_version=$PYTHON_VERSION
+ 			else
+ 				ac_python_version=`$PYTHON -c "import sys; \
+-					print (sys.version[:3])"`
++					print (sys.version[:4])"`
+ 			fi
+ 		fi
+ 
+@@ -21655,7 +21655,7 @@ $as_echo_n "checking for $am_display_PYTHON version... " >&6; }
+ if ${am_cv_python_version+:} false; then :
+   $as_echo_n "(cached) " >&6
+ else
+-  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:3])"`
++  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:4])"`
+ fi
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_version" >&5
+ $as_echo "$am_cv_python_version" >&6; }
+@@ -21696,7 +21696,7 @@ else:
+ # <https://github.com/pypa/virtualenv/issues/118>
+ try:
+     from platform import python_implementation
+-    if python_implementation() == 'CPython' and sys.version[:3] == '2.7':
++    if python_implementation() == 'CPython' and sys.version[:4] == '2.7':
+         can_use_sysconfig = 0
+ except ImportError:
+     pass"
+@@ -21905,7 +21905,7 @@ variable to configure. See \`\`configure --help'' for reference.
+ 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ $as_echo_n "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ $as_echo "yes" >&6; }
+ 	else
+@@ -21963,7 +21963,7 @@ EOD`
+ 				ac_python_version=$PYTHON_VERSION
+ 			else
+ 				ac_python_version=`$PYTHON -c "import sys; \
+-					print (sys.version[:3])"`
++					print (sys.version[:4])"`
+ 			fi
+ 		fi
+ 
+@@ -22285,7 +22285,7 @@ $as_echo_n "checking for $am_display_PYTHON version... " >&6; }
+ if ${am_cv_python_version+:} false; then :
+   $as_echo_n "(cached) " >&6
+ else
+-  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:3])"`
++  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:4])"`
+ fi
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_version" >&5
+ $as_echo "$am_cv_python_version" >&6; }
+@@ -22326,7 +22326,7 @@ else:
+ # <https://github.com/pypa/virtualenv/issues/118>
+ try:
+     from platform import python_implementation
+-    if python_implementation() == 'CPython' and sys.version[:3] == '2.7':
++    if python_implementation() == 'CPython' and sys.version[:4] == '2.7':
+         can_use_sysconfig = 0
+ except ImportError:
+     pass"
+@@ -22535,7 +22535,7 @@ variable to configure. See \`\`configure --help'' for reference.
+ 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ $as_echo_n "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ $as_echo "yes" >&6; }
+ 	else
+@@ -22593,7 +22593,7 @@ EOD`
+ 				ac_python_version=$PYTHON_VERSION
+ 			else
+ 				ac_python_version=`$PYTHON -c "import sys; \
+-					print (sys.version[:3])"`
++					print (sys.version[:4])"`
+ 			fi
+ 		fi
+ 
+@@ -22915,7 +22915,7 @@ $as_echo_n "checking for $am_display_PYTHON version... " >&6; }
+ if ${am_cv_python_version+:} false; then :
+   $as_echo_n "(cached) " >&6
+ else
+-  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:3])"`
++  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:4])"`
+ fi
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_version" >&5
+ $as_echo "$am_cv_python_version" >&6; }
+@@ -22956,7 +22956,7 @@ else:
+ # <https://github.com/pypa/virtualenv/issues/118>
+ try:
+     from platform import python_implementation
+-    if python_implementation() == 'CPython' and sys.version[:3] == '2.7':
++    if python_implementation() == 'CPython' and sys.version[:4] == '2.7':
+         can_use_sysconfig = 0
+ except ImportError:
+     pass"
+@@ -23165,7 +23165,7 @@ variable to configure. See \`\`configure --help'' for reference.
+ 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ $as_echo_n "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ $as_echo "yes" >&6; }
+ 	else
+@@ -23223,7 +23223,7 @@ EOD`
+ 				ac_python_version=$PYTHON_VERSION
+ 			else
+ 				ac_python_version=`$PYTHON -c "import sys; \
+-					print (sys.version[:3])"`
++					print (sys.version[:4])"`
+ 			fi
+ 		fi
+ 
+@@ -23431,13 +23431,13 @@ $as_echo "$as_me: WARNING:
+ 
+         if test -n "$PYTHON"; then
+       # If the user set $PYTHON, use it and don't search something else.
+-      { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $PYTHON version is >= 3.9" >&5
+-$as_echo_n "checking whether $PYTHON version is >= 3.9... " >&6; }
++      { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $PYTHON version is >= 3.11" >&5
++$as_echo_n "checking whether $PYTHON version is >= 3.11... " >&6; }
+       prog="import sys
+ # split strings by '.' and convert to numeric.  Append some zeros
+ # because we need at least 4 digits for the hex conversion.
+ # map returns an iterator in Python 3.0 and a list in 2.x
+-minver = list(map(int, '3.9'.split('.'))) + [0, 0, 0]
++minver = list(map(int, '3.11'.split('.'))) + [0, 0, 0]
+ minverhex = 0
+ # xrange is not present in Python 3.0 and range returns an iterator
+ for i in list(range(0, 4)): minverhex = (minverhex << 8) + minver[i]
+@@ -23458,19 +23458,19 @@ fi
+     else
+       # Otherwise, try each interpreter until we find one that satisfies
+       # VERSION.
+-      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for a Python interpreter with version >= 3.9" >&5
+-$as_echo_n "checking for a Python interpreter with version >= 3.9... " >&6; }
++      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for a Python interpreter with version >= 3.11" >&5
++$as_echo_n "checking for a Python interpreter with version >= 3.11... " >&6; }
+ if ${am_cv_pathless_PYTHON+:} false; then :
+   $as_echo_n "(cached) " >&6
+ else
+ 
+-	for am_cv_pathless_PYTHON           in python3.9 none; do
++	for am_cv_pathless_PYTHON           in python3.11 none; do
+ 	  test "$am_cv_pathless_PYTHON" = none && break
+ 	  prog="import sys
+ # split strings by '.' and convert to numeric.  Append some zeros
+ # because we need at least 4 digits for the hex conversion.
+ # map returns an iterator in Python 3.0 and a list in 2.x
+-minver = list(map(int, '3.9'.split('.'))) + [0, 0, 0]
++minver = list(map(int, '3.11'.split('.'))) + [0, 0, 0]
+ minverhex = 0
+ # xrange is not present in Python 3.0 and range returns an iterator
+ for i in list(range(0, 4)): minverhex = (minverhex << 8) + minver[i]
+@@ -23545,7 +23545,7 @@ $as_echo_n "checking for $am_display_PYTHON version... " >&6; }
+ if ${am_cv_python_version+:} false; then :
+   $as_echo_n "(cached) " >&6
+ else
+-  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:3])"`
++  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:4])"`
+ fi
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_version" >&5
+ $as_echo "$am_cv_python_version" >&6; }
+@@ -23586,7 +23586,7 @@ else:
+ # <https://github.com/pypa/virtualenv/issues/118>
+ try:
+     from platform import python_implementation
+-    if python_implementation() == 'CPython' and sys.version[:3] == '2.7':
++    if python_implementation() == 'CPython' and sys.version[:4] == '2.7':
+         can_use_sysconfig = 0
+ except ImportError:
+     pass"
+@@ -23795,7 +23795,7 @@ variable to configure. See \`\`configure --help'' for reference.
+ 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ $as_echo_n "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ $as_echo "yes" >&6; }
+ 	else
+@@ -23853,7 +23853,7 @@ EOD`
+ 				ac_python_version=$PYTHON_VERSION
+ 			else
+ 				ac_python_version=`$PYTHON -c "import sys; \
+-					print (sys.version[:3])"`
++					print (sys.version[:4])"`
+ 			fi
+ 		fi
+ 
+@@ -24175,7 +24175,7 @@ $as_echo_n "checking for $am_display_PYTHON version... " >&6; }
+ if ${am_cv_python_version+:} false; then :
+   $as_echo_n "(cached) " >&6
+ else
+-  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:3])"`
++  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:4])"`
+ fi
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_version" >&5
+ $as_echo "$am_cv_python_version" >&6; }
+@@ -24216,7 +24216,7 @@ else:
+ # <https://github.com/pypa/virtualenv/issues/118>
+ try:
+     from platform import python_implementation
+-    if python_implementation() == 'CPython' and sys.version[:3] == '2.7':
++    if python_implementation() == 'CPython' and sys.version[:4] == '2.7':
+         can_use_sysconfig = 0
+ except ImportError:
+     pass"
+@@ -24425,7 +24425,7 @@ variable to configure. See \`\`configure --help'' for reference.
+ 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ $as_echo_n "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ $as_echo "yes" >&6; }
+ 	else
+@@ -24483,7 +24483,7 @@ EOD`
+ 				ac_python_version=$PYTHON_VERSION
+ 			else
+ 				ac_python_version=`$PYTHON -c "import sys; \
+-					print (sys.version[:3])"`
++					print (sys.version[:4])"`
+ 			fi
+ 		fi
+ 
+-- 
+2.37.3
+
