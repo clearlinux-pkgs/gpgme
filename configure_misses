@@ -1,9 +1,12 @@
 Configure miss: a Python interpreter with version >= 2.7
+Configure miss: a Python interpreter with version >= 3.10
+Configure miss: a Python interpreter with version >= 3.12
 Configure miss: a Python interpreter with version >= 3.4
 Configure miss: a Python interpreter with version >= 3.5
 Configure miss: a Python interpreter with version >= 3.6
 Configure miss: a Python interpreter with version >= 3.7
 Configure miss: a Python interpreter with version >= 3.8
+Configure miss: a Python interpreter with version >= 3.9
 Configure miss: a Python interpreter with version >= all
 Configure miss: getenv_r
 Configure miss: gitlog-to-changelog
