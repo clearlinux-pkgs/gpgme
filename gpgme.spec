@@ -7,7 +7,7 @@
 #
 Name     : gpgme
 Version  : 1.21.0
-Release  : 77
+Release  : 79
 URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.21.0.tar.bz2
 Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.21.0.tar.bz2
 Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.21.0.tar.bz2.sig
@@ -134,7 +134,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1688759184
+export SOURCE_DATE_EPOCH=1690299013
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
@@ -153,7 +153,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1688759184
+export SOURCE_DATE_EPOCH=1690299013
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gpgme
 cp %{_builddir}/gpgme-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gpgme/dfac199a7539a404407098a2541b9482279f690d || :
@@ -341,7 +341,7 @@ mv %{buildroot}/usr/lib/python3.11/site-packages/gpg-*.egg/gpg %{buildroot}/usr/
 %files extras
 %defattr(-,root,root,-)
 /usr/lib64/libqgpgme.so
-/usr/lib64/libqgpgme.so.15
+/usr/lib64/libqgpgme.so*
 
 %files info
 %defattr(0644,root,root,0755)
@@ -355,7 +355,6 @@ mv %{buildroot}/usr/lib/python3.11/site-packages/gpg-*.egg/gpg %{buildroot}/usr/
 /usr/lib64/libgpgme.so.11.30.0
 /usr/lib64/libgpgmepp.so.6
 /usr/lib64/libgpgmepp.so.6.18.0
-/usr/lib64/libqgpgme.so.15.3.0
 
 %files license
 %defattr(0644,root,root,0755)
