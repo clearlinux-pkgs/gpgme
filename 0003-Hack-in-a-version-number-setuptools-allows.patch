@@ -1,0 +1,26 @@
+From 2e89d9a3616958e07c3818ced12bdee5dd200ef0 Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Wed, 18 Oct 2023 12:02:33 -0700
+Subject: [PATCH] Hack in a version number setuptools allows
+
+Signed-off-by: William Douglas <william.douglas@intel.com>
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index ae4f964..8d7c4a7 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -45,7 +45,7 @@ m4_define([mym4_version],      m4_argn(4, mym4_verslist))
+ m4_define([mym4_revision],     m4_argn(7, mym4_verslist))
+ m4_define([mym4_revision_dec], m4_argn(8, mym4_verslist))
+ m4_esyscmd([echo ]mym4_version[>VERSION])
+-AC_INIT([mym4_package],[mym4_version],[https://bugs.gnupg.org])
++AC_INIT([mym4_package],[mym4_major.mym4_minor.mym4_micro],[https://bugs.gnupg.org])
+ 
+ # LT Version numbers, remember to change them just *before* a release.
+ #   (Code changed:			REVISION++)
+-- 
+2.42.0
+

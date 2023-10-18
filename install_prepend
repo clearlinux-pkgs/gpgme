@@ -1,0 +1,2 @@
+export SETUPTOOLS_USE_DISTUTILS=local
+export SETUP_PY_EXTRA_OPTS="--single-version-externally-managed --root=/"

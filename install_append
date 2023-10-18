@@ -1,4 +1,1 @@
 touch abifiles.list
-cd lang/python
-DESTDIR=%{buildroot} make install
-mv %{buildroot}/usr/lib/python3.11/site-packages/gpg-*.egg/gpg %{buildroot}/usr/lib/python3.11/site-packages/gpg

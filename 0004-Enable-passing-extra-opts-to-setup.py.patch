@@ -1,0 +1,25 @@
+From 82b69994cda0f1bcaf6eaf0510f2a7134f96f19d Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Wed, 18 Oct 2023 13:14:32 -0700
+Subject: [PATCH] Enable passing extra opts to setup.py
+
+Signed-off-by: William Douglas <william.douglas@intel.com>
+---
+ lang/python/Makefile.am | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/lang/python/Makefile.am b/lang/python/Makefile.am
+index 68b98e8..deaa571 100644
+--- a/lang/python/Makefile.am
++++ b/lang/python/Makefile.am
+@@ -97,6 +97,7 @@ install-exec-local:
+ 	  --build-base="$$(basename "$${PYTHON}")-gpg" \
+ 	  install \
+ 	  --prefix "$(DESTDIR)$(prefix)" \
++	  $${SETUP_PY_EXTRA_OPTS:-} \
+ 	  --verbose ; \
+ 	done
+ 
+-- 
+2.42.0
+
