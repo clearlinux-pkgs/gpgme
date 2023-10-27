@@ -895,6 +895,8 @@ libgpgmepp.so.6:_ZNK5GpgME34GpgAddExistingSubkeyEditInteractor7Private9nextState
 libgpgmepp.so.6:_ZNK5GpgME34GpgAddExistingSubkeyEditInteractor9nextStateEjPKcRNS_5ErrorE
 libgpgmepp.so.6:_ZNK5GpgME3Key10canCertifyEv
 libgpgmepp.so.6:_ZNK5GpgME3Key10canEncryptEv
+libgpgmepp.so.6:_ZNK5GpgME3Key10hasCertifyEv
+libgpgmepp.so.6:_ZNK5GpgME3Key10hasEncryptEv
 libgpgmepp.so.6:_ZNK5GpgME3Key10isDisabledEv
 libgpgmepp.so.6:_ZNK5GpgME3Key10issuerNameEv
 libgpgmepp.so.6:_ZNK5GpgME3Key10lastUpdateEv
@@ -907,6 +909,7 @@ libgpgmepp.so.6:_ZNK5GpgME3Key11keyListModeEv
 libgpgmepp.so.6:_ZNK5GpgME3Key12issuerSerialEv
 libgpgmepp.so.6:_ZNK5GpgME3Key13canReallySignEv
 libgpgmepp.so.6:_ZNK5GpgME3Key15canAuthenticateEv
+libgpgmepp.so.6:_ZNK5GpgME3Key15hasAuthenticateEv
 libgpgmepp.so.6:_ZNK5GpgME3Key16protocolAsStringEv
 libgpgmepp.so.6:_ZNK5GpgME3Key18ownerTrustAsStringEv
 libgpgmepp.so.6:_ZNK5GpgME3Key18primaryFingerprintEv
@@ -919,6 +922,7 @@ libgpgmepp.so.6:_ZNK5GpgME3Key6subkeyEj
 libgpgmepp.so.6:_ZNK5GpgME3Key6userIDEj
 libgpgmepp.so.6:_ZNK5GpgME3Key7canSignEv
 libgpgmepp.so.6:_ZNK5GpgME3Key7chainIDEv
+libgpgmepp.so.6:_ZNK5GpgME3Key7hasSignEv
 libgpgmepp.so.6:_ZNK5GpgME3Key7subkeysEv
 libgpgmepp.so.6:_ZNK5GpgME3Key7userIDsEv
 libgpgmepp.so.6:_ZNK5GpgME3Key8protocolEv
