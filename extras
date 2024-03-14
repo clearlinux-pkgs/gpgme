@@ -2,3 +2,6 @@
 /usr/lib64/libqgpgme.so*
 /usr/lib64/libqgpgme.so.15
 /usr/lib64/libqgpgme.so.15.2.1
+/usr/lib64/libqgpgmeqt6.so.15
+/usr/lib64/libqgpgmeqt6.so.15.5.0
+
