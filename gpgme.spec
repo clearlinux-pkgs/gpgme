@@ -9,7 +9,7 @@
 #
 Name     : gpgme
 Version  : 1.23.1
-Release  : 83
+Release  : 84
 URL      : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.23.1.tar.bz2
 Source0  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.23.1.tar.bz2
 Source1  : https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.23.1.tar.bz2.sig
