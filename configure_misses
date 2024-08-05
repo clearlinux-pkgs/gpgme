@@ -1,6 +1,6 @@
 Configure miss: a Python interpreter with version >= 2.7
 Configure miss: a Python interpreter with version >= 3.10
-Configure miss: a Python interpreter with version >= 3.12
+Configure miss: a Python interpreter with version >= 3.11
 Configure miss: a Python interpreter with version >= 3.4
 Configure miss: a Python interpreter with version >= 3.5
 Configure miss: a Python interpreter with version >= 3.6
@@ -8,7 +8,11 @@ Configure miss: a Python interpreter with version >= 3.7
 Configure miss: a Python interpreter with version >= 3.8
 Configure miss: a Python interpreter with version >= 3.9
 Configure miss: a Python interpreter with version >= all
+Configure miss: g++ option to enable C++11 features
+Configure miss: gcc option to enable large file support
+Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: getenv_r
 Configure miss: gitlog-to-changelog
 Configure miss: windres
+Configure miss: x86_64-generic-linux-gnu-file
 Configure miss: x86_64-generic-linux-gnu-moc
