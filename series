@@ -1,2 +1,3 @@
 0003-Hack-in-a-version-number-setuptools-allows.patch
 0004-Enable-passing-extra-opts-to-setup.py.patch
+backport-ecd0c86d62351d267bdc9566286c532a394c711b.patch
