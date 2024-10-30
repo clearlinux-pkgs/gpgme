@@ -1,0 +1,167 @@
+From 7c3302f045c8aad097aacad9f82632822d10eb03 Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Mon, 28 Oct 2024 14:04:15 -0700
+Subject: [PATCH 3/3] Hard code version + sysconfig bits
+
+These don't detect correctly for building with the hacked up patch so
+force their settings.
+
+Signed-off-by: William Douglas <william.douglas@intel.com>
+---
+ configure.ac          |  3 +--
+ m4/ax_python_devel.m4 | 51 +++++++++++++++----------------------------
+ m4/python.m4          |  2 +-
+ 3 files changed, 20 insertions(+), 36 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 70d6974..ad6b816 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -590,8 +590,7 @@ if test "$found_py" = "1"; then
+ 	if test "$found_py" = "1" -o "$found_py3" = "1"; then
+ 	  # Reset everything, so that we can look for another Python.
+           m4_foreach([mym4pythonver],
+-                     [[2.7],[3.4],[3.5],[3.6],[3.7],[3.8],[3.9],[3.10],
+-                      [3.11],[3.12],[all]],
++                     [[3.13],[all]],
+            [unset PYTHON
+ 	    unset PYTHON_VERSION
+ 	    unset PYTHON_CPPFLAGS
+diff --git a/m4/ax_python_devel.m4 b/m4/ax_python_devel.m4
+index a9a68cc..2bca7da 100644
+--- a/m4/ax_python_devel.m4
++++ b/m4/ax_python_devel.m4
+@@ -132,30 +132,15 @@ variable to configure. See ``configure --help'' for reference.
+ 		fi
+ 	fi
+ 
+-	#
+-	# Check if you have distutils, else fail
+-	#
+-	AC_MSG_CHECKING([for the distutils Python package])
+-	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
+-		AC_MSG_RESULT([yes])
+-	else
+-		AC_MSG_RESULT([no])
+-		AC_MSG_ERROR([cannot import Python module "distutils".
+-Please check your Python installation. The error was:
+-$ac_distutils_result])
+-		PYTHON_VERSION=""
+-	fi
+-
+ 	#
+ 	# Check for Python include path
+ 	#
+ 	AC_MSG_CHECKING([for Python include path])
+ 	if test -z "$PYTHON_CPPFLAGS"; then
+-		python_path=`$PYTHON -c "import distutils.sysconfig; \
+-			print (distutils.sysconfig.get_python_inc ());"`
+-		plat_python_path=`$PYTHON -c "import distutils.sysconfig; \
+-			print (distutils.sysconfig.get_python_inc (plat_specific=1));"`
++		python_path=`$PYTHON -c "import sysconfig; \
++			print (sysconfig.get_path('include'));"`
++		plat_python_path=`$PYTHON -c "import sysconfig; \
++			print (sysconfig.get_path('include'));"`
+ 		if test -n "${python_path}"; then
+ 			if test "${plat_python_path}" != "${python_path}"; then
+ 				python_path="-I$python_path -I$plat_python_path"
+@@ -179,7 +164,7 @@ $ac_distutils_result])
+ 
+ # join all versioning strings, on some systems
+ # major/minor numbers could be in different list elements
+-from distutils.sysconfig import *
++from sysconfig import *
+ e = get_config_var('VERSION')
+ if e is not None:
+ 	print(e)
+@@ -205,8 +190,8 @@ EOD`
+ 		ac_python_libdir=`cat<<EOD | $PYTHON -
+ 
+ # There should be only one
+-import distutils.sysconfig
+-e = distutils.sysconfig.get_config_var('LIBDIR')
++import sysconfig
++e = sysconfig.get_config_var('LIBDIR')
+ if e is not None:
+ 	print (e)
+ EOD`
+@@ -214,8 +199,8 @@ EOD`
+ 		# Now, for the library:
+ 		ac_python_library=`cat<<EOD | $PYTHON -
+ 
+-import distutils.sysconfig
+-c = distutils.sysconfig.get_config_vars()
++import sysconfig
++c = sysconfig.get_config_vars()
+ if 'LDVERSION' in c:
+ 	print ('python'+c[['LDVERSION']])
+ else:
+@@ -234,9 +219,9 @@ EOD`
+ 		else
+ 			# old way: use libpython from python_configdir
+ 			ac_python_libdir=`$PYTHON -c \
+-			  "from distutils.sysconfig import get_python_lib as f; \
++			  "from sysconfig import get_path as f; \
+ 			  import os; \
+-			  print (os.path.join(f(plat_specific=1, standard_lib=1), 'config'));"`
++			  print (os.path.join(f('stdlib'), 'config'));"`
+ 			PYTHON_LDFLAGS="-L$ac_python_libdir -lpython$ac_python_version"
+ 		fi
+ 
+@@ -255,8 +240,8 @@ EOD`
+ 	#
+ 	AC_MSG_CHECKING([for Python site-packages path])
+ 	if test -z "$PYTHON_SITE_PKG"; then
+-		PYTHON_SITE_PKG=`$PYTHON -c "import distutils.sysconfig; \
+-			print (distutils.sysconfig.get_python_lib(0,0));"`
++		PYTHON_SITE_PKG=`$PYTHON -c "import sysconfig; \
++			print (sysconfig.get_path('platlib'));"`
+ 	fi
+ 	AC_MSG_RESULT([$PYTHON_SITE_PKG])
+ 	AC_SUBST([PYTHON_SITE_PKG])
+@@ -266,8 +251,8 @@ EOD`
+ 	#
+ 	AC_MSG_CHECKING(python extra libraries)
+ 	if test -z "$PYTHON_EXTRA_LIBS"; then
+-	   PYTHON_EXTRA_LIBS=`$PYTHON -c "import distutils.sysconfig; \
+-                conf = distutils.sysconfig.get_config_var; \
++	   PYTHON_EXTRA_LIBS=`$PYTHON -c "import sysconfig; \
++                conf = sysconfig.get_config_var; \
+                 print (conf('LIBS') + ' ' + conf('SYSLIBS'))"`
+ 	fi
+ 	AC_MSG_RESULT([$PYTHON_EXTRA_LIBS])
+@@ -278,8 +263,8 @@ EOD`
+ 	#
+ 	AC_MSG_CHECKING(python extra linking flags)
+ 	if test -z "$PYTHON_EXTRA_LDFLAGS"; then
+-		PYTHON_EXTRA_LDFLAGS=`$PYTHON -c "import distutils.sysconfig; \
+-			conf = distutils.sysconfig.get_config_var; \
++		PYTHON_EXTRA_LDFLAGS=`$PYTHON -c "import sysconfig; \
++			conf = sysconfig.get_config_var; \
+ 			print (conf('LINKFORSHARED'))"`
+ 	fi
+ 	AC_MSG_RESULT([$PYTHON_EXTRA_LDFLAGS])
+@@ -323,4 +308,4 @@ EOD`
+ 	#
+ 	# all done!
+ 	#
+-])
+\ No newline at end of file
++])
+diff --git a/m4/python.m4 b/m4/python.m4
+index e741511..b1351f7 100644
+--- a/m4/python.m4
++++ b/m4/python.m4
+@@ -41,7 +41,7 @@ AC_DEFUN([AM_PATH_PYTHON],
+   m4_define_default([_AM_PYTHON_INTERPRETER_LIST],
+ [python2 python2.7 dnl
+  python dnl
+- python3 python3.12 python3.11 python3.10 python3.9 python3.8 python3.6
++ python3 python 3.13 python3.12 python3.11 python3.10 python3.9 python3.8 python3.6
+  ])
+ 
+   AC_ARG_VAR([PYTHON], [the Python interpreter])
+-- 
+2.47.0
+

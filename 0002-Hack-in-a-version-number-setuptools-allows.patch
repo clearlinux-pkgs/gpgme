@@ -1,7 +1,7 @@
-From 2e89d9a3616958e07c3818ced12bdee5dd200ef0 Mon Sep 17 00:00:00 2001
+From 61b8836bd73454bd47cd00ed3570ebc6b6cf16b6 Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Wed, 18 Oct 2023 12:02:33 -0700
-Subject: [PATCH] Hack in a version number setuptools allows
+Subject: [PATCH 2/3] Hack in a version number setuptools allows
 
 Signed-off-by: William Douglas <william.douglas@intel.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: William Douglas <william.douglas@intel.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/configure.ac b/configure.ac
-index ae4f964..8d7c4a7 100644
+index ae4c7da..70d6974 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -45,7 +45,7 @@ m4_define([mym4_version],      m4_argn(4, mym4_verslist))
@@ -22,5 +22,5 @@ index ae4f964..8d7c4a7 100644
  # LT Version numbers, remember to change them just *before* a release.
  #   (Code changed:			REVISION++)
 -- 
-2.42.0
+2.47.0
 
